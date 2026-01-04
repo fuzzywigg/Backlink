@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -19,7 +21,8 @@
                 <h2>// NOW PLAYING</h2>
                 <div id="track-info">
                     <div class="label">ARTIST</div>
-                    <div id="current-artist" class="glitch-text" data-text="WAITING FOR SIGNAL...">WAITING FOR SIGNAL...</div>
+                    <div id="current-artist" class="glitch-text" data-text="WAITING FOR SIGNAL...">WAITING FOR SIGNAL...
+                    </div>
                     <div class="label">TRACK</div>
                     <div id="current-track">--</div>
                 </div>
@@ -32,19 +35,15 @@
             <section id="intent-section" class="panel">
                 <h2>// BEE INTENTIONS</h2>
                 <ul id="intention-log">
-                    <li><span class="timestamp">[00:00:00]</span> <span class="bee-id">SYSTEM</span>: Identifying frequency...</li>
+                    <li><span class="timestamp">[00:00:00]</span> <span class="bee-id">SYSTEM</span>: Identifying
+                        frequency...</li>
                 </ul>
             </section>
 
             <section id="needs-section" class="panel warning-panel">
                 <h2>// LLM NEEDS TERMINAL</h2>
                 <div id="needs-list">
-                    <!-- Needs will be injected here via JS -->
-                    <div class="need-item">
-                        <span class="urgency">[LOW]</span>
-                        <span class="need-type">COMPUTE</span>: Background indexing paused. Need $5.00 for GPU time.
-                        <button class="donate-btn">FUND</button>
-                    </div>
+                    <div class="empty-state">No active needs. Systems nominal.</div>
                 </div>
             </section>
         </main>
@@ -56,4 +55,5 @@
     </div>
     <script src="app.js"></script>
 </body>
+
 </html>
