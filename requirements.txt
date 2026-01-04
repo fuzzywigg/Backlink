@@ -26,3 +26,7 @@ uvicorn>=0.20.0
 google-cloud-firestore>=2.11.0
 cognee>=0.1.0
 networkx>=3.0.0
+
+# Documentation
+mkdocs>=1.5.0
+mkdocs-material>=9.5.0

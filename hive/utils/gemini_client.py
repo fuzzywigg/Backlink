@@ -138,22 +138,19 @@ class Gemini3Client:
         if not self.client:
              return {"error": "Google Client not initialized"}
 
-        config_args = {"thinking_config": types.ThinkingConfig(thinking_level=thinking_level)}
+        config = types.GenerateContentConfig(
+            thinking_config=types.ThinkingConfig(thinking_level=thinking_level)
+        )
+        
         if tools:
-            config_args["tools"] = tools
+            config.tools = tools
 
         if response_schema:
-            config_args["response_mime_type"] = "application/json"
-            config_args["response_schema"] = response_schema
+            config.response_mime_type = "application/json"
+            config.response_schema = response_schema
         
-        # In newer SDK, system_instruction might be part of config or method
-        # We assume it goes into contents as 'model' role or config
-        # For simplicity in this wrapper, if system instruction is present, we prepend it or use config
-        # types.GenerateContentConfig has system_instruction in some versions
         if system_instruction:
-            # check SDK version support or prepend
              config.system_instruction = system_instruction
-
 
         try:
             response = self.client.models.generate_content(

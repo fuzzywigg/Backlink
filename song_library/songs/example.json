@@ -1,0 +1,14 @@
+{
+    "artist": "The Hive Mind",
+    "title": "Neural Handshake",
+    "intent": "Systems Synchronization",
+    "cost": 5.00,
+    "files": {
+        "mp3": "songs/neural_handshake.mp3",
+        "cover_art": "images/neural_handshake.png"
+    },
+    "metadata": {
+        "genre": "Synthwave",
+        "bpm": 120
+    }
+}

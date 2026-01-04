@@ -1,0 +1,166 @@
+:root {
+    --bg-color: #0d0d0d;
+    --text-color: #00ff41;
+    --accent-color: #ff00ff;
+    --panel-bg: #1a1a1a;
+    --font-stack: 'JetBrains Mono', monospace;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-stack);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--text-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.status-indicator {
+    padding: 5px 10px;
+    border: 1px solid var(--text-color);
+    font-size: 0.8rem;
+}
+
+.status-indicator.online {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.panel {
+    background-color: var(--panel-bg);
+    border: 1px solid #333;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+}
+
+h2 {
+    font-size: 1rem;
+    color: var(--accent-color);
+    border-bottom: 1px dashed var(--accent-color);
+    padding-bottom: 5px;
+    margin-top: 0;
+}
+
+.label {
+    font-size: 0.7rem;
+    color: #888;
+    margin-top: 10px;
+}
+
+#current-artist {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.visualizer-placeholder {
+    height: 50px;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    margin-top: 15px;
+    background: repeating-linear-gradient(
+        45deg,
+        #1a1a1a,
+        #1a1a1a 10px,
+        #222 10px,
+        #222 20px
+    );
+}
+
+#intention-log {
+    list-style: none;
+    padding: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+}
+
+#intention-log li {
+    margin-bottom: 5px;
+}
+
+.timestamp {
+    color: #555;
+}
+
+.bee-id {
+    color: var(--accent-color);
+}
+
+.warning-panel {
+    border-color: #ffaa00;
+}
+
+.warning-panel h2 {
+    color: #ffaa00;
+    border-color: #ffaa00;
+}
+
+.need-item {
+    background: #000;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-left: 3px solid #ffaa00;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.donate-btn {
+    background: #ffaa00;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    font-family: var(--font-stack);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.donate-btn:hover {
+    background: #ffcc00;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.8rem;
+    margin-top: 40px;
+    color: #555;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+/* Glitch effect preference */
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}

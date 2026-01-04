@@ -13,5 +13,14 @@
         "ui": {
             "enabled": true
         }
+    },
+    "hosting": {
+        "public": "frontend/radio",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "site": "radio-fuzzywigg"
     }
 }

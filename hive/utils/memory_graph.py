@@ -17,18 +17,21 @@ try:
 except ImportError:
     nx = None
 
+from hive.utils.markdown_graph_storage import MarkdownKnowledgeGraph
+
 logger = logging.getLogger(__name__)
 
 class HiveKnowledgeGraph:
     """
     The central memory store for the Hive Swarm.
     
-    Acts as a wrapper around a persisted Graph (NetworkX/Cognee) to allow Bees
+    Acts as a wrapper around a persisted Graph (NetworkX/Cognee/Markdown) to allow Bees
     to store relationships (Triples) and retrieve context via traversal.
     """
 
-    def __init__(self, persistence_path: str = "hive_memory.graphml"):
+    def __init__(self, persistence_path: str = "hive_memory.graphml", markdown_dir: Optional[str] = None):
         self.persistence_path = persistence_path
+        self.markdown_store = MarkdownKnowledgeGraph(markdown_dir) if markdown_dir else None
         self.graph = nx.DiGraph() if nx else None
         self._load_graph()
 
@@ -37,9 +40,24 @@ class HiveKnowledgeGraph:
         if not self.graph:
             logger.warning("NetworkX not available. Graph memory disabled.")
             return
+
+        # Option A: Load from Markdown Store if configured
+        if self.markdown_store:
+            try:
+                data = self.markdown_store.get_full_graph()
+                for entity_name, details in data["entities"].items():
+                    self.graph.add_node(entity_name, type="entity", observations=details["observations"])
+                
+                for rel in data["relationships"]:
+                    self.graph.add_edge(rel["source"], rel["target"], relation=rel["verb"], context=rel["context"])
+                
+                logger.info(f"Loaded {len(data['entities'])} entities from Markdown graph.")
+                return
+            except Exception as e:
+                logger.error(f"Failed to load generic Markdown graph: {e}")
             
         try:
-            # Placeholder for actual persistence logic
+            # Option B: Load from GraphML
             # self.graph = nx.read_graphml(self.persistence_path)
             pass
         except Exception as e:

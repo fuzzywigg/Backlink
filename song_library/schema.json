@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Song Metadata",
+    "type": "object",
+    "required": [
+        "artist",
+        "title",
+        "intent",
+        "cost"
+    ],
+    "properties": {
+        "artist": {
+            "type": "string",
+            "description": "Name of the artist or band."
+        },
+        "title": {
+            "type": "string",
+            "description": "Title of the track."
+        },
+        "intent": {
+            "type": "string",
+            "description": "The vibe, purpose, or 'bee intention' associated with this track (e.g., 'calm focus', 'high energy', 'debugging')."
+        },
+        "cost": {
+            "type": "number",
+            "description": "The cost in credits or $ to request or play this track."
+        },
+        "files": {
+            "type": "object",
+            "properties": {
+                "mp3": {
+                    "type": "string",
+                    "description": "Relative or absolute path to the MP3 file."
+                },
+                "cover_art": {
+                    "type": "string",
+                    "description": "Path to cover art image."
+                }
+            }
+        },
+        "metadata": {
+            "type": "object",
+            "description": "Any additional metadata like genre, bpm, key, etc."
+        }
+    }
+}
