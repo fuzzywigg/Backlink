@@ -4,6 +4,8 @@ import time
 from pathlib import Path
 from hive.bees.base_bee import BaseBee
 from hive.utils.radio_bridge import radio
+from core_utils.ontology_manager import OntologyManager
+from core_utils.model_registry_loader import ModelRegistryLoader
 
 class RadioBee(BaseBee):
     """
@@ -16,6 +18,15 @@ class RadioBee(BaseBee):
         self.song_lib_path = Path(song_lib_path)
         self.current_track = None
         self.intentions = []
+        self.ontology = OntologyManager()
+        self.models = ModelRegistryLoader()
+
+    def get_voice_settings(self):
+        """Retrieves the current hour's ontology and model spec."""
+        current_vibe = self.ontology.get_current_ontology()
+        # Example: select model based on vibe complexity (placeholder logic)
+        model_id = self.models.recommend_model(mode="performance")
+        return current_vibe, model_id
 
     def load_library(self):
         """Loads available songs from the library."""
@@ -74,6 +85,11 @@ class RadioBee(BaseBee):
         Main loop for the Radio Bee.
         """
         self.announce("Radio System Online. Tuning frequencies...")
+        
+        # Check Vibe
+        vibe, model = self.get_voice_settings()
+        self.announce(f"System State: {model} loaded. Vibe: {vibe['id'].upper()}")
+        
         self.spin_track()
 
 if __name__ == "__main__":

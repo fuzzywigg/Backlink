@@ -87,3 +87,45 @@ The `POST /webhook` endpoint in `main_service.py` is the **Root of Trust**.
 * [ ] Create `hive/utils/stripe_client.py` wrapper.
 * [ ] Implement `webhook_handler` in `main_service.py`.
 * [ ] Update `DjBee` to use `stripe.Price.list` for discovery instead of mock lists.
+
+## 6. The Gatekeeper Protocol (The "Piano Bar" Method)
+
+**Status:** Planned (Critical Fix for "Jukebox Jam")
+
+We are replacing the "Strict Sanitization" model with a **Verification & Priority** model to ensure no paying customer is ignored due to a typo.
+
+### 6.1 The "Tip Jar" Priority (Paid vs. Free)
+
+Like a piano bar, money talks.
+
+1. **High Priority (Paid):** Requests with a verified `PaymentIntent` ID. These jump to the front of the queue.
+2. **Low Priority (Shouts):** Requests from Twitter/Socials without payment. These are ignored unless the Paid Queue is empty.
+
+### 6.2 Verification (The Lookup)
+
+Instead of blindly rejecting "weird" text, we use it to search.
+
+* **Input:** "Song With; Weird-Chars (Remix)"
+* **Action:** The system calls the **Spotify API Search**.
+* **Result:**
+  * **Match Found:** We discard the user's messy text and use the **Clean Official Title/Artist** from Spotify. This sanitizes the data *for* us.
+  * **No Match (The "Crowd Protocol"):** We do NOT hide this in a private dashboard.
+    * **Action:** `EngagementBee` posts to **Twitter**: *"@User sent $5 for '[Input]' but I can't find it. Help? Reply with the Spotify link."*
+    * **Resolution:** The Agent monitors replies. If a trusted user (or the buyer) replies with a valid Spotify URL, the request is updated and moved to `VERIFIED`.
+    * **Benefit:** Keeps the community engaged and turns a "bug" into a "collaborative moment."
+
+### 6.3 The FIFO Queue (The Hopper)
+
+We cannot process 50 requests simultaneously.
+
+1. **Ingest:** Requests enter `honeycomb/request_queue.json` with a `priority` score.
+2. **State:** Requests have a `status`: `PENDING` -> `VERIFIED` -> `PLAYED`.
+3. **Throttle:** The `DjBee` only pulls **ONE** item from `VERIFIED` at a time.
+4. **Grace Period:** Enforce a 30-second "cool down" between identifying new purchases to allow the backend to settle.
+
+### 6.4 "Slot Full" Logic
+
+If `honeycomb/request_queue.json` > 50 items:
+
+* Temporarily disable `payment_intent` creation (API returns 503).
+* Prevents the "machine" from eating coins it cannot honor.

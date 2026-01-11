@@ -113,7 +113,7 @@ def analyze_audio(file_path):
     
     try:
         # Check if we can use the file API
-        uploaded_file = client.files.upload(path=file_path)
+        uploaded_file = client.files.upload(file=file_path)
         
         # Wait for processing if strictly needed, but usually small audio is fast.
         # For 'active' state check:

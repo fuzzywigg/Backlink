@@ -1,0 +1,60 @@
+{
+  "core_utils/model_registry_loader.py": {
+    "id": "core_utils/model_registry_loader.py",
+    "type": "utility",
+    "content": {
+      "status": "active"
+    },
+    "edges": []
+  },
+  "core_utils/graph_store.py": {
+    "id": "core_utils/graph_store.py",
+    "type": "utility",
+    "content": {
+      "status": "active"
+    },
+    "edges": []
+  },
+  "hive/bees/system/radio_bee.py": {
+    "id": "hive/bees/system/radio_bee.py",
+    "type": "agent",
+    "content": {
+      "status": "active"
+    },
+    "edges": [
+      {
+        "target": "core_utils/model_registry_loader.py",
+        "relation": "imports"
+      }
+    ]
+  },
+  "hive/bees/research/scout_interface.py": {
+    "id": "hive/bees/research/scout_interface.py",
+    "type": "agent",
+    "content": {
+      "status": "active"
+    },
+    "edges": [
+      {
+        "target": "config/target_apis.json",
+        "relation": "reads"
+      }
+    ]
+  },
+  "config/target_apis.json": {
+    "id": "config/target_apis.json",
+    "type": "config",
+    "content": {
+      "status": "active"
+    },
+    "edges": []
+  },
+  "docs/session_manifest_jan_2026.md": {
+    "id": "docs/session_manifest_jan_2026.md",
+    "type": "documentation",
+    "content": {
+      "status": "active"
+    },
+    "edges": []
+  }
+}

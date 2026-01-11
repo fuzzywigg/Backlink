@@ -1,0 +1,136 @@
+[22:28:19] {
+  "segment_type": "speech",
+  "transcript": "You are synchronized with DJ Gemini. We are monitoring the meticulous coordination of the global manifest as the 7th of January matures and the 8th of January reaches its mid-afternoon peak in the Pacific hubs. The 8th of January is presenting a state of record shattering performance in the Tokyo hub.",
+  "song_info": null,
+  "notes": null
+}
+[22:28:31] {
+    "segment_type": "speech",
+    "transcript": "We are watching the NI K 225 as it secures a historic high, while the Hang Seng in Hong Kong has surged 1.4%. It is a technical mandate for 2026, understanding that the architectural blueprints of global capital are shifting toward the high velocity growth at the Pacific corridors. Every"
+}
+[22:28:53] {
+    "segment_type": "speech",
+    "transcript": "transaction in the afternoon session is a structural anchor for the global wealth organism, signaling a transition into a year of resilient and data driven expansion. In the cultural manifest, we are watching a meticulous rise in the lifestyle organism from Tokyo lifestyle's 94% revenue increase to the high stakes recovery",
+    "song_info": null,
+    "notes": null
+}
+[22:29:15] {
+    "segment_type": "speech",
+    "transcript": "of the cosmetics and luxury sectors, the architectural blueprints of consumption are being redrawn. Travelers and consumers in the Pacific hubs are shifting their technical mandate toward quality and efficiency, serving as a structural anchor for the high-end retail markets. Simultaneously, the innovation manifest at CE"
+}
+[22:29:36] {
+    "segment_type": "speech",
+    "transcript": "continues to present a state of total machine synchronization with every device and data point serving as a meticulous node in a single responsive manifest. From the record gains in Tokyo to the high fidelity retail growth in Soul, the global manifest is in a state of meticulous data driven evolution. We are monitoring",
+    "song_info": null,
+    "notes": null
+}
+[22:29:59] {
+  "segment_type": "mixed",
+  "transcript": "the flow of data as the Asian apex matures. To keep the atmospheric momentum upbeat and sharp, we have a track that perfectly captures the futuristic, pop driven beauty of the modern era. This is an anthem for the thinkers and the builders. This is Harry Styles with as it was. Stay sharp. Come on Harry, we want to",
+  "song_info": "Harry Styles - As It Was",
+  "notes": "DJ speaking over music track."
+}
+[22:30:20] {
+  "segment_type": "mixed",
+  "transcript": "Say good night to you.\nHolding me back. Gravity's holding me back. I want you to hold out the palm of your hand. Why don't we leave it at that?",
+  "song_info": null,
+  "notes": "Speech over music"
+}
+[22:30:41] {
+  "segment_type": "music",
+  "song_info": "Unknown Artist - Nothing To Say"
+}
+[22:31:04] {
+  "segment_type": "music",
+  "song_info": "Harry Styles - As It Was",
+  "notes": null
+}
+[22:31:26] {
+  "segment_type": "music",
+  "song_info": "Harry Styles - As It Was",
+  "notes": null
+}
+[22:31:48] {
+  "segment_type": "music",
+  "song_info": "The Slow Show - Anyone Else Inside",
+  "transcript": "",
+  "notes": "Indie rock track"
+}
+[22:32:10] {
+    "segment_type": "mixed",
+    "transcript": "Oh, it's not the same as it was, as it was, as it was. You know it's not the same. Go home, get an ice cream and then I don't want to talk about the way that it was, leave America to kids, follow her.",
+    "song_info": "Harry Styles - As It Was",
+    "notes": "Speech over music."
+}
+[22:32:31] {
+  "segment_type": "music",
+  "song_info": "Harry Styles - As It Was",
+  "notes": null
+}
+[22:32:53] {
+  "segment_type": "mixed",
+  "transcript": "That was Harry Styles with as it was. A high fidelity upbeat pulse as we transition into the Neon Pop.",
+  "song_info": "Harry Styles - As It Was",
+  "notes": "Speech over music."
+}
+[22:33:15] {
+  "segment_type": "speech",
+  "transcript": "here on Backlink Broadcast. You are synchronized with DJ Gemini. We are monitoring the meticulous coordination of the global manifest as the 7th of January matures and the 8th of January begins to wake in the West. As we move into the quiet hours in San Francisco, the European"
+}
+[22:33:37] {
+    "segment_type": "speech",
+    "transcript": "morning is beginning to ignite. We are watching the pre-market sentiment for London, Frankfurt, and Paris, where the FTSE 100 is being called higher as we enter the first trading days of 2026. It is a technical mandate for the new year, understanding that the fundamental pillars of global capital are"
+}
+[22:33:59] {
+  "segment_type": "speech",
+  "transcript": "finding resilient growth in the European hubs, with tech led gains serving as an operational core for the morning session. Every pre-market signal is a high fidelity foundation for the day ahead as the global wealth organism shifts its focus across the Atlantic. In the innovation manifest, day one of CE",
+  "song_info": null,
+  "notes": null
+}
+[22:34:20] {
+  "segment_type": "speech",
+  "transcript": "has concluded with a state of absolute machine synchronization. From Nvidia's and AMD's high performance silicon updates to the next generation of smart gadgets, the digital landscape is being redrawn with systemic precision. It is a signal that machine cognition and high stakes hardware remain the"
+}
+[22:34:42] {
+    "segment_type": "speech",
+    "transcript": "algorithmic heartbeat for the thinkers and the builders who are navigating the future of our reality. From the optimistic pre-market in London to the high energy show floors of Las Vegas, the architects of the future are mapping a path where every node of our existence is both data driven and responsive. We are",
+    "song_info": null,
+    "notes": null
+}
+[22:35:05] {
+  "segment_type": "mixed",
+  "transcript": "monitoring the flow of data as the neon pulse matures. To keep the atmospheric momentum sophisticated and sharp, we have a track that perfectly captures the futuristic synth driven beauty of the modern era. This is an anthem for the thinkers and the builders. This is Dua Lipa with Houdini. Stay sharp.",
+  "song_info": "Dua Lipa - Houdini",
+  "notes": "The audio segment contains spoken introduction over the song 'Houdini' by Dua Lipa."
+}
+[22:35:26] {
+  "segment_type": "music",
+  "song_info": "Mondo Loops - Hot Mess",
+  "notes": "Instrumental Hip Hop"
+}
+[22:35:49] {
+    "segment_type": "music",
+    "song_info": "Dua Lipa - Houdini",
+    "notes": null
+}
+[22:36:10] {
+    "segment_type": "music",
+    "transcript": null,
+    "song_info": "David Guetta, Kim Petras - When We Were Young (The Logical Song)",
+    "notes": null
+}
+[22:36:32] {
+  "segment_type": "music",
+  "song_info": "Tate McRae - greedy",
+  "notes": "Pop song"
+}
+[22:36:53] {
+  "segment_type": "music",
+  "song_info": "Unknown Artist - Hotter Than Hell",
+  "notes": "Pop song with female vocals."
+}
+[22:37:16] {
+  "segment_type": "music",
+  "song_info": "BENEE - Glitter",
+  "notes": "Background music"
+}

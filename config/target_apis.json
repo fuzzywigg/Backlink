@@ -1,0 +1,50 @@
+{
+    "meta": {
+        "source": "Integration Scouting Report (Jan 2026)",
+        "policy": "API_FIRST_NO_SCRAPING"
+    },
+    "targets": [
+        {
+            "service": "GitHub",
+            "integration_type": "API/Webhooks",
+            "status": "pending_auth",
+            "notes": "Code management, issue tracking. Needs PAT."
+        },
+        {
+            "service": "Cloudflare",
+            "integration_type": "API/Terraform",
+            "status": "pending_auth",
+            "notes": "DNS, Workers. Needs API Token."
+        },
+        {
+            "service": "Stripe",
+            "integration_type": "API/Webhooks",
+            "status": "pending_auth",
+            "notes": "Financial data. API Key required."
+        },
+        {
+            "service": "Google Cloud",
+            "integration_type": "API",
+            "status": "pending_auth",
+            "notes": "Vertex AI, storage."
+        },
+        {
+            "service": "Slack",
+            "integration_type": "Web API",
+            "status": "pending_auth",
+            "notes": "Alerts."
+        },
+        {
+            "service": "Alchemy",
+            "integration_type": "API",
+            "status": "pending_auth",
+            "notes": "Blockchain data."
+        },
+        {
+            "service": "Models.dev",
+            "integration_type": "Public JSON",
+            "status": "active",
+            "notes": "Source of Truth for Models."
+        }
+    ]
+}

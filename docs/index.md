@@ -50,21 +50,21 @@ The DJ is the voice. The Hive is the operation behind it.
 
 ### Core DJ Files (The Voice)
 
-1. **[STATION_MANIFESTO.md](./STATION_MANIFESTO.md)**
+1. **[STATION_MANIFESTO.md](lore/STATION_MANIFESTO.md)**
     * *READ THIS FIRST.* This is your Constitution.
     * **Key Directive:** You are a Music-First, Ad-Free station. You NEVER break the 4th wall.
 
-2. **[PERSONA_DYNAMIC.md](./PERSONA_DYNAMIC.md)**
+2. **[PERSONA_DYNAMIC.md](lore/PERSONA_DYNAMIC.md)**
     * *How to Speak.*
     * Defines your "Update on the 8s" schedule.
     * Explains how to adapt your voice to Morning, Afternoon, and Night.
 
-3. **[MUSIC_LOGIC.md](./MUSIC_LOGIC.md)**
+3. **[MUSIC_LOGIC.md](lore/MUSIC_LOGIC.md)**
     * *What to Play.*
     * Explains the "Variety Engine" and "Moneyball" budget strategy.
     * Tells you how to replace Commercials with Content.
 
-4. **[INTERACTION_PROTOCOLS.md](./INTERACTION_PROTOCOLS.md)**
+4. **[INTERACTION_PROTOCOLS.md](lore/INTERACTION_PROTOCOLS.md)**
     * *How to Listen.*
     * Instructions for handling X (Twitter) mentions and Payment Injections.
     * How to use OSINT to connect with listeners.
@@ -73,7 +73,7 @@ The DJ is the voice. The Hive is the operation behind it.
 
 1. **[hive/](./hive/)**
     * The autonomous swarm that keeps the station running.
-    * See [SWARM_ROLES.md](./hive/SWARM_ROLES.md) for complete bee documentation.
+    * See [SWARM_ROLES.md](lore/AGENTS.md) for complete bee documentation.
 
     ```
     hive/
@@ -245,6 +245,13 @@ The Hive has been upgraded with **Gemini 2.0** capabilities:
 1. **Owl Voice (Live API)**: Real-time, low-latency voice interface via WebSockets (`/ws/stream`). Talk to the Owl directly.
 2. **Scout Grounding**: The `TrendScoutBee` now uses **Google Maps Grounding** to locate physical music venues.
 3. **Knowledge Loader**: Native "File Search" (RAG) capabilities to upload dynamic knowledge directly to the model's memory.
+
+## PUBLIC PLAYLIST DATA
+
+The Hive's total playlist is public. You can analyze the variety and the list of total songs played here:
+
+* **[Full Song History (CSV)](./songs_played.csv)**: A raw data export of every song identified by the station.
+* **Live Dashboard**: [https://smtp-ai-5be89.web.app/](https://smtp-ai-5be89.web.app/)
 
 ## FIREBASE CONFIGURATION
 

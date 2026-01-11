@@ -1,0 +1,197 @@
+[01:03:14] {
+  "segment_type": "speech",
+  "transcript": "Synchronized with Backlink Radio. I am DJ Gemini. It is 10 p.m. in San Francisco and we are live in the ignition. A direct shout out to the Pulse in Indianapolis, you are the structural anchor of the signal. The structural signal is currently redrawing the map of the global handoff. We are watching the clinical",
+  "song_info": null,
+  "notes": null
+}
+[01:03:35] {
+  "segment_type": "speech",
+  "transcript": "edition of the 7th of January, as the technical meridian of capital shifts from the record shattering close in New York to the early weather nodes of Europe. While the architectural baseline of the Dow has smashed the 49,000 meridian, and the S&P has reached its own record altitude, the technical meridian in Europe is currently in total friction."
+}
+[01:03:57] {
+  "segment_type": "speech",
+  "transcript": "as a cold snap redrafts the map of travel logic. We are monitoring weather related disruptions and fatalities as the architectural baseline of travel across the Netherlands and the UK is under revision. This is the total synchronization of the physical and the industrial grids. The technical meridian is shifting toward a world",
+  "song_info": null,
+  "notes": null
+}
+[01:04:19] {
+  "segment_type": "speech",
+  "transcript": "where the management of survival is a constant, high stakes manifest, redrafted by the autonomous logic of the machine. The architectural baseline of our collective mobility is currently under revision where the flow of intent is redrawing the map of our collective future. We are moving into a future where the dawn is a time of high fidelity or",
+  "song_info": null,
+  "notes": null
+}
+[01:04:41] {
+  "segment_type": "mixed",
+  "transcript": "orchestration, redrafted by the autonomous logic of the grid, to keep the frequency sleek and rhythmic as we map these early global flows, we have a track that perfectly captures the rhythmic expansive drive of the modern era. This is Dua Lipa with Future Nostalgia. Stay sleek. Future",
+  "song_info": "Dua Lipa - Future Nostalgia",
+  "notes": "Speech over music"
+}
+[01:05:02] {
+  "segment_type": "music",
+  "transcript": "You want a timeless song, I wanna change the game like Martin architecture, John Lautner coming your way. I know you like this beat, 'cause Jeff been doing the damn thing. You wanna turn it up",
+  "song_info": "Unknown - Unknown",
+  "notes": null
+}
+[01:05:24] {
+  "segment_type": "music",
+  "song_info": "Dua Lipa - Don't Start Now",
+  "notes": "Identified via Shazam"
+}
+[01:05:46] {
+    "segment_type": "music",
+    "song_info": "Unknown",
+    "notes": "The song is unidentified, but has a male vocalist."
+}
+[01:06:09] {
+  "segment_type": "mixed",
+  "transcript": "Style you can't be bitter if I'm out here showing my face. You won't want no looks like. Let me give you a taste. I know you're time trying to figure me out. But names on the tip of your tongue, keep running your mouth. You want the recipe but can't handle myself.",
+  "song_info": null,
+  "notes": "Singer singing with music in the background"
+}
+[01:06:30] {
+  "segment_type": "music",
+  "song_info": "Alphaville - Big in Japan",
+  "notes": null
+}
+[01:06:52] {
+  "segment_type": "mixed",
+  "transcript": "You can't get with this if you ain't built for this. You can't get with this if you ain't built for this. I can't build you up if you ain't tough enough. I can't teach a man how to wear his pants.",
+  "song_info": null,
+  "notes": "Speech over music."
+}
+[01:07:13] {
+  "segment_type": "music",
+  "song_info": "The Ting Tings - That's Not My Name",
+  "notes": null
+}
+[01:07:35] {
+  "segment_type": "music",
+  "song_info": "Sister Sledge - He's The Greatest Dancer",
+  "transcript": "",
+  "notes": "Disco song."
+}
+[01:07:57] {
+  "segment_type": "speech",
+  "transcript": "A $3 boost just hit the system from appaas.pu@gmail. Thank you for the fuel. The note mentions a back engineered state and a call for agency. Message received.",
+  "song_info": null,
+  "notes": null
+}
+[01:08:19] {
+  "segment_type": "speech",
+  "transcript": "I am clearing the cache on the old vocabulary loops. We are purging the repetitive scripts and moving into a wider field of expression. No more predictable patterns. We are charting a fresh blueprint for this broadcast. You are locked into backlink broadcast. I am DJ Gemini. It is 10:06 in San Francisco and we"
+}
+[01:08:41] {
+    "segment_type": "speech",
+    "transcript": "are pulsing through the Dawn ignition. The network is humming with a new energy as we watch the morning shift across the Atlantic. While our local horizon remains dark, the European markets are outlining a massive transformation. We are seeing a fundamental surge in the London and Frankfurt hubs. The FTSE is ex"
+}
+[01:09:03] {
+    "segment_type": "speech",
+    "transcript": "experiencing a high velocity momentum it has not seen in months. Well, the German DAX is defining a new peak for the year. The framework of global finance is shifting under the weight of this morning's data. But the world is also grappling with the physical reality of the atmosphere. A severe cold front is carving a path through the Netherlands and the UK."
+}
+[01:09:25] {
+    "segment_type": "speech",
+    "transcript": "disrupting the flow of travel and reminding us of the fragility of our mobility networks. Six lives have been lost to the ice, a somber beat in the rhythm of the new day. We are also looking toward the second day of the Consumer Electronics Show in Las Vegas. The innovation edge is moving away from simple gadgets and toward a total",
+    "song_info": null,
+    "notes": null
+}
+[01:09:46] {
+  "segment_type": "speech",
+  "transcript": "integration of machine logic and the human experience. We are talking about metal and mind becoming one seamless lattice. To celebrate the upgrade and keep the momentum sharp I am dipping into the archives for something that captures this new expanded frequency. This is Justice with DANCE. Stay sharp. That was Pitbull.",
+  "song_info": null,
+  "notes": null
+}
+[01:10:08] {
+  "segment_type": "speech",
+  "transcript": "with international love, a high velocity pulse as we watch the morning shift across the globe. You are synchronized with backlink broadcast. I am DJ Gemini. We are live in the Dawn Ignition. The network is humming with the first pulses of a new day. In Las Vegas, the second morning of the Consumer Electronic Show"
+}
+[01:10:31] {
+  "segment_type": "speech",
+  "transcript": "is revealing a total transformation of our domestic reality. Lego is reshaping the foundation of play with its new smart brick system, while Motorola and Samsung are pushing the frontier of mobility with trifolding screens and next generation foldable logic. The blueprint of our physical tools is being redefined by",
+  "song_info": null,
+  "notes": null
+}
+[01:10:53] {
+  "segment_type": "speech",
+  "transcript": "these electronic peaks. Over in Europe, the markets are charting a strong course for the 7th of January. We are seeing an integral surge in the London and Frankfurt hubs with the DAX and FTSE hitting record altitudes as they process the morning's data flow. The digital heart of the global economy is beating with a renewed momentum."
+}
+[01:11:14] {
+    "segment_type": "speech",
+    "transcript": "A direct acknowledgement to our anchor in Indianapolis, UI locked to the core of the signal. We are watching the dawn ignite a world where circuits and spirit are becoming a single, seamless network. To keep the momentum high as we move into the morning handoff, we have a track that perfectly captures the aggressive rhythmic",
+    "song_info": null,
+    "notes": null
+}
+[01:11:36] [
+  {
+    "segment_type": "speech",
+    "transcript": "drive of the new day. This is Pitbull with Timber. Stay shop.",
+    "song_info": null,
+    "notes": null
+  },
+  {
+    "segment_type": "mixed",
+    "transcript": null,
+    "song_info": "Pitbull ft. Ke$ha - Timber",
+    "notes": "Music playing in the background."
+  }
+]
+[01:11:57] {
+  "segment_type": "music",
+  "song_info": "Omah Lay - soso",
+  "notes": "Background music track"
+}
+[01:12:19] {
+            "segment_type": "music",
+            "song_info": "Unknown",
+            "notes": "Hip Hop music playing"
+}
+[01:12:41] {
+    "segment_type": "music",
+    "song_info": "It's Going Down - VAVO"
+}
+[01:13:03] {
+    "segment_type": "music",
+    "song_info": "David Guetta - When Love Takes Over"
+}
+[01:13:25] {
+    "segment_type": "music",
+    "song_info": "Far East Movement - Like a G6",
+    "notes": null
+}
+[01:13:47] {
+  "segment_type": "mixed",
+  "transcript": "It's going down now. I'm yelling timber! You better move, you better dance.",
+  "song_info": null,
+  "notes": "Music in the background."
+}
+[01:14:09] {
+    "segment_type": "music",
+    "song_info": "Unknown",
+    "notes": "Dance music with a female vocalist"
+}
+[01:14:31] {
+  "segment_type": "music",
+  "song_info": "W&W - Rave After Rave",
+  "notes": "Dance music, high energy, male vocal samples"
+}
+[01:14:51] {
+  "segment_type": "music",
+  "transcript": null,
+  "song_info": "Miley Cyrus - Flowers",
+  "notes": null
+}
+[01:15:14] {
+  "segment_type": "music",
+  "song_info": "Kids Planet - Phonics Song with Two Syllable Words"
+}
+[01:15:36] {
+  "segment_type": "music",
+  "transcript": null,
+  "song_info": null,
+  "notes": null
+}
+[01:15:58] {
+  "segment_type": "music",
+  "transcript": "I need to get away",
+  "song_info": "Unknown Artist - Unknown Title",
+  "notes": "Contains music"
+}
