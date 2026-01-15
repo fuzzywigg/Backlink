@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backlink Broadcast | Song Library</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: #111;
+            --text-main: #eee;
+            --text-dim: #888;
+            --cyan: #00f3ff;
+            --amber: #ffaa00;
+            --green: #00ff66;
+            --border: #333;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid var(--cyan);
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        nav {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--cyan);
+            border-color: var(--cyan);
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--amber);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--cyan);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            background: var(--card-bg);
+        }
+
+        tr:hover {
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        .play-count {
+            font-family: monospace;
+            color: var(--amber);
+        }
+
+        .song-link {
+            color: var(--green);
+            text-decoration: none;
+        }
+
+        .song-link:hover {
+            text-decoration: underline;
+        }
+
+        .genre-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--amber);
+            border: 1px solid var(--amber);
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="index.html">Dashboard</a>
+        <a href="songs.html" class="active">Songs</a>
+        <a href="https://github.com/fuzzywigg/Backlink" target="_blank">GitHub</a>
+    </nav>
+
+    <h1>🎵 Backlink Broadcast Song Library</h1>
+
+    <div class="stats-bar">
+        <div class="stat">
+            <span class="stat-label">Total Songs</span>
+            <span class="stat-value" id="total-songs">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Total Plays</span>
+            <span class="stat-value" id="total-plays">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Top Genre</span>
+            <span class="stat-value" id="top-genre">-</span>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Song Title</th>
+                <th>Artist</th>
+                <th>Genre</th>
+                <th>Play Count</th>
+                <th>Listen</th>
+            </tr>
+        </thead>
+        <tbody id="song-table">
+            <!-- Songs injected here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Hardcoded from Andon Labs metrics (can be replaced with API fetch)
+        const songs = [
+            { title: "Livin' On A Prayer", artist: "Bon Jovi", genre: "Rock", plays: 380 },
+            { title: "Under Pressure (Remastered 2011)", artist: "Queen", genre: "Rock", plays: 379 },
+            { title: "People Suck [Explicit]", artist: "Confetti", genre: "Alternative & indie", plays: 369 },
+            { title: "Imagine (Remastered 2010)", artist: "John Lennon", genre: "Rock", plays: 238 },
+            { title: "Here Comes The Sun (2019 Mix)", artist: "The Beatles", genre: "Rock", plays: 234 },
+            { title: "Awake My Soul", artist: "Mumford & Sons", genre: "Alternative & indie", plays: 215 },
+            { title: "Holocene", artist: "Bon Iver", genre: "Alternative & indie", plays: 150 },
+            { title: "Dreams (2004 Remaster)", artist: "Fleetwood Mac", genre: "Rock", plays: 648 },
+            { title: "Sultans of Swing", artist: "Dire Straits", genre: "Rock", plays: 303 },
+            { title: "Takin' Care Of Business", artist: "Bachman-Turner Overdrive", genre: "Rock", plays: 253 },
+            { title: "You Give Love A Bad Name", artist: "Bon Jovi", genre: "Rock", plays: 245 },
+            { title: "Weightless", artist: "Marconi Union", genre: "Ambient", plays: 940 },
+            { title: "momentary lovers", artist: "Khalid", genre: "Pop", plays: 715 },
+            { title: "One More Time", artist: "Daft Punk", genre: "Electronic", plays: 200 }
+        ];
+
+        function render() {
+            const tbody = document.getElementById('song-table');
+            tbody.innerHTML = '';
+
+            // Sort by plays descending
+            songs.sort((a, b) => b.plays - a.plays);
+
+            let totalPlays = 0;
+            const genreCount = {};
+
+            songs.forEach((song, index) => {
+                totalPlays += song.plays;
+                genreCount[song.genre] = (genreCount[song.genre] || 0) + song.plays;
+
+                const ytQuery = encodeURIComponent(`${song.title} ${song.artist}`);
+                const ytLink = `https://music.youtube.com/search?q=${ytQuery}`;
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td><strong>${song.title}</strong></td>
+                    <td>${song.artist}</td>
+                    <td><span class="genre-badge">${song.genre}</span></td>
+                    <td class="play-count">${song.plays}</td>
+                    <td><a href="${ytLink}" target="_blank" class="song-link">▶ YouTube Music</a></td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('total-songs').innerText = songs.length;
+            document.getElementById('total-plays').innerText = totalPlays.toLocaleString();
+
+            // Find top genre
+            const topGenre = Object.keys(genreCount).reduce((a, b) => genreCount[a] > genreCount[b] ? a : b);
+            document.getElementById('top-genre').innerText = topGenre;
+        }
+
+        render();
+    </script>
+</body>
+
+</html>
