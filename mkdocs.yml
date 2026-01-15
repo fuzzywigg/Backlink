@@ -28,11 +28,13 @@ nav:
       - Swarm Roles: SWARM_ROLES.md
       - Investors: INVESTORS.md
   - Planning:
+      - Q1 2026 Roadmap: roadmap_2026_q1_integrations.md
+      - Q2 2026 Latent Space: q2_2026_latent_space_roadmap.md
+      - Monetization Strategy: monetization_strategy.md
+      - Sovereign Capital Plan: sovereign_capital_plan.md
       - Roadmap: planning/ROADMAP.md
       - Pathway: planning/PATHWAY.md
       - Gap Assessment: planning/GAP_ASSESSMENT.md
-      - Scratchpad: planning/SCRATCHPAD.md
-      - Requirements: planning/WORKSPACE_REQUIREMENTS.json
   - Technical Specs:
       - Architecture: DEPLOYMENT_HANDOFF.md
       - Gap Analysis: GAP_ANALYSIS_REPORT.md
@@ -43,8 +45,9 @@ nav:
       - Agents: lore/AGENTS.md
       - Persona: lore/PERSONA_DYNAMIC.md
       - Music Logic: lore/MUSIC_LOGIC.md
-  - Wisdom API:
-      - Raw Genesis: api/wisdom.json
+  - Resources:
+      - Song Library: songs.html
+      - Wisdom API: api/wisdom.json
 
 plugins:
   - search
