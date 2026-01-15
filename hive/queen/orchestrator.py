@@ -143,6 +143,7 @@ class QueenOrchestrator:
             "treasury": ("bees.system.treasury_bee", "TreasuryBee"),
             "security": ("bees.system.security_bee", "SecurityBee"),
             "knowledge_graph": ("bees.knowledge.graph_bee", "KnowledgeGraphBee"),
+            "classifier_defense": ("bees.defense.classifier_defense_bee", "ClassifierDefenseBee"),
         }
 
         for bee_type, (module_path, class_name) in bee_mappings.items():
