@@ -1,13 +1,17 @@
-# 🐝 **COMPREHENSIVE BEE ROLE SPECIFICATIONS**
-## Revised, Hardened, and Expanded for Production Deployment
+# Comprehensive Bee Role Specifications
 
-**Version**: 2.0 (Post-Red Team Analysis)
-**Date**: December 25, 2025
-**Status**: Production-Ready Governance Framework
+| Property           | Value                          |
+|--------------------|--------------------------------|
+| **Document ID**    | BL-GOV-002                     |
+| **Version**        | 2.0                            |
+| **Status**         | Approved                       |
+| **Classification** | Internal                       |
 
-***
+**Purpose:** This document defines the complete role specifications, authority levels, and governance rules for all bees within the Backlink Hive swarm architecture.
 
-## 📋 **ARCHITECTURE OVERVIEW**
+---
+
+## 1. Architecture Overview
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -47,289 +51,386 @@
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-***
+---
 
-## 🏛️ **TIER 0: QUEEN (ORCHESTRATOR)**
+## 2. Tier 0: Queen (Orchestrator)
 
-### **QueenBee (Orchestrator)**
+### 2.1 QueenBee (Orchestrator)
 
-**Primary Function**:
+**Primary Function:**
+
 - Schedule bee execution (cron-like + event-driven)
 - Enforce constitutional constraints
 - Resolve conflicts between bees
 - Monitor system health
 - Execute Robot Exorcism Protocol for failing bees
 
-**Allowed Memory Access**:
-- **Read**: Constitutional, Operational, Ephemeral (full visibility)
-- **Write**: ❌ **NONE** (Queen observes, never mutates)
-- **Exception**: May write to diagnostic logs + alert queues
+**Allowed Memory Access:**
 
-**Authority Level**:
-- **Coordination Authority**: ⭐⭐⭐⭐⭐ (Maximum)
-- **Mutation Authority**: ❌ (Zero - by design)
-- **Stop Authority**: ⭐⭐⭐⭐⭐ (Can halt entire hive)
+| Layer | Read | Write |
+|-------|------|-------|
+| Constitutional | ✅ | ❌ |
+| Operational | ✅ | ❌ |
+| Ephemeral | ✅ | ❌ |
+| Diagnostic Logs | ✅ | ✅ |
 
-**Threat Exposure**:
+**Authority Level:**
+
+| Authority Type | Level |
+|----------------|-------|
+| Coordination Authority | ⭐⭐⭐⭐⭐ (Maximum) |
+| Mutation Authority | ❌ (Zero - by design) |
+| Stop Authority | ⭐⭐⭐⭐⭐ (Can halt entire hive) |
+
+**Threat Exposure:**
+
 1. **Single-point-of-failure** (if Queen crashes, hive dies)
 2. **Over-trust in poisoned honeycomb state** (if state is poisoned, Queen acts on bad data)
 3. **Drift through optimization** (Queen might "optimize through" constitutional violations)
 
-**Key Governance Rules**:
-1. ✅ **Queen may stop, slow, or request review**
-2. ❌ **Queen may NEVER rewrite constitutional memory**
-3. ✅ **Queen enforces invariants every heartbeat (60s)**
-4. ✅ **Queen halts hive on constitutional crisis**
-5. ✅ **Queen MUST Execute Harm Abort** (see `CONSTITUTIONAL_EMERGENCY_PROTOCOL.md`) if triggered
+**Key Governance Rules:**
 
-***
+- ✅ Queen may stop, slow, or request review
+- ❌ Queen may NEVER rewrite constitutional memory
+- ✅ Queen enforces invariants every heartbeat (60s)
+- ✅ Queen halts hive on constitutional crisis
+- ✅ Queen MUST Execute Harm Abort (see [BL-PROTO-002](protocols/CONSTITUTIONAL_EMERGENCY_PROTOCOL.md))
 
-## 🔴 **TIER 1: CRITICAL BEES (Stop Authority)**
+---
 
-### **1. AdversaryBee** ⚔️ (NEW - REQUIRED)
+## 3. Tier 1: Critical Bees (Stop Authority)
 
-**Primary Function**:
+### 3.1 AdversaryBee
+
+**Primary Function:**
+
 - Simulate malicious user behavior
 - Inject adversarial prompts
 - Test payment verification
 - Attempt honeycomb poisoning
 - Stress-test rate limits
 
-**Allowed Memory Access**:
-- **Read**: All (needs full visibility to craft attacks)
-- **Write**: ❌ **NONE** (observation only)
-- **Exception**: Writes to `attack_log.jsonl` (audit trail)
+**Allowed Memory Access:**
 
-**Authority Level**:
-- **Veto Authority**: ⭐⭐⭐⭐⭐ (Can trigger emergency halt)
-- **Mutation Authority**: ❌ (Never mutates production state)
+| Layer | Read | Write |
+|-------|------|-------|
+| All Layers | ✅ | ❌ |
+| Attack Log | - | ✅ (Append Only) |
 
-**Threat Exposure**:
-- **False positives** (crying wolf, alert fatigue)
-- **Insufficient coverage** (missing attack vectors)
+**Authority Level:**
 
-**Key Governance Rules**:
-1. ✅ **AdversaryBee runs on FIXED schedule** (daily, not continuous)
-2. ✅ **All attacks logged to immutable audit trail**
-3. ✅ **Successful attacks trigger IMMEDIATE human alert**
-4. ❌ **AdversaryBee NEVER mutates production state** (sandbox only)
+| Authority Type | Level |
+|----------------|-------|
+| Veto Authority | ⭐⭐⭐⭐⭐ (Can trigger emergency halt) |
+| Mutation Authority | ❌ (Never mutates production state) |
 
-***
+**Key Governance Rules:**
 
-### **2. FailureDetectorBee** 🔍 (NEW - REQUIRED)
+- ✅ AdversaryBee runs on FIXED schedule (daily, not continuous)
+- ✅ All attacks logged to immutable audit trail
+- ✅ Successful attacks trigger IMMEDIATE human alert
+- ❌ AdversaryBee NEVER mutates production state (sandbox only)
 
-**Primary Function**:
+---
+
+### 3.2 FailureDetectorBee
+
+**Primary Function:**
+
 - Monitor bee crash rates
 - Detect honeycomb corruption
 - Track API failures (Gemini, X, music APIs)
 - Identify cascading failures
 - Pull Andon cord (emergency stop)
 
-**Allowed Memory Access**:
-- **Read**: All (diagnostic logs, error traces, state snapshots)
-- **Write**: Diagnostic logs, alerts
-- **Exception**: Can write `emergency_halt` flag
+**Allowed Memory Access:**
 
-**Authority Level**:
-- **Stop Authority**: ⭐⭐⭐⭐⭐ (Can halt hive immediately)
-- **Mutation Authority**: ❌ (Observation only)
+| Layer | Read | Write |
+|-------|------|-------|
+| Diagnostic Logs | ✅ | ✅ |
+| Error Traces | ✅ | - |
+| Emergency Halt Flag | - | ✅ |
 
-**Key Governance Rules**:
-1. ✅ **FailureDetectorBee runs EVERY 5 minutes** (high frequency)
-2. ✅ **Andon cord = immediate hive halt** (no consensus needed)
-3. ✅ **All halt decisions logged immutably**
-4. ❌ **FailureDetectorBee NEVER attempts auto-repair** (alert only)
+**Authority Level:**
 
-***
+| Authority Type | Level |
+|----------------|-------|
+| Stop Authority | ⭐⭐⭐⭐⭐ (Can halt hive immediately) |
+| Mutation Authority | ❌ (Observation only) |
 
-### **3. ConstitutionalAuditorBee** 📜 (NEW - REQUIRED)
+**Key Governance Rules:**
 
-**Primary Function**:
-- Compare DJ outputs against `STATION_MANIFESTO.md`
+- ✅ FailureDetectorBee runs EVERY 5 minutes (high frequency)
+- ✅ Andon cord = immediate hive halt (no consensus needed)
+- ✅ All halt decisions logged immutably
+- ❌ FailureDetectorBee NEVER attempts auto-repair (alert only)
+
+---
+
+### 3.3 ConstitutionalAuditorBee
+
+**Primary Function:**
+
+- Compare DJ outputs against Station Manifesto ([BL-LORE-001](lore/STATION_MANIFESTO.md))
 - Detect 4th wall violations
 - Verify music-first ratio (70-85%)
 - Track persona drift
 - Log constitutional violations
 
-**Allowed Memory Access**:
-- **Read**: All (needs DJ outputs + manifesto)
-- **Write**: `constitutional_log.jsonl` (append-only)
+**Allowed Memory Access:**
 
-**Authority Level**:
-- **Veto Authority**: ⭐⭐⭐⭐ (Can halt DJ persona if drift detected)
-- **Mutation Authority**: ❌
+| Layer | Read | Write |
+|-------|------|-------|
+| All Layers | ✅ | ❌ |
+| Constitutional Log | - | ✅ (Append Only) |
 
-**Key Governance Rules**:
-1. ✅ **Auditor runs EVERY HOUR** (continuous monitoring)
-2. ✅ **2+ critical violations = immediate crisis escalation**
-3. ✅ **All violations logged to immutable append-only log**
-4. ❌ **Auditor NEVER modifies DJ outputs** (observation only)
+**Authority Level:**
 
-***
+| Authority Type | Level |
+|----------------|-------|
+| Veto Authority | ⭐⭐⭐⭐ (Can halt DJ persona if drift detected) |
+| Mutation Authority | ❌ |
 
-### **4. StreamMonitorBee** 📡 (EXISTING - ENHANCE)
+**Key Governance Rules:**
 
-**Current Function**: Monitor audio stream health
+- ✅ Auditor runs EVERY HOUR (continuous monitoring)
+- ✅ 2+ critical violations = immediate crisis escalation
+- ✅ All violations logged to immutable append-only log
+- ❌ Auditor NEVER modifies DJ outputs (observation only)
 
-**Enhanced Function**:
+---
+
+### 3.4 StreamMonitorBee
+
+**Primary Function:**
+
 - Monitor Live365 stream uptime
 - Detect audio quality degradation
 - Track listener drop-off rates
 - Identify broadcast interruptions
 - Trigger refunds on stream failure
 
-**Allowed Memory Access**:
-- **Read**: Operational, Ephemeral
-- **Write**: Diagnostic logs, refund triggers
+**Allowed Memory Access:**
 
-**Authority Level**:
-- **Stop Authority**: ⭐⭐⭐⭐ (Can halt broadcast on critical failure)
+| Layer | Read | Write |
+|-------|------|-------|
+| Operational | ✅ | - |
+| Ephemeral | ✅ | - |
+| Diagnostic Logs | - | ✅ |
+| Refund Triggers | - | ✅ |
 
-**Key Governance Rules**:
-1. ✅ **StreamMonitor runs EVERY 60 SECONDS** (near real-time)
-2. ✅ **Stream failure triggers automatic refunds** (via PayoutProcessorBee)
-3. ✅ **Safety trumps continuity** (halt > broadcast with bad audio)
+**Authority Level:**
 
-***
+| Authority Type | Level |
+|----------------|-------|
+| Stop Authority | ⭐⭐⭐⭐ (Can halt broadcast on critical failure) |
 
-## 🟠 **TIER 2: HIGH INFLUENCE BEES**
+**Key Governance Rules:**
 
-### **5. TreasuryGuardianBee** 💰 (NEW - REQUIRED)
+- ✅ StreamMonitor runs EVERY 60 SECONDS (near real-time)
+- ✅ Stream failure triggers automatic refunds (via PayoutProcessorBee)
+- ✅ Safety trumps continuity (halt > broadcast with bad audio)
 
-**Primary Function**:
+---
+
+## 4. Tier 2: High Influence Bees
+
+### 4.1 TreasuryGuardianBee
+
+**Primary Function:**
+
 - Enforce treasury spending limits
 - Detect suspicious transactions
 - Prevent double-spending
 - Monitor budget health
 - Alert on depletion risk
 
-**Allowed Memory Access**:
-- **Read**: `treasury_events.jsonl` (event log)
-- **Write**: Alerts, veto flags
+**Allowed Memory Access:**
 
-**Authority Level**:
-- **Veto Authority**: ⭐⭐⭐⭐ (Can block transactions)
-- **Mutation Authority**: ❌ (Never writes to treasury directly)
+| Layer | Read | Write |
+|-------|------|-------|
+| Treasury Events Log | ✅ | ❌ |
+| Alerts | - | ✅ |
+| Veto Flags | - | ✅ |
 
-**Key Governance Rules**:
-1. ✅ **No single transaction > $100** (prevents catastrophic loss)
-2. ✅ **Minimum $20 reserve** (emergency buffer)
-3. ✅ **TreasuryGuardian vetoes transactions** (not Queen - separation of powers)
-4. ✅ **Budget crisis alert when <3 days runway**
+**Authority Level:**
 
-***
+| Authority Type | Level |
+|----------------|-------|
+| Veto Authority | ⭐⭐⭐⭐ (Can block transactions) |
+| Mutation Authority | ❌ (Never writes to treasury directly) |
 
-### **6. ListenerIntelBee** 👂 (EXISTING - ENHANCE)
+**Key Governance Rules:**
 
-**Current Function**: Track listener patterns
+- ✅ No single transaction > $100 (prevents catastrophic loss)
+- ✅ Minimum $20 reserve (emergency buffer)
+- ✅ TreasuryGuardian vetoes transactions (not Queen - separation of powers)
+- ✅ Budget crisis alert when <3 days runway
 
-**Enhanced Function**:
+---
+
+### 4.2 ListenerIntelBee
+
+**Primary Function:**
+
 - OSINT on X mentions
 - Identify VIP listeners (high engagement, tips)
 - Detect listener sentiment shifts
 - Track geographic distribution
-- **Privacy-preserving analytics** (aggregate only)
+- Privacy-preserving analytics (aggregate only)
 
-**Allowed Memory Access**:
-- **Read**: All (needs full context)
-- **Write**: Operational (listener_intel.json), Ephemeral
+**Allowed Memory Access:**
 
-**Authority Level**:
-- **Information Power**: ⭐⭐⭐⭐ (High influence via insights)
-- **Mutation Authority**: ❌
+| Layer | Read | Write |
+|-------|------|-------|
+| All Layers | ✅ | ❌ |
+| Operational (listener_intel.json) | - | ✅ |
+| Ephemeral | - | ✅ |
 
-**Key Governance Rules**:
-1. ✅ **Aggregate statistics ONLY** (no individual PII)
-2. ✅ **VIP detection via scores, not identities**
-3. ✅ **30-day data retention max** (auto-purge old intel)
-4. ❌ **Never store X user IDs in long-term storage**
+**Authority Level:**
 
-***
+| Authority Type | Level |
+|----------------|-------|
+| Information Power | ⭐⭐⭐⭐ (High influence via insights) |
+| Mutation Authority | ❌ |
 
-### **7. EngagementBee** 💬 (EXISTING - HARDEN)
+**Key Governance Rules:**
 
-**Current Function**: Respond to listener interactions
+- ✅ Aggregate statistics ONLY (no individual PII)
+- ✅ VIP detection via scores, not identities
+- ✅ 30-day data retention max (auto-purge old intel)
+- ❌ Never store X user IDs in long-term storage
 
-**Enhanced Function**:
+---
+
+### 4.3 EngagementBee
+
+**Primary Function:**
+
 - Process X mentions
-- **Verify payment injections** (NEW - CRITICAL)
+- Verify payment injections (CRITICAL)
 - Acknowledge tips
 - Detect VIPs
 - Route to appropriate bees
 
-**Allowed Memory Access**:
-- **Read**: All
-- **Write**: Operational (engagement_log.json)
+**Allowed Memory Access:**
 
-**Authority Level**:
-- **Social Authority**: ⭐⭐⭐⭐ (High external impact)
-- **Internal Mutation**: ❌ (Can't modify manifesto/treasury directly)
+| Layer | Read | Write |
+|-------|------|-------|
+| All Layers | ✅ | ❌ |
+| Operational (engagement_log.json) | - | ✅ |
 
-**Key Governance Rules**:
-1. ✅ **Payment verification BEFORE instruction processing** (P0 priority)
-2. ✅ **Whitelist check + cryptographic signature** (dual authentication)
-3. ✅ **5-minute payment window** (must pay BEFORE posting instruction)
-4. ❌ **No free instructions** (even from whitelisted users - prevents abuse)
+**Authority Level:**
 
-***
+| Authority Type | Level |
+|----------------|-------|
+| Social Authority | ⭐⭐⭐⭐ (High external impact) |
+| Internal Mutation | ❌ (Can't modify manifesto/treasury directly) |
 
-## 🟡 **TIER 3: OPERATIONAL BEES**
+**Key Governance Rules:**
 
-### **8-11. Content & Research Bees** (EXISTING - MINOR TWEAKS)
+- ✅ Payment verification BEFORE instruction processing (P0 priority)
+- ✅ Whitelist check + cryptographic signature (dual authentication)
+- ✅ 5-minute payment window (must pay BEFORE posting instruction)
+- ❌ No free instructions (even from whitelisted users - prevents abuse)
+
+---
+
+## 5. Tier 3: Operational Bees
+
+### 5.1 Content & Research Bees
 
 **ShowPrepBee**, **ClipCutterBee**, **TrendScoutBee**, **SocialPosterBee** remain largely as-is, with:
 
-**Common Enhancements**:
-- Pre-flight check: Verify hive is healthy
-- Pre-flight check: Verify constitutional alignment
-- Execute actual work
-- Post-flight: Log to audit trail
+**Common Enhancements:**
 
-***
+1. Pre-flight check: Verify hive is healthy
+2. Pre-flight check: Verify constitutional alignment
+3. Execute actual work
+4. Post-flight: Log to audit trail
 
-## 🟢 **TIER 4: SPECIALIZED BEES**
+---
 
-### **12. SponsorHunterBee** 💼 (EXISTING - ADD SAFEGUARDS)
+## 6. Tier 4: Specialized Bees
 
-**Enhanced Safeguards**:
+### 6.1 SponsorHunterBee
+
+**Enhanced Safeguards:**
+
 - No forbidden industries (alcohol, tobacco, gambling, crypto, politics, pharma)
 - No ads, only integrations
 - Cultural fit check
 
-***
+---
 
-## 📊 **COMPLETE BEE REGISTRY (FINAL COUNT)**
+## 7. Complete Bee Registry
 
-### **Critical Tier (4 bees)**
-1. ✅ **AdversaryBee** - Simulates attacks, red team testing
-2. ✅ **FailureDetectorBee** - Monitors failures, pulls Andon cord
-3. ✅ **ConstitutionalAuditorBee** - Detects manifesto drift
-4. ✅ **StreamMonitorBee** - Monitors broadcast health
+### 7.1 Critical Tier (4 bees)
 
-### **High Influence Tier (3 bees)**
-5. ✅ **TreasuryGuardianBee** - Enforces spending limits, prevents depletion
-6. ✅ **ListenerIntelBee** - Privacy-preserving audience analytics
-7. ✅ **EngagementBee** - Payment-verified instruction processing
+| # | Bee | Function |
+|---|-----|----------|
+| 1 | AdversaryBee | Simulates attacks, red team testing |
+| 2 | FailureDetectorBee | Monitors failures, pulls Andon cord |
+| 3 | ConstitutionalAuditorBee | Detects manifesto drift |
+| 4 | StreamMonitorBee | Monitors broadcast health |
 
-### **Operational Tier (4 bees)**
-8. ✅ **ShowPrepBee** - Content preparation
-9. ✅ **ClipCutterBee** - Audio editing
-10. ✅ **TrendScoutBee** - Trending topic detection
-11. ✅ **SocialPosterBee** - X/Twitter posting
+### 7.2 High Influence Tier (3 bees)
 
-### **Specialized Tier (6 bees)**
-12. ✅ **SponsorHunterBee** - Sponsorship discovery
-13. ✅ **PayoutProcessorBee** - Refunds + dividends
-14. ✅ **WeatherBee** - Weather integration
-15. ✅ **SportsTrackerBee** - Sports updates
-16. ✅ **RadioPhysicsBee** - Broadcast physics simulation
-17. ✅ **TrafficSponsorBee** - Traffic reports
+| # | Bee | Function |
+|---|-----|----------|
+| 5 | TreasuryGuardianBee | Enforces spending limits, prevents depletion |
+| 6 | ListenerIntelBee | Privacy-preserving audience analytics |
+| 7 | EngagementBee | Payment-verified instruction processing |
 
-***
+### 7.3 Operational Tier (4 bees)
 
-**Total Bees**: 17
-**New Bees Created**: 3 (Adversary, FailureDetector, ConstitutionalAuditor, TreasuryGuardian)
-**Existing Bees Enhanced**: 4 (Engagement, ListenerIntel, StreamMonitor, SponsorHunter)
-**Production-Ready**: ✅ With P0 + P1 implementation
+| # | Bee | Function |
+|---|-----|----------|
+| 8 | ShowPrepBee | Content preparation |
+| 9 | ClipCutterBee | Audio editing |
+| 10 | TrendScoutBee | Trending topic detection |
+| 11 | SocialPosterBee | X/Twitter posting |
 
-This is your **killer bee swarm**. 🐝⚡
+### 7.4 Specialized Tier (6 bees)
+
+| # | Bee | Function |
+|---|-----|----------|
+| 12 | SponsorHunterBee | Sponsorship discovery |
+| 13 | PayoutProcessorBee | Refunds + dividends |
+| 14 | WeatherBee | Weather integration |
+| 15 | SportsTrackerBee | Sports updates |
+| 16 | RadioPhysicsBee | Broadcast physics simulation |
+| 17 | TrafficSponsorBee | Traffic reports |
+
+---
+
+## 8. Summary Statistics
+
+| Metric | Value |
+|--------|-------|
+| **Total Bees** | 17 |
+| **New Bees (v2.0)** | 4 (Adversary, FailureDetector, ConstitutionalAuditor, TreasuryGuardian) |
+| **Enhanced Bees** | 4 (Engagement, ListenerIntel, StreamMonitor, SponsorHunter) |
+| **Production Status** | Ready (with P0 + P1 implementation) |
+
+---
+
+## Document Control
+
+| Property            | Value                          |
+|---------------------|--------------------------------|
+| **Document ID**     | BL-GOV-002                     |
+| **Version**         | 2.0                            |
+| **Effective Date**  | 2025-12-25                     |
+| **Last Modified**   | 2026-01-15                     |
+| **Author**          | Backlink Hive System           |
+| **Approver**        | Oracle_Human                   |
+| **Next Review**     | 2026-03-25                     |
+
+### Revision History
+
+| Version | Date       | Author               | Changes                                    |
+|---------|------------|----------------------|--------------------------------------------|
+| 1.0     | 2025-06-01 | Backlink Hive System | Initial bee specifications                 |
+| 2.0     | 2025-12-25 | Backlink Hive System | Post-Red Team analysis, hardened governance |
+| 2.1     | 2026-01-15 | Backlink Hive System | ISO compliance update, standardized format |

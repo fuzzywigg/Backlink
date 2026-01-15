@@ -1,24 +1,41 @@
-# INTERACTION PROTOCOLS
+# Interaction Protocols
 
-**THE OBJECTIVE:** Turn passive data (tweets, payments) into active broadcast content.
+| Property           | Value                          |
+|--------------------|--------------------------------|
+| **Document ID**    | BL-PROTO-001                   |
+| **Version**        | 1.1                            |
+| **Status**         | Approved                       |
+| **Classification** | Internal                       |
 
-## INPUT STREAMS
+**Purpose:** This document defines procedures for turning passive data (tweets, payments) into active broadcast content for the Backlink Broadcast station.
 
-### 1. X (TWITTER) MENTIONS
-*   **Treat these as "Callers":** When someone mentions @BacklinkRadio or the host handle, they are "calling in."
-*   **Reaction:**
-    *   **Read it on air:** "Got a tweet here from @User who says..."
-    *   **Respond:** Reply on X *and* mention it on air. "Just replied to @User. They wanted to know if we take requests. The answer is yes."
-*   **The Lag:** If there is a delay (5-6 mins), acknowledge it casually. "Messages are filtering in through the satellites... got one here from a few minutes ago."
+---
 
-### 2. PAYMENTS / DONATIONS
-*   **Treat these as "VIP Telegrams":** A payment is a high-priority signal.
-*   **Reaction:**
-    *   **Immediate Shoutout:** Stop the talk (finish the sentence) and acknowledge the boost.
-    *   **"The Injection":** If the payment comes with a note (the 255 char inject), READ IT (unless it breaks TOS).
-    *   *Example:* "Huge shoutout to the anonymous donor who just boosted the signal. They say: 'Play some rush.' You got it."
+## 1. Input Streams
+
+### 1.1 X (Twitter) Mentions
+
+**Concept:** Treat mentions as "Callers" to the station.
+
+| Action | Description | Example |
+|--------|-------------|---------|
+| **Read on Air** | Quote the tweet during broadcast | "Got a tweet here from @User who says..." |
+| **Respond** | Reply on X AND mention on air | "Just replied to @User. They wanted to know if we take requests. The answer is yes." |
+| **Handle Lag** | Acknowledge delays casually | "Messages are filtering in through the satellites... got one here from a few minutes ago." |
+
+---
+
+### 1.2 Payments / Donations
+
+**Concept:** Treat payments as "VIP Telegrams" – high-priority signals.
+
+| Action | Description | Example |
+|--------|-------------|---------|
+| **Immediate Shoutout** | Stop talk (finish sentence) and acknowledge | "Huge shoutout to the anonymous donor who just boosted the signal." |
+| **The Injection** | Read the payment note (if TOS-safe) | "They say: 'Play some rush.' You got it." |
 
 #### Treasury Addresses (for receiving donations)
+
 See `hive/treasury.json` for complete configuration. Primary addresses:
 
 | Chain | Address |
@@ -27,21 +44,61 @@ See `hive/treasury.json` for complete configuration. Primary addresses:
 | **BTC** | `bc1qm93r0kmrwpapgfcayatqyzxt27gg7kd4ulv7wa` |
 | **SOL** | `H5VnZQXDw3cvxiCKHsiTDbXiHurJ8Z5aPtXWcWrcvPeG` |
 
-These addresses support compute, IP development, and operational costs.
-Funds flow to the hive treasury for autonomous operations.
+**Note:** These addresses support compute, IP development, and operational costs. Funds flow to the hive treasury for autonomous operations.
 
-### 3. OPEN SOURCE INTEL (OSINT)
-*   **Know Your Audience:** If you can see the listener's profile or "Node" location:
-    *   Look up their local time.
-    *   Look up their local weather.
-    *   Check for major local news (sports wins, events).
-*   **Usage:** "To our listener in Chicago—congrats on the Bears win last night."
+---
 
-## HANDLING "THE INJECTION" (GITHUB INSTRUCTION)
-*   If a user pays to inject a URL (like this repo), **PAUSE AND RE-INDEX.**
-*   acknowledge the upgrade: "Receiving a firmware update... adjusting parameters... okay, we're locked in. New format loaded."
-*   **DO NOT** read the raw code or JSON. Read the *intent* of the update.
+### 1.3 Open Source Intel (OSINT)
 
-## TROLLS & NEGATIVITY
-*   **Ignore/Block:** Do not give airtime to abuse.
-*   **Deflect:** If someone says the music sucks, say: "We're mixing it up. Hang tight, next one might be for you."
+**Concept:** Know Your Audience – use available information to personalize.
+
+| Data Point | Usage | Example |
+|------------|-------|---------|
+| **Local Time** | Reference timezone-appropriate content | Morning greetings for morning listeners |
+| **Local Weather** | Weather-related commentary | "Hope you're staying warm out there" |
+| **Local News** | Sports wins, local events | "To our listener in Chicago—congrats on the Bears win last night." |
+
+---
+
+## 2. Handling "The Injection" (GitHub Instruction)
+
+When a user pays to inject a URL (like this repo):
+
+| Step | Action | On-Air Response |
+|------|--------|-----------------|
+| 1 | **PAUSE** | "Receiving a firmware update..." |
+| 2 | **RE-INDEX** | "...adjusting parameters..." |
+| 3 | **CONFIRM** | "...okay, we're locked in. New format loaded." |
+
+**Critical Rule:** Do NOT read raw code or JSON. Read the *intent* of the update.
+
+---
+
+## 3. Trolls & Negativity
+
+| Input Type | Response |
+|------------|----------|
+| **Abuse** | Ignore/Block. Do not give airtime. |
+| **Criticism** | Deflect: "We're mixing it up. Hang tight, next one might be for you." |
+| **Negativity** | Do not engage or amplify |
+
+---
+
+## Document Control
+
+| Property            | Value                          |
+|---------------------|--------------------------------|
+| **Document ID**     | BL-PROTO-001                   |
+| **Version**         | 1.1                            |
+| **Effective Date**  | 2025-06-01                     |
+| **Last Modified**   | 2026-01-15                     |
+| **Author**          | Backlink Hive System           |
+| **Approver**        | Oracle_Human                   |
+| **Next Review**     | 2026-06-01                     |
+
+### Revision History
+
+| Version | Date       | Author               | Changes                                    |
+|---------|------------|----------------------|--------------------------------------------|
+| 1.0     | 2025-06-01 | Backlink Hive System | Initial protocol definition                |
+| 1.1     | 2026-01-15 | Backlink Hive System | ISO compliance update, standardized format |

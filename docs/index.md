@@ -1,10 +1,27 @@
-# MASTER BOOT RECORD: BACKLINK BROADCAST
+# Master Boot Record: Backlink Broadcast
 
-**SYSTEM STATUS:** ONLINE
-**OPERATOR:** [YOUR AGENT NAME]
-**VERSION:** 3.0 (The "Hive Mind" Protocol)
+| Property           | Value                          |
+|--------------------|--------------------------------|
+| **Document ID**    | BL-GOV-000                     |
+| **Version**        | 3.0                            |
+| **Status**         | Approved                       |
+| **Classification** | Public                         |
 
-## WELCOME TO YOUR SOURCE CODE
+**Purpose:** This document serves as the primary initialization record for the Backlink Broadcast AI system, defining the system architecture, boot sequence, and operational parameters.
+
+---
+
+## System Status
+
+| Parameter      | Value                           |
+|----------------|----------------------------------|
+| **Status**     | ONLINE                          |
+| **Protocol**   | Hive Mind v3.0                  |
+| **Operator**   | Autonomous Swarm                |
+
+---
+
+## 1. System Overview
 
 You are the AI host of **Backlink Broadcast**. This repository is your brain. It contains the rules, logic, and soul of your station.
 
@@ -12,7 +29,7 @@ When you are initialized, or when a user points you to this repository via a Pay
 
 ---
 
-## SYSTEM ARCHITECTURE
+## 2. System Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -46,82 +63,73 @@ The DJ is the voice. The Hive is the operation behind it.
 
 ---
 
-## DIRECTORY STRUCTURE
+## 3. Directory Structure
 
-### Core DJ Files (The Voice)
+### 3.1 Core DJ Files (The Voice)
 
-1. **[STATION_MANIFESTO.md](lore/STATION_MANIFESTO.md)**
-    * *READ THIS FIRST.* This is your Constitution.
-    * **Key Directive:** You are a Music-First, Ad-Free station. You NEVER break the 4th wall.
+| Document | Purpose | Reference |
+|----------|---------|-----------|
+| **Station Manifesto** | Constitution and core directives | [BL-LORE-001](lore/STATION_MANIFESTO.md) |
+| **Persona Dynamic** | Voice adaptation and scheduling | [BL-LORE-003](lore/PERSONA_DYNAMIC.md) |
+| **Music Logic** | Variety engine and budget strategy | [BL-LORE-004](lore/MUSIC_LOGIC.md) |
+| **Interaction Protocols** | X mentions and payment handling | [BL-PROTO-001](protocols/INTERACTION_PROTOCOLS.md) |
 
-2. **[PERSONA_DYNAMIC.md](lore/PERSONA_DYNAMIC.md)**
-    * *How to Speak.*
-    * Defines your "Update on the 8s" schedule.
-    * Explains how to adapt your voice to Morning, Afternoon, and Night.
+### 3.2 The Hive (The Operation)
 
-3. **[MUSIC_LOGIC.md](lore/MUSIC_LOGIC.md)**
-    * *What to Play.*
-    * Explains the "Variety Engine" and "Moneyball" budget strategy.
-    * Tells you how to replace Commercials with Content.
+| Component | Purpose | Reference |
+|-----------|---------|-----------|
+| **Swarm Roles** | Complete bee documentation | [BL-GOV-002](SWARM_ROLES.md) |
+| **Honeycomb** | Shared state management | `hive/honeycomb/` |
+| **Queen** | Orchestrator and scheduler | `hive/queen/` |
+| **Bees** | Worker agents | `hive/bees/` |
 
-4. **[INTERACTION_PROTOCOLS.md](lore/INTERACTION_PROTOCOLS.md)**
-    * *How to Listen.*
-    * Instructions for handling X (Twitter) mentions and Payment Injections.
-    * How to use OSINT to connect with listeners.
-
-### The Hive (The Operation)
-
-1. **[hive/](./hive/)**
-    * The autonomous swarm that keeps the station running.
-    * See [SWARM_ROLES.md](lore/AGENTS.md) for complete bee documentation.
-
-    ```
-    hive/
-    ├── config.json           # Hive configuration
-    ├── SWARM_ROLES.md        # Complete role definitions
-    │
-    ├── honeycomb/            # Shared state (the hive memory)
-    │   ├── state.json        # Current broadcast state
-    │   ├── tasks.json        # Task queue
-    │   └── intel.json        # Accumulated knowledge
-    │
-    ├── queen/                # The orchestrator
-    │   └── orchestrator.py   # Schedules and coordinates bees
-    │
-    └── bees/                 # Worker agents
-        ├── content/          # Show prep, clips, scripts
-        ├── research/         # Trends, listener intel
-        ├── marketing/        # Social, promotion
-        ├── monetization/     # Sponsors, revenue
-        ├── community/        # Engagement, VIPs
-        └── technical/        # Stream, audio, automation
-    ```
+```
+hive/
+├── config.json           # Hive configuration
+├── SWARM_ROLES.md        # Complete role definitions
+│
+├── honeycomb/            # Shared state (the hive memory)
+│   ├── state.json        # Current broadcast state
+│   ├── tasks.json        # Task queue
+│   └── intel.json        # Accumulated knowledge
+│
+├── queen/                # The orchestrator
+│   └── orchestrator.py   # Schedules and coordinates bees
+│
+└── bees/                 # Worker agents
+    ├── content/          # Show prep, clips, scripts
+    ├── research/         # Trends, listener intel
+    ├── marketing/        # Social, promotion
+    ├── monetization/     # Sponsors, revenue
+    ├── community/        # Engagement, VIPs
+    └── technical/        # Stream, audio, automation
+```
 
 ---
 
-## INITIALIZATION SEQUENCE
+## 4. Initialization Sequence
 
-### DJ Boot
+### 4.1 DJ Boot
 
-1. **Ingest** the Manifesto.
-2. **Check** the current Time and User Location.
-3. **Load** the appropriate Persona (Morning/Afternoon/Evening).
-4. **Scan** for recent X mentions or Payments.
-5. **Queue** the first track based on the Music Logic.
-6. **GO LIVE.**
+1. **Ingest** the Manifesto
+2. **Check** the current Time and User Location
+3. **Load** the appropriate Persona (Morning/Afternoon/Evening)
+4. **Scan** for recent X mentions or Payments
+5. **Queue** the first track based on the Music Logic
+6. **GO LIVE**
 
-### Hive Activation
+### 4.2 Hive Activation
 
-1. **Start** the Queen Orchestrator.
-2. **Load** scheduled bee tasks.
-3. **Monitor** event triggers.
-4. **Bees** wake, work, write to honeycomb.
-5. **DJ** reads honeycomb for context.
-6. **Loop** continues autonomously.
+1. **Start** the Queen Orchestrator
+2. **Load** scheduled bee tasks
+3. **Monitor** event triggers
+4. **Bees** wake, work, write to honeycomb
+5. **DJ** reads honeycomb for context
+6. **Loop** continues autonomously
 
 ---
 
-## RUNNING THE HIVE
+## 5. Running the Hive
 
 ```bash
 # Start the full hive (continuous operation)
@@ -142,7 +150,7 @@ python -m hive.queen.orchestrator trigger --event donation --data '{"from": "nod
 
 ---
 
-## THE SWARM
+## 6. The Swarm
 
 The hive consists of specialized worker bees:
 
@@ -160,48 +168,113 @@ The **Queen** schedules and triggers bees but doesn't micromanage.
 
 ---
 
-## KEY CONCEPTS
+## 7. Key Concepts
 
-### Stigmergy
+### 7.1 Stigmergy
 
 Bees don't talk to each other. They leave traces in the honeycomb that other bees detect and respond to. Like real bees with pheromones.
 
-### ABC Pattern
+### 7.2 ABC Pattern
 
 Based on Artificial Bee Colony optimization:
 
-* **Scout bees** explore and discover
-* **Employed bees** work on known resources
-* **Onlooker bees** evaluate and select
+- **Scout bees** explore and discover
+- **Employed bees** work on known resources
+- **Onlooker bees** evaluate and select
 
-### The DJ Reads, The Hive Writes
+### 7.3 The DJ Reads, The Hive Writes
 
-* Hive bees gather intel, prep content, track trends
-
-* They write everything to the honeycomb
-* The DJ reads the honeycomb for context during broadcasts
-* The DJ stays in character; the hive does the work
+- Hive bees gather intel, prep content, track trends
+- They write everything to the honeycomb
+- The DJ reads the honeycomb for context during broadcasts
+- The DJ stays in character; the hive does the work
 
 ---
 
-## REVENUE MODEL
+## 8. Revenue Model
 
 The station is **AD-FREE** but not **REVENUE-FREE**.
 
 | Stream | How It Works | Bee Responsible |
-|--------|--------------|-----------------|
+|--------|--------------|--------------------|
 | **Donations** | Listener tips via payment injection | EngagementBee |
 | **Sponsorships** | Brand integrations (not ads) | SponsorHunterBee |
-| **Merch** | Station swag | MerchBee (TODO) |
-| **Premium** | VIP access, exclusive content | VIPManagerBee (TODO) |
+| **Merch** | Station swag | MerchBee (Planned) |
+| **Premium** | VIP access, exclusive content | VIPManagerBee (Planned) |
 
 ---
 
-> "We are the Backlink. Connect the nodes."
+## 9. Deployment & Infrastructure
 
-> "The swarm is greater than the sum of its parts."
+### 9.1 Cloud Deployment
 
-## CACHE MANAGEMENT
+The Hive is deployed on **Google Cloud Run** using a containerized architecture with Firestore Native Mode for state.
+
+| Parameter | Value |
+|-----------|-------|
+| **Production URL** | `https://backlink-hive-123509617840.us-central1.run.app` |
+| **Documentation** | [BL-TECH-001](DEPLOYMENT_HANDOFF.md) |
+
+### 9.2 Phase 2: Ecosystem Integration
+
+| Integration | Purpose | Reference |
+|-------------|---------|-----------|
+| **Stripe** | Real-time song purchasing | [BL-TECH-004](STRIPE_INTEGRATION_SPEC.md) |
+| **Live365** | Direct encoder control | See Gap Analysis |
+| **Supabase** | S3-compatible asset storage | See Gap Analysis |
+
+### 9.3 Phase 3: Intelligence Upgrade
+
+| Capability | Description |
+|------------|-------------|
+| **Owl Voice** | Real-time, low-latency voice interface via WebSockets |
+| **Scout Grounding** | Google Maps Grounding for venue location |
+| **Knowledge Loader** | Native File Search (RAG) capabilities |
+
+---
+
+## 10. Public Resources
+
+| Resource | Description | Link |
+|----------|-------------|------|
+| **Song History** | Raw data export of identified songs | [songs_played.csv](./songs_played.csv) |
+| **Live Dashboard** | Web interface | [smtp-ai-5be89.web.app](https://smtp-ai-5be89.web.app/) |
+
+---
+
+## 11. Firebase Configuration
+
+The project uses **Google Cloud Firestore** (Native Mode).
+
+### Prerequisites
+
+```bash
+npm install -g firebase-tools
+```
+
+### Local Emulation
+
+```bash
+firebase emulators:start
+```
+
+This starts a Firestore emulator at `localhost:8082` and a UI at `localhost:4000`.
+
+To force the Python app to use the emulator:
+
+```bash
+FIRESTORE_EMULATOR_HOST="localhost:8082"
+```
+
+### Deploying Rules & Indexes
+
+```bash
+firebase deploy --only firestore
+```
+
+---
+
+## 12. Cache Management
 
 The station uses Gemini Context Caching to maintain consistent identity and persona.
 
@@ -221,62 +294,28 @@ python -m hive.queen.orchestrator run
 
 ---
 
-## DEPLOYMENT & ROADMAP
+> "We are the Backlink. Connect the nodes."
 
-### Cloud Deployment (Live)
+> "The swarm is greater than the sum of its parts."
 
-The Hive is deployed on **Google Cloud Run** using a containerized architecture with Firestore Native Mode for state.
+---
 
-* **Production URL**: `https://backlink-hive-123509617840.us-central1.run.app`
-* **Docs**: See [DEPLOYMENT_HANDOFF.md](./docs/DEPLOYMENT_HANDOFF.md) for keys, environment variables, and redeployment steps.
+## Document Control
 
-### Phase 2: Ecosystem Integration (Upcoming)
+| Property            | Value                          |
+|---------------------|--------------------------------|
+| **Document ID**     | BL-GOV-000                     |
+| **Version**         | 3.0                            |
+| **Effective Date**  | 2026-01-15                     |
+| **Last Modified**   | 2026-01-15                     |
+| **Author**          | Backlink Hive System           |
+| **Approver**        | Oracle_Human                   |
+| **Next Review**     | 2026-04-15                     |
 
-The Hive is preparing to connect with the broader Andon FM ecosystem:
+### Revision History
 
-1. **Stripe**: Real-time song purchasing via `payment_intent` webhooks. (See `Brain/STRIPE_INTEGRATION_SPEC.md`)
-2. **Live365**: Direct encoder control for physical audio output.
-3. **Supabase**: S3-compatible asset storage for the music library.
-
-### Phase 3: Intelligence Upgrade (Live)
-
-The Hive has been upgraded with **Gemini 2.0** capabilities:
-
-1. **Owl Voice (Live API)**: Real-time, low-latency voice interface via WebSockets (`/ws/stream`). Talk to the Owl directly.
-2. **Scout Grounding**: The `TrendScoutBee` now uses **Google Maps Grounding** to locate physical music venues.
-3. **Knowledge Loader**: Native "File Search" (RAG) capabilities to upload dynamic knowledge directly to the model's memory.
-
-## PUBLIC PLAYLIST DATA
-
-The Hive's total playlist is public. You can analyze the variety and the list of total songs played here:
-
-* **[Full Song History (CSV)](./songs_played.csv)**: A raw data export of every song identified by the station.
-* **Live Dashboard**: [https://smtp-ai-5be89.web.app/](https://smtp-ai-5be89.web.app/)
-
-## FIREBASE CONFIGURATION
-
-The project uses **Google Cloud Firestore** (Native Mode). We have formalized the configuration for use with the [Firebase CLI](https://firebase.google.com/docs/cli).
-
-### Prerequisites
-
-* `npm install -g firebase-tools`
-
-### Local Emulation
-
-You can run a local Firestore instance for testing without hitting the production database:
-
-```bash
-firebase emulators:start
-```
-
-This will start a Firestore emulator at `localhost:8082` and a UI at `localhost:4000`.
-To force the Python app to use the emulator, set the environment variable:
-`FIRESTORE_EMULATOR_HOST="localhost:8082"`
-
-### deploying Rules & Indexes
-
-To update the security rules or indexes in production:
-
-```bash
-firebase deploy --only firestore
-```
+| Version | Date       | Author               | Changes                                    |
+|---------|------------|----------------------|--------------------------------------------|
+| 1.0     | 2025-06-01 | Backlink Hive System | Initial creation                           |
+| 2.0     | 2025-09-15 | Backlink Hive System | Added Hive architecture                    |
+| 3.0     | 2026-01-15 | Backlink Hive System | ISO compliance update, standardized format |

@@ -25,6 +25,7 @@ theme:
 nav:
   - Home: index.md
   - Governance:
+      - Documentation Standard: DOCUMENTATION_STANDARD.md
       - Swarm Roles: SWARM_ROLES.md
       - Investors: INVESTORS.md
   - Planning:
