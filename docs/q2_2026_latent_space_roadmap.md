@@ -49,6 +49,41 @@ This document captures innovations discovered through deep research of the AI ag
 **Implementation**: Already scaffolded in `hive/bees/community/listener_line_bee.py`. Awaiting API keys.
 **Priority**: 🟡 HIGH (Critical for listener engagement revenue stream)
 
+### 5. ShowCast: Multi-Voice Conversations (NotebookLM-Style)
+
+**Source**: [ElevenLabs Multi-Voice, Google NotebookLM Pattern]
+**Problem Solved**: Single-voice radio is monotonous. Morning shows have ensemble casts (Host, Sidekick, Weather, Sports). The LLM should generate multi-character dialogues rendered with distinct ElevenLabs voices.
+**Concept**:
+
+- **The Cast**: Define 3-4 distinct personas with unique voices:
+  - `DJ_MAIN`: The primary host (authoritative, smooth).
+  - `SIDEKICK_COMEDY`: The "butt of jokes" (higher energy, goofy).
+  - `NEWS_ANCHOR`: Weather/News (professional, calm).
+  - `GUEST_INTERVIEWER`: For mock interviews (curious, probing).
+- **Dialogue Generation**: LLM writes multi-turn script:
+
+  ```
+  DJ_MAIN: "So, the weather today..."
+  NEWS_ANCHOR: "Thanks, DJ. It's going to be a chilly one..."
+  SIDEKICK_COMEDY: "Chilly? I'm still in my summer shorts!"
+  ```
+
+- **Voice Rendering**: Each line sent to ElevenLabs with corresponding voice ID.
+- **Seamless Stitching**: Audio segments concatenated for natural conversation.
+**Implementation**:
+
+1. Create `ShowCastBee` to orchestrate multi-voice segments.
+2. Define `CastConfig` JSON: persona names, ElevenLabs voice IDs, personality prompts.
+3. Use DSPy `PersonaAdapter` for distinct linguistic styles per character.
+4. Implement audio stitching/streaming logic.
+**Use Cases**:
+
+- **Morning Banter**: Scripted comedy bits between host and sidekick.
+- **Mock Interviews**: LLM generates interviewer AND interviewee dialogue.
+- **News Segments**: Handoff from DJ to News Anchor for weather/headlines.
+- **Listener Interactions**: Reading messages in "sidekick" voice for comic effect.
+**Priority**: 🟡 HIGH (Key differentiator for engaging content, directly requested)
+
 ---
 
 ## 🟢 MEDIUM: Sprint 6+ (Q2 2026)
@@ -113,18 +148,19 @@ This document captures innovations discovered through deep research of the AI ag
 
 ## Implementation Status
 
-| Item | Priority | Status |
-|------|----------|--------|
-| Constitutional Classifiers | 🔴 CRITICAL | **Implementing Now** |
-| Cognee Integration | 🟡 HIGH | Sprint 5 |
-| ElevenLabs Flash | 🟡 HIGH | Sprint 5 |
-| Twilio | 🟡 HIGH | Sprint 5 |
-| LangGraph | 🟢 MEDIUM | Sprint 6 |
-| x402/AP2 | 🟢 MEDIUM | Sprint 6 |
-| Deej-AI | 🟢 MEDIUM | Sprint 6 |
-| CrewAI | 🟢 MEDIUM | Sprint 6 |
-| VoxPulse | 🔵 LOW | Backlog |
-| MAGMA | 🔵 LOW | Backlog |
+| Item                        | Priority     | Status               |
+|-----------------------------|--------------|----------------------|
+| Constitutional Classifiers  | 🔴 CRITICAL  | **Implementing Now** |
+| Cognee Integration          | 🟡 HIGH      | Sprint 5             |
+| ElevenLabs Flash            | 🟡 HIGH      | Sprint 5             |
+| Twilio                      | 🟡 HIGH      | Sprint 5             |
+| ShowCast Multi-Voice        | 🟡 HIGH      | Sprint 5             |
+| LangGraph                   | 🟢 MEDIUM    | Sprint 6             |
+| x402/AP2                    | 🟢 MEDIUM    | Sprint 6             |
+| Deej-AI                     | 🟢 MEDIUM    | Sprint 6             |
+| CrewAI                      | 🟢 MEDIUM    | Sprint 6             |
+| VoxPulse                    | 🔵 LOW       | Backlog              |
+| MAGMA                       | 🔵 LOW       | Backlog              |
 
 ---
 **Document Created**: 2026-01-15
