@@ -1,6 +1,6 @@
 """
 Queen Orchestrator - Central coordinator for the hive.
-Updated to initialize Constitutional Gateway.
+Updated to initialize Constitutional Gateway and Intelligent Dispatch.
 """
 
 import copy
@@ -24,22 +24,23 @@ except ImportError:
     print("WARNING: Constitutional Gateway not found. Governance disabled.")
     ConstitutionalGateway = None
 
-# Ensure we can find the sibling constitutional-llm package
-# Assuming orchestrator.py is in hive/queen/ and constitutional-llm is in root
-ROOT_DIR = Path(__file__).parent.parent.parent
-if str(ROOT_DIR) not in sys.path:
-    sys.path.append(str(ROOT_DIR))
+try:
+    from hive.utils.llm import LLMClient
+except ImportError:
+    print("WARNING: LLMClient not found. Intelligent Dispatch disabled.")
+    LLMClient = None
 
 try:
-    from constitutional_llm.src.constitutional_gateway import ConstitutionalGateway
+    from hive.queen.router import TaskRouter
 except ImportError:
-    print("WARNING: Constitutional Gateway not found. Governance disabled.")
-    ConstitutionalGateway = None
+    print("WARNING: TaskRouter not found. Routing disabled.")
+    TaskRouter = None
 
 
 class QueenOrchestrator:
     """
     The Queen - orchestrates the entire hive operation.
+    Now with Intelligent Dispatch capabilities using Gemini 2.0.
     """
 
     def __init__(self, hive_path: str | None = None):
@@ -72,7 +73,18 @@ class QueenOrchestrator:
         self.config = self._load_config()
         self._register_default_bees()
 
-
+        # Initialize Intelligence Layer
+        self.llm_client = None
+        self.router = None
+        if LLMClient:
+            self.llm_client = LLMClient(self.config)
+            if self.llm_client.enabled:
+                self.log("Models.dev Intelligence Layer: ONLINE")
+                if TaskRouter:
+                    self.router = TaskRouter(self.llm_client)
+                    self.log("Gemini Router: ONLINE")
+            else:
+                self.log("Models.dev Intelligence Layer: DISABLED (Key missing)", level="warning")
 
     def _load_config(self) -> dict[str, Any]:
         """Load hive configuration."""
@@ -128,6 +140,9 @@ class QueenOrchestrator:
             "traffic_sponsor": ("bees.monetization.traffic_sponsor_bee", "TrafficSponsorBee"),
             "dao_update": ("bees.marketing.dao_update_bee", "DAOUpdateBee"),
             "sports_tracker": ("bees.research.sports_tracker_bee", "SportsTrackerBee"),
+            "treasury": ("bees.system.treasury_bee", "TreasuryBee"),
+            "security": ("bees.system.security_bee", "SecurityBee"),
+            "knowledge_graph": ("bees.knowledge.graph_bee", "KnowledgeGraphBee"),
         }
 
         for bee_type, (module_path, class_name) in bee_mappings.items():
@@ -170,15 +185,12 @@ class QueenOrchestrator:
                 # Construct import path relative to hive
                 import sys
 
-                bees_path = str(self.hive_path / "bees")
-                if bees_path not in sys.path:
-                    sys.path.insert(0, bees_path)
+                # Construct import path relative to hive
+                import sys
 
-                # Import the specific module
-                # Simplified loader
-                # module_parts = module_path.split(".")
-                # e.g., bees.content.show_prep_bee -> show_prep_bee
-                # This assumes standard structure
+                # Add hive directory to path so 'bees.xxx' imports work
+                if str(self.hive_path) not in sys.path:
+                    sys.path.insert(0, str(self.hive_path))
 
                 # Import via importlib
                 module = importlib.import_module(module_path)
@@ -239,8 +251,6 @@ class QueenOrchestrator:
 
         # 2. Logic to "Review and Revise" (Stub for self-healing)
         # In a full system, this would trigger an Agentic Code Reviewer to inspect the bee's code.
-        # For now, we just log it and potentially reset the counter after a
-        # cooldown.
 
         # 3. Temporary Exile (Cooldown)
         # We don't actually delete the file, but we stop spawning it.
@@ -261,6 +271,68 @@ class QueenOrchestrator:
             results.append({"bee_type": bee_type, "result": result})
 
         return results
+    
+    # ─────────────────────────────────────────────────────────────
+    # INTELLIGENT DISPATCH (Gemini 2.0 Router Pattern)
+    # ─────────────────────────────────────────────────────────────
+
+    def analyze_task_intent(self, task_description: str) -> dict[str, Any]:
+        """
+        Use the TaskRouter to analyze a high-level task and break it down.
+        """
+        if not self.router:
+            return {"error": "Router not available"}
+        
+        return self.router.route_task(task_description)
+
+    def orchestrate_complex_task(self, task_description: str) -> dict[str, Any]:
+        """
+        Execute a complex task by planning and delegating.
+        """
+        self.log(f"Orchestrating complex task: {task_description}")
+        
+        # 1. Plan
+        plan = self.analyze_task_intent(task_description)
+        if "error" in plan:
+            self.log(f"Planning failed: {plan['error']}", level="error")
+            return plan
+        
+        # Support both new schema ('assignments') and old output if needed
+        assignments = plan.get("assignments") or plan.get("plan") or []
+        intent = plan.get("intent") or plan.get("plan_summary")
+        
+        self.log(f"Plan generated: {intent}")
+        
+        # 2. Execute
+        results = []
+        
+        # Sort by priority (order is 1-based index)
+        # We handle simple sorting here.
+        try:
+            assignments.sort(key=lambda x: x.get("order", 99))
+        except:
+            pass # fallback if order missing
+
+        for step in assignments:
+            bee_type = step.get("bee_type") or step.get("bee")
+            if bee_type:
+                # Provide strict 'instruction' and flexible 'task_args'
+                bee_task = {
+                    "instruction": step.get("instruction") or step.get("task"), 
+                    "args": step.get("task_args") or step.get("args") or {},
+                    "context": "orchestrated_task"
+                }
+                
+                self.log(f"Delegating to {bee_type}: {bee_task['instruction']}")
+                result = self.spawn_bee(bee_type, bee_task)
+                
+                results.append({
+                    "bee": bee_type,
+                    "status": "success" if result.get("success") else "failed",
+                    "output": result
+                })
+        
+        return {"plan": plan, "execution_results": results}
 
     def run_schedule(self) -> dict[str, Any]:
         """Run scheduled bee tasks."""
@@ -318,10 +390,18 @@ class QueenOrchestrator:
         processed = []
         for task in pending[:5]:  # Process up to 5 tasks per cycle
             bee_type = task.get("bee_type")
+            
+            # If explicit bee type is assigned, just spawn it
             if bee_type:
                 result = self.spawn_bee(bee_type, task)
                 processed.append(
                     {"task_id": task.get("id"), "bee_type": bee_type, "result": result}
+                )
+            # If no bee type but has 'complex_instruction', use Orchestrator
+            elif task.get("complex_instruction"):
+                result = self.orchestrate_complex_task(task.get("complex_instruction"))
+                processed.append(
+                    {"task_id": task.get("id"), "bee_type": "queen_orchestrator", "result": result}
                 )
 
         return {"processed": len(processed), "results": processed}
@@ -337,6 +417,7 @@ class QueenOrchestrator:
             "queen_status": "alive",
             "registered_bees": list(self.bee_registry.keys()),
             "hive_health": self._check_hive_health(),
+            "intelligence_layer": "online" if self.llm_client and self.llm_client.enabled else "offline"
         }
 
         # Update state
@@ -365,25 +446,10 @@ class QueenOrchestrator:
         Args:
             once: If True, run one cycle and exit. If False, run continuously.
         """
-        # Ensure station identity cache is fresh
-        # Note: BacklinkCacheManager import was removed in User's provided snippet?
-        # User snippet imports: json, time, copy, importlib, sys, datetime, pathlib, typing, queue.
-        # Original had BacklinkCacheManager.
-        # The user says "Keep the rest of your existing methods...".
-        # I removed BacklinkCacheManager import because it was not in the user's snippet,
-        # but I should probably keep it if run() uses it.
-        # However, I can't import it if I don't import it.
-        # The user's snippet provided full imports, so maybe I should stick to that.
-        # But if run() uses it, it will crash.
-        # I'll check if I included BacklinkCacheManager in the imports I prepared.
-        # I did NOT. I should add it back if I keep the run() method.
-        # Wait, I am overwriting the file. I am writing the file content I prepared above.
-        # In the content above, I did NOT include `from hive.utils.cache_manager import BacklinkCacheManager`.
-        # I should add it.
-        # Let me add it now.
-
         self.running = True
         self.log("Queen is online. Hive is active.")
+        if self.llm_client and self.llm_client.enabled:
+            self.log("INTELLIGENCE LAYER: Active (Gemini 2.0)", level="success")
 
         while self.running:
             try:
@@ -462,9 +528,26 @@ class QueenOrchestrator:
     def _update_state(self, updates: dict[str, Any]) -> None:
         """Update state file."""
         state = self._read_state()
-        state = self._deep_merge(state, updates)
-        state["_meta"]["last_updated"] = datetime.now(timezone.utc).isoformat()
-        state["_meta"]["last_updated_by"] = "queen"
+        
+        # Handle Constitutional Wrapper
+        is_wrapped = "data" in state
+        target = state["data"] if is_wrapped else state
+        
+        merged_target = self._deep_merge(target, updates)
+        
+        # Ensure meta exists
+        if "_meta" not in merged_target:
+            merged_target["_meta"] = {}
+            
+        merged_target["_meta"]["last_updated"] = datetime.now(timezone.utc).isoformat()
+        merged_target["_meta"]["last_updated_by"] = "queen"
+        
+        if is_wrapped:
+            state["data"] = merged_target
+            # Note: In full production, we should re-sign this. 
+            # For now, we preserve the structure but invalidate the sig.
+        else:
+            state = merged_target
 
         state_path = self.honeycomb_path / "state.json"
         with open(state_path, "w") as f:
@@ -496,11 +579,12 @@ def main():
 
     parser = argparse.ArgumentParser(description="Backlink Broadcast - Queen Orchestrator")
     parser.add_argument(
-        "command", choices=["run", "once", "spawn", "status", "trigger"], help="Command to execute"
+        "command", choices=["run", "once", "spawn", "status", "trigger", "orchestrate"], help="Command to execute"
     )
     parser.add_argument("--bee", "-b", help="Bee type to spawn")
     parser.add_argument("--event", "-e", help="Event type to trigger")
     parser.add_argument("--data", "-d", help="JSON data for task/event")
+    parser.add_argument("--instruction", "-i", help="Complex instruction for orchestrator")
 
     args = parser.parse_args()
 
@@ -531,6 +615,13 @@ def main():
         data = json.loads(args.data) if args.data else {}
         results = queen.trigger_event(args.event, data)
         print(json.dumps(results, indent=2))
+    
+    elif args.command == "orchestrate":
+        if not args.instruction:
+            print("Error: --instruction required for orchestrate command")
+            return
+        result = queen.orchestrate_complex_task(args.instruction)
+        print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":

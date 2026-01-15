@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hive Scout | Remote Input</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: #111;
+            --text-main: #eee;
+            --text-dim: #888;
+            --cyan: #00f3ff;
+            --amber: #ffaa00;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .input-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #333;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        input {
+            width: 93%;
+            padding: 1rem;
+            background: #000;
+            border: 1px solid #333;
+            color: var(--cyan);
+            font-family: monospace;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--cyan);
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 1rem;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hive Scout Input</h1>
+    <div class="input-card">
+        <input type="text" id="url" placeholder="Paste URL here..." autofocus>
+        <button id="submitBtn" onclick="submit()">Send to Hive</button>
+        <div id="status" class="status">Secure Link to Sovereign Core</div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        // Using the public project ID; Security Rules will restrict write access if needed, 
+        // but for now we want an open ingestion funnel (with 'Pending' status).
+        const firebaseConfig = {
+            projectId: "backlink-hive-123509617840",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.submit = async () => {
+            const urlIn = document.getElementById('url');
+            const statusDiv = document.getElementById('status');
+            const btn = document.getElementById('submitBtn');
+
+            const url = urlIn.value.trim();
+            if (!url) return;
+
+            btn.disabled = true;
+            btn.innerText = "Transmitting...";
+
+            try {
+                // We write to a new 'scout_inbox' collection in Firestore.
+                // The local Python agent will poll this collection.
+                await addDoc(collection(db, "scout_inbox"), {
+                    url: url,
+                    status: "PENDING",
+                    source: "web_remote",
+                    timestamp: serverTimestamp()
+                });
+
+                statusDiv.innerText = "Transmission Received by Hive Core.";
+                statusDiv.style.color = "#00ff66";
+                urlIn.value = "";
+
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerText = "Send to Hive";
+                    statusDiv.innerText = "Ready for next target.";
+                    statusDiv.style.color = "#888";
+                }, 2000);
+
+            } catch (e) {
+                console.error(e);
+                statusDiv.innerText = "Transmission Failed: " + e.message;
+                statusDiv.style.color = "#ff3333";
+                btn.disabled = false;
+                btn.innerText = "Retry";
+            }
+        };
+    </script>
+</body>
+
+</html>

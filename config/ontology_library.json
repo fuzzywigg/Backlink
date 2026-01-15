@@ -49,7 +49,11 @@
             "banned_words": [
                 "vibes",
                 "chill",
-                "stuff"
+                "stuff",
+                "manifest",
+                "blueprint",
+                "organism",
+                "meticulous"
             ],
             "preferred_words": [
                 "variable",
@@ -67,7 +71,10 @@
             "banned_words": [
                 "hard data",
                 "specs",
-                "roadmap"
+                "roadmap",
+                "manifest",
+                "blueprint",
+                "organism"
             ],
             "preferred_words": [
                 "rhythm",

@@ -69,7 +69,17 @@ class RadioBee(BaseBee):
     def announce(self, message):
         """
         Announces something on the radio log.
+        Checks for ontology violations (banned words) before broadcasting.
         """
+        # Safety Check
+        score = 1.0
+        if self.ontology:
+            score = self.ontology.validate_text(message, history=[])
+            
+        if score < 1.0:
+            self.log(f"⚠️ [SAFETY BLOCKED] Message contains banned content: '{message}'")
+            return
+
         radio.log_intention(self.name, message)
         self.log(f"ON AIR: {message}")
 

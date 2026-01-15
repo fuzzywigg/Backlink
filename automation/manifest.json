@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1_queen_router_logic",
+    "description": "Implement the Router Pattern logic for the Queen using Gemini 2.0 schemas.",
+    "target_file": "hive/queen/router.py",
+    "status": "completed",
+    "priority": "critical"
+  },
+  {
+    "id": "2_queen_integration",
+    "description": "Integrate the Router into the main QueenOrchestrator class.",
+    "target_file": "hive/queen/orchestrator.py",
+    "status": "completed",
+    "priority": "critical"
+  },
+  {
+    "id": "3_treasury_scaffold",
+    "description": "Create the base TreasuryBee class with x402 protocol stubs.",
+    "target_file": "hive/bees/system/treasury_bee.py",
+    "status": "completed",
+    "priority": "high"
+  },
+  {
+    "id": "4_ontology_manager_scaffold",
+    "description": "Create the OntologyManager class for DSPy prompt management.",
+    "target_file": "hive/bees/content/ontology_manager.py",
+    "status": "completed",
+    "priority": "medium"
+  },
+  {
+    "id": "5_security_audit_tools",
+    "description": "Implement Frida/Unidbg detection methods in SecurityBee.",
+    "target_file": "hive/bees/system/security_bee.py",
+    "status": "completed",
+    "priority": "medium"
+  },
+  {
+    "id": "6_full_system_test",
+    "description": "Run a full simulation of the Hive Broadcasting cycle (Weather -> Prep -> DJ -> Stream).",
+    "target_file": "tests/simulation/hive_cycle_test.py",
+    "status": "completed",
+    "priority": "critical"
+  }
+]

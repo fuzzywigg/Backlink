@@ -1,0 +1,480 @@
+[
+  {
+    "timestamp": "2026-01-11T23:41:07.208946",
+    "url": "https://github.com/google/heir",
+    "name": "HEIR (Homomorphic Encryption)",
+    "summary": "Compiler for Homomorphic Encryption Intermediate Representation.",
+    "scores": {
+      "Strategic": 9,
+      "Sovereign": 10,
+      "Agentic": 6,
+      "Technical": 10
+    },
+    "weighted_score": 87.5,
+    "analysis": "Enables privacy-preserving compute (FHE) on public untrusted servers. Strategic for the 'Quantum Hive' initiative to allow agents to process sensitive data without decrypting it.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T23:38:56.023675",
+    "url": "https://github.com/google/XNNPACK",
+    "name": "XNNPACK",
+    "summary": "High-efficiency floating-point neural network inference operators.",
+    "scores": {
+      "Strategic": 7,
+      "Sovereign": 9,
+      "Agentic": 5,
+      "Technical": 9
+    },
+    "weighted_score": 75.0,
+    "analysis": "Foundational library for optimized edge inference (ARM64/x86/WASM). Valuable for Phase 4 (Edge Sovereignty) when deploying local models to low-power Hive nodes.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T23:35:55.308035",
+    "url": "https://github.com/google/deps.dev",
+    "name": "deps.dev API",
+    "summary": "API for querying dependency graphs, licenses, and security advisories for open source packages.",
+    "scores": {
+      "Strategic": 9,
+      "Sovereign": 8,
+      "Agentic": 10,
+      "Technical": 9
+    },
+    "weighted_score": 90.0,
+    "analysis": "Critical upstream data source for the Security Bee (Hive Immunity Sprint). Enables autonomous auditing of the Hive's software supply chain and 'Radioactive Content' checking via OpenSSF Scorecards.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T23:33:59.701065",
+    "url": "https://github.com/google/styleguide",
+    "name": "Google Style Guides",
+    "summary": "Official style guides for Google-originated open-source projects.",
+    "scores": {
+      "Strategic": 8,
+      "Sovereign": 9,
+      "Agentic": 10,
+      "Technical": 9
+    },
+    "weighted_score": 90.0,
+    "analysis": "Critical for standardizing the Hive's Python and JS codebases. Enforcing these styles ensures high readability for agents and humans.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T22:25:40.049597",
+    "url": "https://github.com/Universal-Commerce-Protocol/ucp",
+    "name": "Universal Commerce Protocol (UCP)",
+    "summary": "Standardized common language for agent trading and checkout.",
+    "scores": {
+      "Strategic": 9,
+      "Sovereign": 10,
+      "Agentic": 10,
+      "Technical": 8
+    },
+    "weighted_score": 92.5,
+    "analysis": "The overarching framework for agentic commerce. Enables standardized discovery and checkout. Explicitly supports AP2 (logged previously). Needed for the Marketplace layer of the Hive.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T22:23:15.616982",
+    "url": "https://github.com/google-agentic-commerce/a2a-x402",
+    "name": "A2A x402 Extension",
+    "summary": "Brings cryptocurrency payments to the Agent-to-Agent (A2A) protocol.",
+    "scores": {
+      "Strategic": 10,
+      "Sovereign": 10,
+      "Agentic": 10,
+      "Technical": 9
+    },
+    "weighted_score": 97.5,
+    "analysis": "Revives HTTP 402 for agents. Enables on-chain, decentralized payments between agents. Crucial for Hive economic sovereignty (Treasury Bee).",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T22:20:27.344088",
+    "url": "https://github.com/google-agentic-commerce/AP2",
+    "name": "Agent Payments Protocol (AP2)",
+    "summary": "Google's open standard for secure, interoperable AI-driven payments.",
+    "scores": {
+      "Strategic": 9,
+      "Sovereign": 8,
+      "Agentic": 10,
+      "Technical": 9
+    },
+    "weighted_score": 90.0,
+    "analysis": "Foundations for the Hive Treasury. Enables standardized economic transactions for agents. Detailed Python/Android samples available.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T22:13:37.949474",
+    "url": "https://github.com/arham-kk/gemini-agent-cookbook",
+    "name": "Gemini Agent Cookbook",
+    "summary": "Implementation of Anthropic agentic workflows using Google Gemini 2.0",
+    "scores": {
+      "Strategic": 9,
+      "Sovereign": 9,
+      "Agentic": 10,
+      "Technical": 9
+    },
+    "weighted_score": 92.5,
+    "analysis": "CRITICAL resource. Implements true Agentic Patterns (Orchestrator, Routing, etc.) on Gemini 2.0. This is the missing link for our Hive Orchestrator.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T22:13:50.344085",
+    "url": "https://github.com/overkazaf/reverse_engineering",
+    "name": "Reverse Engineering Cookbook",
+    "summary": "Comprehensive guide for Android and Web reverse engineering (Frida, Unidbg).",
+    "scores": {
+      "Strategic": 8,
+      "Sovereign": 9,
+      "Agentic": 9,
+      "Technical": 8
+    },
+    "weighted_score": 85.0,
+    "analysis": "High-value sovereign capability resource. Covers advanced topics like JSVMP and Unidbg. Essential coverage for the Security Bee.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T22:09:51.002551",
+    "url": "https://platform.claude.com/cookbook",
+    "name": "Anthropics: Cookbook Home",
+    "summary": "Official Anthropics guide/notebook.",
+    "scores": {
+      "Strategic": 7,
+      "Sovereign": 7,
+      "Agentic": 9,
+      "Technical": 8
+    },
+    "weighted_score": 77.5,
+    "analysis": "General Claude resource. High value reference.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T22:09:51.029716",
+    "url": "https://github.com/google-gemini/cookbook",
+    "name": "Google Skills Learning",
+    "summary": "Google documentation/console.",
+    "scores": {
+      "Strategic": 2,
+      "Sovereign": 2,
+      "Agentic": 5,
+      "Technical": 8
+    },
+    "weighted_score": 42.5,
+    "analysis": "Low sovereignty, high utility. Keep on radar but do not integrate deeply.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:01.545371",
+    "url": "https://github.com/simonw/claude-code-transcripts/blob/main/README.md",
+    "name": "SimonW Resource",
+    "summary": "Submitted via Dashboard. Waiting for AI/Human analysis.",
+    "scores": {
+      "Strategic": 9,
+      "Sovereign": 10,
+      "Agentic": 9,
+      "Technical": 9
+    },
+    "weighted_score": 92.5,
+    "analysis": "Simon Willison is a key 'Sovereign AI' thought leader. His tools usually align perfectly with our ethos.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T08:42:27.138860",
+    "url": "https://support.google.com/googlenest/answer/9330256",
+    "name": "Google Nest Support: Device Setup",
+    "summary": "Official support page for Google Nest device setup. Pending review from dashboard.",
+    "scores": {
+      "Strategic": 3,
+      "Sovereign": 2,
+      "Agentic": 5,
+      "Technical": 5
+    },
+    "weighted_score": 37.5,
+    "analysis": "Standard documentation. Likely useful for the 'Smart Home' aspect of the Backlink Hive but generic. Low priority.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T03:05:35.064551",
+    "url": "https://github.com/PrimeIntellect-ai/OpenDiLoCo",
+    "name": "GitHub: PrimeIntellect-ai/OpenDiLoCo",
+    "summary": "Open-Source Framework for Globally Distributed Low-Communication Training. Note: Superseded by 'prime' repo.",
+    "scores": {
+      "Strategic": 5,
+      "Sovereign": 8,
+      "Agentic": 4,
+      "Technical": 7
+    },
+    "weighted_score": 60.0,
+    "analysis": "Foundational research for Phase 5 (Distributed Training). HOWEVER, the repo explicitly states it is 'no longer maintained' and points to 'PrimeIntellect-ai/prime'. I should log this but flag the successor. 'Prime' is the actual target for the roadmap.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T03:05:34.938394",
+    "url": "https://github.com/stanfordnlp/dspy",
+    "name": "GitHub: stanfordnlp/dspy",
+    "summary": "The framework for programming\u2014not prompting\u2014language models. Declarative Self-improving Python.",
+    "scores": {
+      "Strategic": 9,
+      "Sovereign": 7,
+      "Agentic": 8,
+      "Technical": 9
+    },
+    "weighted_score": 82.5,
+    "analysis": "Essential framework for the 'Ontology Manager' evolution. Moves beyond static prompts to programmable, self-optimizing pipelines. Key for 'Mad Libs' eradication strategy. Allows optimizing prompts vs weights.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T03:05:34.863588",
+    "url": "https://github.com/cube-js/cube",
+    "name": "GitHub: cube-js/cube",
+    "summary": "Cube Core is an open-source semantic layer for AI, BI and embedded analytics. Abstracts data sources into metrics/dimensions.",
+    "scores": {
+      "Strategic": 6,
+      "Sovereign": 7,
+      "Agentic": 5,
+      "Technical": 9
+    },
+    "weighted_score": 67.5,
+    "analysis": "Mature, industry-standard semantic layer. Less 'AI-native' than Semantica, more BI-focused. Good for structural analytics (e.g., Polymarket PnL dashboards) but potentially heavy for sovereign agentic memory. Headless API is a plus.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T03:05:34.793385",
+    "url": "https://github.com/Hawksight-AI/semantica",
+    "name": "GitHub: Hawksight-AI/semantica",
+    "summary": "Open Source Semantic Layer & Knowledge Engineering Framework. Transforms unstructured data into structured Knowledge Graphs.",
+    "scores": {
+      "Strategic": 8,
+      "Sovereign": 8,
+      "Agentic": 9,
+      "Technical": 8
+    },
+    "weighted_score": 82.5,
+    "analysis": "Candidate for 'Core Cognitive Infrastructure'. Offers a complete pipeline for GraphRAG, Triplets, and Ontology management. Directly relevant to the 'HiveKnowledgeGraph' work in Phase 1 (Cognee alternative or supplement). Features 'Context Engineering' and 'Memory Systems'.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T02:56:12.576218",
+    "url": "https://github.com/nsbradford/ai-devtool-leaderboard",
+    "name": "GitHub: nsbradford/ai-devtool-leaderboard",
+    "summary": "Source code for the AI Code Review Adoption Tracker. Tracks PR review events via GH Archive to measure tool adoption.",
+    "scores": {
+      "Strategic": 7,
+      "Sovereign": 6,
+      "Agentic": 5,
+      "Technical": 8
+    },
+    "weighted_score": 65.0,
+    "analysis": "Source repository for the previously logged tracker. Reveals methodology: uses Trigger.dev cron jobs, Neon serverless Postgres, and queries GH Archive BigQuery dataset. Useful reference for building similar 'sovereign' tracking tools. Confirms data scope is limited to PR reviews.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T02:55:06.454194",
+    "url": "https://www.aitooltracker.dev/",
+    "name": "AI Code Review Adoption Tracker",
+    "summary": "Tracks adoption of AI code review tools in active open-source repositories using data from GH Archive.",
+    "scores": {
+      "Strategic": 7,
+      "Sovereign": 4,
+      "Agentic": 6,
+      "Technical": 6
+    },
+    "weighted_score": 57.5,
+    "analysis": "Strategic market intelligence resource. Useful for identifying emerging AI coding tools and verifying industry trends. Open source data processing (GH Archive) adds credibility. Vibe coded by Nick Bradford.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:01.552418",
+    "url": "https://github.com/anthropics/claude-cookbooks/blob/main/skills/notebooks/01_skills_introduction.ipynb",
+    "name": "Anthropics: Skills Dev Guide",
+    "summary": "Official Anthropics guide/notebook.",
+    "scores": {
+      "Strategic": 9,
+      "Sovereign": 8,
+      "Agentic": 10,
+      "Technical": 8
+    },
+    "weighted_score": 87.5,
+    "analysis": "Core reference for tool/skill definition, matching our Universal Discovery Protocol work.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:01.594612",
+    "url": "https://github.com/anthropics/claude-cookbooks/blob/main/skills/notebooks/03_skills_custom_development.ipynb",
+    "name": "Anthropics: Skills Dev Guide",
+    "summary": "Official Anthropics guide/notebook.",
+    "scores": {
+      "Strategic": 9,
+      "Sovereign": 8,
+      "Agentic": 10,
+      "Technical": 8
+    },
+    "weighted_score": 87.5,
+    "analysis": "Core reference for tool/skill definition, matching our Universal Discovery Protocol work.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:01.650411",
+    "url": "https://github.com/anthropics/claude-cookbooks/blob/main/observability/usage_cost_api.ipynb",
+    "name": "Anthropics: Cost & Observability",
+    "summary": "Official Anthropics guide/notebook.",
+    "scores": {
+      "Strategic": 5,
+      "Sovereign": 5,
+      "Agentic": 5,
+      "Technical": 8
+    },
+    "weighted_score": 57.5,
+    "analysis": "Utility for cost tracking. Monitoring only.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:01.705839",
+    "url": "https://github.com/anthropics/claude-cookbooks/blob/main/patterns/agents/orchestrator_workers.ipynb",
+    "name": "Anthropics: Orchestrator Pattern",
+    "summary": "Official Anthropics guide/notebook.",
+    "scores": {
+      "Strategic": 10,
+      "Sovereign": 8,
+      "Agentic": 10,
+      "Technical": 9
+    },
+    "weighted_score": 92.5,
+    "analysis": "CRITICAL: Orchestrator patterns are central to the Hive's 'Swarm' architecture.",
+    "recommendation": "INTEGRATE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:01.948999",
+    "url": "https://www.skills.google/",
+    "name": "Google Skills Learning",
+    "summary": "Google documentation/console.",
+    "scores": {
+      "Strategic": 2,
+      "Sovereign": 2,
+      "Agentic": 5,
+      "Technical": 8
+    },
+    "weighted_score": 42.5,
+    "analysis": "Low sovereignty, high utility. Keep on radar but do not integrate deeply.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:02.132826",
+    "url": "https://console.developers.google.com/apis",
+    "name": "Google Cloud APIs Console",
+    "summary": "Google documentation/console.",
+    "scores": {
+      "Strategic": 2,
+      "Sovereign": 2,
+      "Agentic": 5,
+      "Technical": 8
+    },
+    "weighted_score": 42.5,
+    "analysis": "Low sovereignty, high utility. Keep on radar but do not integrate deeply.",
+    "recommendation": "IGNORE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:02.371165",
+    "url": "https://platform.claude.com/cookbook",
+    "name": "Anthropics: Cookbook Home",
+    "summary": "Official Anthropics guide/notebook.",
+    "scores": {
+      "Strategic": 7,
+      "Sovereign": 7,
+      "Agentic": 9,
+      "Technical": 8
+    },
+    "weighted_score": 77.5,
+    "analysis": "General Claude resource. High value reference.",
+    "recommendation": "MONITOR",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:02.419955",
+    "url": "https://github.com/alexzhang13/rlm",
+    "name": "RLM (Unknown Repo)",
+    "summary": "Submitted via Dashboard. Waiting for AI/Human analysis.",
+    "scores": {
+      "Strategic": 5,
+      "Sovereign": 5,
+      "Agentic": 5,
+      "Technical": 5
+    },
+    "weighted_score": 50.0,
+    "analysis": "Needs manual review. Marked as Queued.",
+    "recommendation": "QUEUED",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T09:14:02.457821",
+    "url": "https://github.com/fuzzywigg/agents-standard/tree/alpha",
+    "name": "Fuzzywigg Agents Standard (Dup)",
+    "summary": "Submitted via Dashboard. Waiting for AI/Human analysis.",
+    "scores": {
+      "Strategic": 0,
+      "Sovereign": 0,
+      "Agentic": 0,
+      "Technical": 0
+    },
+    "weighted_score": 0.0,
+    "analysis": "Duplicate.",
+    "recommendation": "IGNORE",
+    "context": "backlink_hive_scout"
+  },
+  {
+    "timestamp": "2026-01-11T00:26:16.091551",
+    "url": "https://backlink-hive-123509617840.us-central1.run.app",
+    "name": "Backlink Broadcast",
+    "summary": "The core sovereign AI radio station.",
+    "scores": {
+      "strategic": 10,
+      "sovereign": 10,
+      "agentic": 10,
+      "technical": 9
+    },
+    "weighted_score": 98.0,
+    "analysis": "This is the primary project repository. It scores perfectly on alignment because it IS the alignment standard.",
+    "recommendation": "INTEGRATE"
+  },
+  {
+    "timestamp": "2026-01-11T00:49:48.130551",
+    "url": "https://github.com/fuzzywigg/agents-standard/tree/alpha",
+    "name": "Agentic Intelligence Standard (Alpha)",
+    "summary": "A public standard for persistent cognitive context in LLM workflows (AGENTS.md).",
+    "scores": {
+      "strategic": 9,
+      "sovereign": 10,
+      "agentic": 10,
+      "technical": 8
+    },
+    "weighted_score": 93.0,
+    "analysis": "This repository provides the sanitized public baseline for Hive agent behaviors. It acts as the 'Constitutional AI' layer. Highly sovereign (markdown-based) and machine-readable. Critical for maintaining prompt consistency across the swarm.",
+    "recommendation": "INTEGRATE"
+  }
+]

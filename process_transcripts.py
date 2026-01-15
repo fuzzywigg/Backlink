@@ -9,6 +9,8 @@ OUTPUT_DIR = "data/processed"
 SONGS_CSV = os.path.join(OUTPUT_DIR, "songs_played.csv")
 CONTINUITY_LOG = os.path.join(OUTPUT_DIR, "broadcast_continuity.txt")
 
+from core_utils.ontology_manager import OntologyManager
+
 def parse_log_line(line):
     """
     Extracts the timestamp and the JSON content from a log line.
@@ -140,6 +142,8 @@ def write_outputs(songs, continuity):
     print(f"Written {len(songs)} songs to {SONGS_CSV}")
 
     # 2. Write Continuity Log
+    ontology_mgr = OntologyManager()
+    
     with open(CONTINUITY_LOG, 'w', encoding='utf-8') as f:
         f.write("BACKLINK BROADCAST CONTINUITY LOG\n")
         f.write("=================================\n\n")
@@ -153,7 +157,20 @@ def write_outputs(songs, continuity):
             f.write(f"[{ts}]\n")
             
             if event['transcript']:
-                f.write(f"  🎙️ DJ: \"{event['transcript']}\"\n")
+                # Validate Text
+                try:
+                    # Set ontology context based on timestamp hour
+                    hour = int(ts.split(':')[0])
+                    ontology_mgr.get_current_ontology(override_hour=hour)
+                except Exception:
+                    pass
+
+                score = ontology_mgr.validate_text(event['transcript'], history=[])
+                warning_flag = ""
+                if score < 1.0:
+                    warning_flag = " [⚠️ ONTO-VIOLATION]"
+                
+                f.write(f"  🎙️ DJ: \"{event['transcript']}\"{warning_flag}\n")
             
             if event['song_info']:
                 f.write(f"  🎵 SONG: {event['song_info']}\n")

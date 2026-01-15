@@ -183,6 +183,10 @@ class BaseBee(ABC):
         """Read state.json."""
         return self._read_json("state.json")
 
+    def write_state(self, updates: dict[str, Any]) -> None:
+        """Write/Update state.json."""
+        self._write_json("state.json", updates)
+
     def read_tasks(self) -> dict[str, Any]:
         """Read tasks.json."""
         return self._read_json("tasks.json")

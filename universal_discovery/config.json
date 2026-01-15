@@ -1,0 +1,20 @@
+{
+  "active_context": "backlink_hive_scout",
+  "contexts": {
+    "default": {
+      "rubric": "generic_sme",
+      "storage": "local_json",
+      "path": "discovery_log.json"
+    },
+    "backlink_hive_scout": {
+      "rubric": "sovereign_ai",
+      "storage": "firestore_hybrid",
+      "path": "../review_system/reviews.json"
+    },
+    "task_master": {
+      "rubric": "strict_agnostic",
+      "storage": "local_json",
+      "path": "task_master_log.json"
+    }
+  }
+}

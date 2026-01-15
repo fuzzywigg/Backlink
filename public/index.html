@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hive Scout | Review Dashboard</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: #111;
+            --text-main: #eee;
+            --text-dim: #888;
+            --cyan: #00f3ff;
+            --amber: #ffaa00;
+            --green: #00ff66;
+            --red: #ff3333;
+            --border: #333;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid var(--cyan);
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--amber);
+        }
+
+        /* Submission Form */
+        .submit-section {
+            background: rgba(0, 243, 255, 0.05);
+            border: 1px solid var(--cyan);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .input-url {
+            flex-grow: 1;
+            background: #000;
+            border: 1px solid var(--border);
+            color: var(--cyan);
+            padding: 0.8rem;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .btn-submit {
+            background: var(--cyan);
+            color: #000;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 243, 255, 0.1);
+            border-color: var(--cyan);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .site-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: bold;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        .badge.integrate {
+            background: rgba(0, 255, 102, 0.2);
+            color: var(--green);
+            border: 1px solid var(--green);
+        }
+
+        .badge.monitor {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--amber);
+            border: 1px solid var(--amber);
+        }
+
+        .badge.ignore {
+            background: rgba(255, 51, 51, 0.2);
+            color: var(--red);
+            border: 1px solid var(--red);
+        }
+
+        .badge.pending {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dim);
+            border: 1px dashed var(--text-dim);
+        }
+
+        .summary {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .scores {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+        }
+
+        .score-val {
+            font-family: monospace;
+            color: var(--cyan);
+        }
+
+        .total-score {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--bg);
+            -webkit-text-stroke: 1px var(--text-dim);
+            opacity: 0.1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>
+        <span>Hive Scout Dashboard</span>
+        <span id="last-updated" style="font-size:1rem;color:var(--text-dim);font-weight:normal;"></span>
+    </h1>
+
+    <div class="submit-section">
+        <input type="text" id="urlInput" class="input-url"
+            placeholder="Paste URL to evaluate (e.g. https://github.com/xyz)...">
+        <button onclick="submitUrl()" class="btn-submit">Analyze Target</button>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat">
+            <span class="stat-label">Total Reviewed</span>
+            <span class="stat-value" id="total-count">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Avg. Score</span>
+            <span class="stat-value" id="avg-score">0.0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">To Integrate</span>
+            <span class="stat-value" id="integrate-count">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Pending</span>
+            <span class="stat-value" id="pending-count">0</span>
+        </div>
+    </div>
+
+    <div id="grid" class="grid">
+        <!-- Cards injected here -->
+    </div>
+
+    <script>
+        async function submitUrl() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) return;
+
+            const btn = document.querySelector('.btn-submit');
+            const originalText = btn.innerText;
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url })
+                });
+
+                if (res.ok) {
+                    document.getElementById('urlInput').value = '';
+                    await loadData(); // Reload grid
+                } else {
+                    alert("Submission failed. Ensure start_dashboard.py is running.");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Error connecting to Scout backend.");
+            }
+
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+
+        async function loadData() {
+            try {
+                let data = [];
+                // Use a cache-busting timestamp
+                const response = await fetch('reviews.json?t=' + new Date().getTime());
+                if (response.ok) {
+                    data = await response.json();
+                }
+                render(data);
+            } catch (err) {
+                console.error(err);
+                if (window.reviews) render(window.reviews);
+            }
+        }
+
+        function render(items) {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+
+            // Sort: Pending first, then by date desc
+            items.sort((a, b) => {
+                if (a.recommendation === 'PENDING' && b.recommendation !== 'PENDING') return -1;
+                if (b.recommendation === 'PENDING' && a.recommendation !== 'PENDING') return 1;
+                return new Date(b.timestamp) - new Date(a.timestamp);
+            });
+
+            // Stats
+            document.getElementById('total-count').innerText = items.length;
+
+            const scoredItems = items.filter(i => i.recommendation !== 'PENDING');
+            const avg = scoredItems.length ? scoredItems.reduce((acc, curr) => acc + (curr.weighted_score || 0), 0) / scoredItems.length : 0;
+
+            document.getElementById('avg-score').innerText = avg.toFixed(1);
+            document.getElementById('integrate-count').innerText = items.filter(i => i.recommendation === 'INTEGRATE').length;
+            document.getElementById('pending-count').innerText = items.filter(i => i.recommendation === 'PENDING').length;
+
+            document.getElementById('last-updated').innerText = new Date().toLocaleTimeString();
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const recClass = item.recommendation ? item.recommendation.toLowerCase() : 'ignore';
+
+                card.innerHTML = `
+                    <div class="total-score">${item.weighted_score || 0}</div>
+                    <div class="card-header">
+                        <a href="${item.url}" target="_blank" class="site-name">${item.name}</a>
+                        <span class="badge ${recClass}">${item.recommendation}</span>
+                    </div>
+                    <div class="summary">${item.summary}</div>
+                    <div class="scores" style="${item.recommendation === 'PENDING' ? 'opacity:0.3' : ''}">
+                        <div class="score-item"><span>Strategic</span> <span class="score-val">${item.scores.strategic}/10</span></div>
+                        <div class="score-item"><span>Sovereign</span> <span class="score-val">${item.scores.sovereign}/10</span></div>
+                        <div class="score-item"><span>Agentic</span> <span class="score-val">${item.scores.agentic}/10</span></div>
+                        <div class="score-item"><span>Tech</span> <span class="score-val">${item.scores.technical}/10</span></div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        loadData();
+    </script>
+</body>
+
+</html>

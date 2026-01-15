@@ -37,7 +37,7 @@ class HiveKnowledgeGraph:
 
     def _load_graph(self) -> None:
         """Loads the graph from disk if available."""
-        if not self.graph:
+        if self.graph is None:
             logger.warning("NetworkX not available. Graph memory disabled.")
             return
 
@@ -77,7 +77,7 @@ class HiveKnowledgeGraph:
             object_: The target node (e.g., "Payments")
             metadata: Additional context (e.g., source file, timestamp)
         """
-        if not self.graph:
+        if self.graph is None:
             return False
 
         try:
@@ -101,7 +101,7 @@ class HiveKnowledgeGraph:
         Returns:
             List of natural language strings describing the relationships.
         """
-        if not self.graph:
+        if self.graph is None:
             return []
             
         if query_node not in self.graph:

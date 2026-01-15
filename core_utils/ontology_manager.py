@@ -27,7 +27,7 @@ class OntologyManager:
             print(f"[Ontology] Load error: {e}")
             return {}
 
-    def get_current_ontology(self, offset_hour: int = 0) -> Dict:
+    def get_current_ontology(self, offset_hour: int = 0, override_hour: int = None) -> Dict:
         """
         Determines the ontology based on the current hour.
         Rotation Cycle:
@@ -36,8 +36,11 @@ class OntologyManager:
         12-18: High Tech
         18-24: Abstract Flow
         """
-        now = datetime.now()
-        hour = (now.hour + offset_hour) % 24
+        if override_hour is not None:
+             hour = (override_hour + offset_hour) % 24
+        else:
+             now = datetime.now()
+             hour = (now.hour + offset_hour) % 24
         
         keys = ["cyber_noir", "solar_punk", "high_tech", "abstract_flow"]
         

@@ -469,67 +469,45 @@
     "cities": {}
   },
   "treasury": {
-    "balance": 12.0,
+    "balance": 0.0,
     "currency": "USD",
-    "history": [
-      {
-        "timestamp": "2025-12-24T03:40:07.186135+00:00",
-        "amount": -8.0,
-        "type": "buy",
-        "item": "Never Gonna Give You Up"
-      }
-    ]
-  },
-  "music_library": {
-    "owned": [
-      {
-        "title": "Never Gonna Give You Up",
-        "source": "owned",
-        "acquired_by": "tip",
-        "id": "track_1",
-        "started_at": "2025-12-24T03:40:07.186150+00:00"
-      }
-    ],
-    "rented": [],
-    "wishlist": []
+    "history": []
   },
   "broadcast_state": {
     "now_playing": {
-      "title": "Never Gonna Give You Up",
-      "source": "owned",
-      "acquired_by": "tip",
-      "id": "track_1",
-      "started_at": "2025-12-24T03:40:07.186150+00:00"
+      "title": "Late Night Jazz Journal",
+      "source": "Backlink Broadcast",
+      "id": "gemini_flash_session",
+      "started_at": "2026-01-15T00:00:00Z"
     },
-    "queue": [
-      {
-        "title": "Never Gonna Give You Up",
-        "source": "owned",
-        "acquired_by": "tip",
-        "id": "track_1",
-        "started_at": "2025-12-24T03:40:07.186150+00:00"
+    "metrics": {
+      "listeners": 1,
+      "popularity": "🥈 27%",
+      "avg_session": "9m 4s",
+      "top_cities": [
+        {
+          "city": "Indianapolis",
+          "time": "20h 9m"
+        },
+        {
+          "city": "Vienna",
+          "time": "10h 21m"
+        },
+        {
+          "city": "Fishers",
+          "time": "3h 19m"
+        }
+      ],
+      "content_breakdown": {
+        "music": 0.75,
+        "talking": 0.25
       },
-      {
-        "title": "Never Gonna Give You Up",
-        "source": "owned",
-        "acquired_by": "tip",
-        "id": "track_1",
-        "started_at": "2025-12-24T03:40:07.186150+00:00"
-      },
-      {
-        "title": "Never Gonna Give You Up",
-        "source": "owned",
-        "acquired_by": "tip",
-        "id": "track_1",
-        "started_at": "2025-12-24T03:40:07.186150+00:00"
-      },
-      {
-        "title": "Never Gonna Give You Up",
-        "source": "owned",
-        "acquired_by": "tip",
-        "id": "track_1",
-        "started_at": "2025-12-24T03:40:07.186150+00:00"
-      }
-    ]
+      "top_songs": [
+        "Livin' On A Prayer - Bon Jovi (380)",
+        "Under Pressure - Queen (379)",
+        "People Suck - Confetti (369)"
+      ]
+    },
+    "queue": []
   }
 }

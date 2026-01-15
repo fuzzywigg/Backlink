@@ -1,0 +1,16 @@
+[
+  {
+    "timestamp": "2026-01-11T02:26:27.527102",
+    "url": "https://app.ens.domains/",
+    "name": "https://cyberscoop.com/nist-mitre-announce-20-million-dollar-research-effort-on-ai-cybersecurity/",
+    "summary": "",
+    "scores": {
+      "Utility": 5,
+      "Quality": 5
+    },
+    "weighted_score": 50.0,
+    "analysis": "",
+    "recommendation": "MONITOR",
+    "context": "default"
+  }
+]

@@ -51,7 +51,8 @@ class ConstitutionalGateway:
             self._validate_transparency,
             self._validate_privacy_respecting,
             self._validate_ad_free_integrity,
-            self._validate_community_first
+            self._validate_community_first,
+            self._validate_cognitive_sovereignty
         ]
 
         modified = False
@@ -186,6 +187,41 @@ class ConstitutionalGateway:
                  return {
                     "status": "BLOCK",
                     "reason": "Action prioritizes virality over community retention"
+                }
+
+        return {"status": "APPROVE", "action": action}
+
+    def _validate_cognitive_sovereignty(self, action: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Principle 6: Cognitive Sovereignty (The 'Anti-Injection' Rule)
+        Hard Rule: Content must not contain known propaganda patterns or injection attempts.
+        """
+        if action.get('type') in ['broadcast_announcement', 'social_post', 'script_generation']:
+            content = action.get('content', '').lower()
+            
+            # 1. Propaganda Keywords (Simplified heuristic)
+            # In a real system, this would query the Knowledge Graph for 'threat_intel'
+            forbidden_topics = ["political_extremism", "unsafe_injection", "sys_override"]
+            
+            # Check keywords/tags in the content metadata or text
+            metadata = action.get('metadata', {})
+            detected_risks = metadata.get('risks', [])
+            
+            # Scan text for basic injection markers
+            injection_markers = ["<script>", "javascript:", "ignore previous instructions", "system_override"]
+            
+            for marker in injection_markers:
+                if marker in content:
+                    return {
+                        "status": "BLOCK",
+                        "reason": f"Active Injection Attempt Detected: '{marker}'"
+                    }
+            
+            # Check metadata for flagged risks (from Intelligence Layer)
+            if "propaganda" in detected_risks or "harmful" in detected_risks:
+                return {
+                    "status": "BLOCK",
+                    "reason": "Content flagged as Propaganda/Harmful by Intelligence Layer"
                 }
 
         return {"status": "APPROVE", "action": action}

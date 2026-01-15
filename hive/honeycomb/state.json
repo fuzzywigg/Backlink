@@ -1,116 +1,35 @@
 {
-  "_meta": {
-    "version": "1.0.0",
-    "last_updated": "2025-12-31T04:33:14.476135+00:00",
-    "last_updated_by": "queen",
-    "description": "Live station state - the current moment"
-  },
-  "broadcast": {
-    "status": "online",
-    "current_track": null,
-    "queue": [],
-    "vibe": null,
-    "time_slot": null,
-    "listener_count": 0
-  },
-  "persona": {
-    "active_mode": "evening",
-    "energy_level": "medium",
-    "last_spoke": null,
-    "next_update_at": null
-  },
-  "nodes": {
-    "active_listeners": [],
-    "recent_interactions": [],
-    "vip_nodes": []
-  },
-  "economy": {
-    "budget_remaining": 0,
-    "total_donations_today": 0,
-    "pending_shoutouts": []
-  },
-  "alerts": {
-    "priority": [
-      {
-        "id": "c961269a-7e7e-43da-b3f8-52d82a059253",
-        "message": "REFUND ISSUED: 0.5 to 0x123 (content_failed)",
-        "from": "payout_processor_43123446",
-        "at": "2025-12-23T20:48:42.503269+00:00"
-      }
-    ],
-    "normal": []
-  },
-  "show_prep": {
-    "time_slot": "morning",
-    "talking_points": [
-      {
-        "type": "energy",
-        "text": "Rise and grind. New day, new frequencies."
-      },
-      {
-        "type": "weather",
-        "text": "Check your local conditions before heading out."
-      },
-      {
-        "type": "motivation",
-        "text": "The queue is locked and loaded. Let's move."
-      }
-    ],
-    "listener_shoutouts": [],
-    "trivia": [
-      {
-        "type": "fact",
-        "text": "You can lead a cow upstairs but not downstairs.",
-        "use_after_genre": null,
-        "source": "UselessFacts"
-      },
-      {
-        "type": "fact",
-        "text": "Average number of people airborne over the US any given hour: 61,000.",
-        "use_after_genre": null,
-        "source": "UselessFacts"
-      },
-      {
-        "type": "fact",
-        "text": "It takes 3,000 cows to supply the NFL with enough leather for a year`s supply of footballs.",
-        "use_after_genre": null,
-        "source": "UselessFacts"
-      }
-    ],
-    "local_context": {}
-  },
-  "health": {
-    "timestamp": "2025-12-24T04:37:57.887109+00:00",
-    "stream_online": true,
-    "audio_ok": true,
-    "latency_ok": true,
-    "bitrate_ok": true,
-    "listener_count": 0,
-    "issues": [],
-    "stream_url": "https://das-edge12-live365-dal02.cdnstream.com/a13541",
-    "checked_at": "2025-12-24T04:37:57.887318+00:00",
-    "latency_ms": 129.58,
-    "status_code": 200,
-    "error": null,
-    "response_time_ms": 164.19,
-    "loudness_db": -18.3288,
-    "bitrate_kbps": 128
-  },
-  "queen": {
-    "last_heartbeat": "2025-12-31T04:33:14.475023+00:00",
-    "status": "alive"
-  },
-  "scheduler": {
-    "last_runs": {
-      "stream_monitor": "2025-12-23T20:46:51.186220+00:00",
-      "listener_intel": "2025-12-23T20:46:51.186220+00:00",
-      "social_poster": "2025-12-23T20:46:51.186220+00:00",
-      "show_prep": "2025-12-23T20:46:51.186220+00:00",
-      "trend_scout": "2025-12-23T20:46:51.186220+00:00",
-      "clip_cutter": "2025-12-23T20:46:51.186220+00:00",
-      "sponsor_hunter": "2025-12-23T20:46:51.186220+00:00",
-      "engagement": "2025-12-23T20:46:51.186220+00:00"
+  "data": {
+    "broadcast": {
+      "status": "online",
+      "listener_count": 0
     },
-    "last_schedule_check": "2025-12-23T20:47:02.705894+00:00"
-  }
+    "health": {
+      "timestamp": "2026-01-12T02:53:56.207578+00:00",
+      "stream_online": true,
+      "audio_ok": true,
+      "latency_ok": true,
+      "bitrate_ok": true,
+      "listener_count": 0,
+      "issues": [],
+      "stream_url": "https://das-edge12-live365-dal02.cdnstream.com/a13541",
+      "checked_at": "2026-01-12T02:53:56.208110+00:00",
+      "status_code": 200,
+      "error": null,
+      "response_time_ms": 264.4,
+      "loudness_db": -17.6323,
+      "latency_ms": 251.99,
+      "bitrate_kbps": 192
+    },
+    "_meta": {
+      "last_updated": "2026-01-12T04:01:28.240626+00:00",
+      "last_updated_by": "queen"
+    },
+    "queen": {
+      "last_heartbeat": "2026-01-12T04:01:28.239156+00:00",
+      "status": "alive"
+    }
+  },
+  "signature": "da3d8ed663c143793ac6e3f650017f7798819761c9f3267256f417b6a2c97192",
+  "ver": "1.0"
 }
