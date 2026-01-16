@@ -156,3 +156,8 @@ temp/
 
 # Bandit security reports
 bandit-report.json
+
+grok_playlist.json
+
+data/stream_capture/
+*.mp3

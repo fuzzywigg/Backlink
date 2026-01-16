@@ -482,7 +482,7 @@
     },
     "metrics": {
       "listeners": 1,
-      "popularity": "🥈 27%",
+      "popularity": "\u00f0\u0178\u00a5\u02c6 27%",
       "avg_session": "9m 4s",
       "top_cities": [
         {
@@ -509,5 +509,159 @@
       ]
     },
     "queue": []
+  },
+  "music_library": {
+    "owned": [
+      {
+        "id": "grok_5817",
+        "title": "Livin' On A Prayer",
+        "artist": "Bon Jovi",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257264+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_9984",
+        "title": "Under Pressure (Remastered 2011)",
+        "artist": "Queen",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257291+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_7384",
+        "title": "People Suck [Explicit]",
+        "artist": "Confetti",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257298+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_7425",
+        "title": "Imagine (Remastered 2010)",
+        "artist": "John Lennon",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257302+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_4662",
+        "title": "Here Comes The Sun (2019 Mix)",
+        "artist": "The Beatles",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257306+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_6022",
+        "title": "Awake My Soul",
+        "artist": "Mumford & Sons",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257310+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_3187",
+        "title": "Holocene",
+        "artist": "Bon Iver",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257314+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_3894",
+        "title": "Dreams (2004 Remaster)",
+        "artist": "Fleetwood Mac",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257318+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_1463",
+        "title": "Sultans of Swing",
+        "artist": "Dire Straits",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257322+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_9667",
+        "title": "Takin' Care Of Business",
+        "artist": "Bachman-Turner Overdrive",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257325+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_1750",
+        "title": "You Give Love A Bad Name",
+        "artist": "Bon Jovi",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257327+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_2739",
+        "title": "Weightless",
+        "artist": "Marconi Union",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257330+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_9429",
+        "title": "momentary lovers",
+        "artist": "Khalid",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257334+00:00",
+        "vibe_match": "Consultant Selection"
+      },
+      {
+        "id": "grok_5923",
+        "title": "One More Time",
+        "artist": "Daft Punk",
+        "source": "Grok_Import",
+        "acquired_at": "2026-01-16T21:40:53.257338+00:00",
+        "vibe_match": "Consultant Selection"
+      }
+    ],
+    "rented": [],
+    "candidates": [
+      {
+        "title": "All Time Low",
+        "artist": "Jon Bellion",
+        "source": "Consultant_Suggestion",
+        "suggested_at": "2026-01-16T21:46:17.333061+00:00",
+        "reason": "Features precise production and clean vocals, with an analytical lyrical approach."
+      },
+      {
+        "title": "Clint Eastwood",
+        "artist": "Gorillaz",
+        "source": "Consultant_Suggestion",
+        "suggested_at": "2026-01-16T21:46:17.333075+00:00",
+        "reason": "Clean, calculated instrumental and precise vocals makes it fit with the professional and analytical vibe."
+      },
+      {
+        "title": "Counting Stars",
+        "artist": "OneRepublic",
+        "source": "Consultant_Suggestion",
+        "suggested_at": "2026-01-16T21:46:17.333079+00:00",
+        "reason": "Features a meticulously crafted arrangement, making it an analytical song."
+      },
+      {
+        "title": "Homecoming",
+        "artist": "Kanye West",
+        "source": "Consultant_Suggestion",
+        "suggested_at": "2026-01-16T21:46:17.333081+00:00",
+        "reason": "Showcases controlled and polished delivery, making it precise, and clean."
+      },
+      {
+        "title": "Intentions",
+        "artist": "Justin Bieber",
+        "source": "Consultant_Suggestion",
+        "suggested_at": "2026-01-16T21:46:17.333084+00:00",
+        "reason": "Represents a carefully constructed pop sound, resulting in a clean song."
+      }
+    ]
   }
 }
