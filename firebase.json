@@ -15,7 +15,7 @@
         }
     },
     "hosting": {
-        "public": "site",
+        "public": "public",
         "ignore": [
             "firebase.json",
             "**/.*",
