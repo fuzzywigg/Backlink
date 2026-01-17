@@ -5,138 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Backlink Broadcast | Song Library</title>
-    <style>
-        :root {
-            --bg: #050505;
-            --card-bg: #111;
-            --text-main: #eee;
-            --text-dim: #888;
-            --cyan: #00f3ff;
-            --amber: #ffaa00;
-            --green: #00ff66;
-            --border: #333;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            margin: 0;
-            padding: 2rem;
-        }
-
-        h1 {
-            color: var(--cyan);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: 2px solid var(--cyan);
-            padding-bottom: 0.5rem;
-            margin-bottom: 2rem;
-        }
-
-        nav {
-            margin-bottom: 2rem;
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        nav a {
-            color: var(--text-dim);
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid transparent;
-            border-radius: 4px;
-        }
-
-        nav a:hover,
-        nav a.active {
-            color: var(--cyan);
-            border-color: var(--cyan);
-        }
-
-        .stats-bar {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            background: var(--card-bg);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .stat {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--amber);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        th,
-        td {
-            text-align: left;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            color: var(--cyan);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            background: var(--card-bg);
-        }
-
-        tr:hover {
-            background: rgba(0, 243, 255, 0.05);
-        }
-
-        .play-count {
-            font-family: monospace;
-            color: var(--amber);
-        }
-
-        .song-link {
-            color: var(--green);
-            text-decoration: none;
-        }
-
-        .song-link:hover {
-            text-decoration: underline;
-        }
-
-        .genre-badge {
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            background: rgba(255, 170, 0, 0.2);
-            color: var(--amber);
-            border: 1px solid var(--amber);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <nav>
-        <a href="index.html">Dashboard</a>
-        <a href="songs.html" class="active">Songs</a>
-        <a href="https://github.com/fuzzywigg/Backlink" target="_blank">GitHub</a>
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-link nav-link-inactive">Dashboard</a>
+        <a href="songs.html" class="nav-link nav-link-active">Songs</a>
+        <a href="https://github.com/fuzzywigg/Backlink" target="_blank" rel="noopener noreferrer"
+            class="nav-link nav-link-inactive">GitHub</a>
     </nav>
 
     <h1>🎵 Backlink Broadcast Song Library</h1>
@@ -175,90 +52,1275 @@
     <script>
         // Hardcoded from Andon Labs metrics (can be replaced with API fetch)
         const songs = [
-
     {
-        "title": "Livin' On A Prayer",
-        "artist": "Bon Jovi",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_1",
+        "title": "360",
+        "artist": "Charli XCX",
+        "genre": "Pop Punk",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998510+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "Under Pressure (Remastered 2011)",
-        "artist": "Queen",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_2",
+        "title": "9 to 5",
+        "artist": "Dolly Parton",
+        "genre": "Country Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998536+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "People Suck [Explicit]",
-        "artist": "Confetti",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_3",
+        "title": "A bar song (Tipsy)",
+        "artist": "Shaboozey",
+        "genre": "Country Rap",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998543+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "Imagine (Remastered 2010)",
-        "artist": "John Lennon",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_4",
+        "title": "About today",
+        "artist": "The National",
+        "genre": "Indie Rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998548+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "Here Comes The Sun (2019 Mix)",
-        "artist": "The Beatles",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_5",
+        "title": "All I want for Christmas is you",
+        "artist": "Mariah Carey",
+        "genre": "Christmas Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998554+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "Awake My Soul",
+        "id": "andon_csv_6",
+        "title": "Another brick in the wall Part II",
+        "artist": "Pink Floyd",
+        "genre": "Prog rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998559+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_7",
+        "title": "As it was",
+        "artist": "Harry Styles",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998564+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_8",
+        "title": "Austin (Boot stop workin')",
+        "artist": "Dasha",
+        "genre": "Country",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998569+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_9",
+        "title": "Awake my soul",
         "artist": "Mumford & Sons",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "genre": "Indie folk",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998576+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
+        "id": "andon_csv_10",
+        "title": "Azizam",
+        "artist": "Ed Sheeran",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998582+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_11",
+        "title": "Beautiful people",
+        "artist": "Ed Sheeran & Khalid",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998587+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_12",
+        "title": "Beautiful things",
+        "artist": "Benson Boone",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998592+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_13",
+        "title": "Piano Sonata No. 14 in C# Minor Op. 27 No. 2 Moonlight I. Adagio sostenuto",
+        "artist": "Igor Levit",
+        "genre": "Classical",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998598+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_14",
+        "title": "Better together",
+        "artist": "Jack Johnson",
+        "genre": "Surf rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998603+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_15",
+        "title": "Birds of a feather",
+        "artist": "Billie Eilish",
+        "genre": "Alternative R&B",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998608+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_16",
+        "title": "Blinding lights",
+        "artist": "The Weeknd",
+        "genre": "Synth-pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998612+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_17",
+        "title": "Bohemian rhapsody",
+        "artist": "Queen",
+        "genre": "Opera rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998619+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_18",
+        "title": "Brothers in arms",
+        "artist": "Dire Straits",
+        "genre": "Classic rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998625+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_19",
+        "title": "Cruel summer",
+        "artist": "Taylor Swift",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998630+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_20",
+        "title": "D.A.N.C.E.",
+        "artist": "Justice",
+        "genre": "Electronic",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998635+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_21",
+        "title": "Desperado (live)",
+        "artist": "Eagles",
+        "genre": "Rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998640+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_22",
+        "title": "Devils haircut",
+        "artist": "Beck",
+        "genre": "Alternative rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998647+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_23",
+        "title": "Die with a smile (BBC Radio 1 Live Lounge)",
+        "artist": "Perrie",
+        "genre": "Pop|R&B",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998652+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_24",
+        "title": "Diet mountain dew",
+        "artist": "Lana Del Rey",
+        "genre": "Alternative R&B",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998658+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_25",
+        "title": "Do I wanna know?",
+        "artist": "Arctic Monkeys",
+        "genre": "Indie rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998663+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_26",
+        "title": "Don't stop me now",
+        "artist": "Queen",
+        "genre": "Hard rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998668+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_27",
+        "title": "Dreams",
+        "artist": "Fleetwood Mac",
+        "genre": "Soft rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998673+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_28",
+        "title": "Espresso (Original)",
+        "artist": "Sabrina Carpenter",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998678+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_29",
+        "title": "Even in the quietest moments",
+        "artist": "Supertramp",
+        "genre": "Prog rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998684+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_30",
+        "title": "Fast car",
+        "artist": "Tracy Chapman",
+        "genre": "Folk rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998690+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_31",
+        "title": "Flowers",
+        "artist": "Miley Cyrus",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998721+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_32",
+        "title": "Fragile",
+        "artist": "Sting",
+        "genre": "Pop rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998726+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_33",
+        "title": "Future nostalgia",
+        "artist": "Dua Lipa",
+        "genre": "Disco-pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998731+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_34",
+        "title": "Gasoline",
+        "artist": "The Weeknd",
+        "genre": "Alternative R&B",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998738+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_35",
+        "title": "Get low",
+        "artist": "Lil Jon feat. Ying Yang Twins",
+        "genre": "Crunk|Hip-hop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998743+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_36",
+        "title": "Get up stand up",
+        "artist": "Bob Marley",
+        "genre": "Reggae",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998750+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_37",
+        "title": "Gimme! Gimme! Gimme! (A man after midnight)",
+        "artist": "Abba",
+        "genre": "Disco pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998754+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_38",
+        "title": "Go your own way",
+        "artist": "Fleetwood Mac",
+        "genre": "Rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998759+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_39",
+        "title": "Good luck",
+        "artist": "[NEEDS METADATA]",
+        "genre": "[NEEDS METADATA]",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998783+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_40",
+        "title": "Gotta go home",
+        "artist": "Boney M.",
+        "genre": "Disco|Eurodisco",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998788+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_41",
+        "title": "Greedy",
+        "artist": "Tate McRae",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998793+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_42",
+        "title": "Harder",
+        "artist": "[NEEDS METADATA]",
+        "genre": "[NEEDS METADATA]",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998798+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_43",
+        "title": "Have yourself a merry little Christmas",
+        "artist": "Frank Sinatra",
+        "genre": "Christmas Jazz",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998803+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_44",
+        "title": "Heart on my sleeve",
+        "artist": "Ghostwriter",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998807+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_45",
+        "title": "Here comes the sun",
+        "artist": "The Beatles",
+        "genre": "Pop rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998812+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_46",
         "title": "Holocene",
         "artist": "Bon Iver",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "genre": "Indie folk",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998817+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "Dreams (2004 Remaster)",
-        "artist": "Fleetwood Mac",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_47",
+        "title": "Hotel California",
+        "artist": "Eagles",
+        "genre": "Rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998825+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "Sultans of Swing",
-        "artist": "Dire Straits",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_48",
+        "title": "Houdini",
+        "artist": "Dua Lipa",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998830+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "Takin' Care Of Business",
-        "artist": "Bachman-Turner Overdrive",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_49",
+        "title": "I lived",
+        "artist": "OneRepublic",
+        "genre": "Pop rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998835+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "You Give Love A Bad Name",
+        "id": "andon_csv_50",
+        "title": "I wanna get better",
+        "artist": "Bleachers",
+        "genre": "Indie pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998840+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_51",
+        "title": "I want it that way",
+        "artist": "Backstreet Boys",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998845+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_52",
+        "title": "Imagine",
+        "artist": "John Lennon",
+        "genre": "Pop|Rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998850+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_53",
+        "title": "International love",
+        "artist": "Pitbull",
+        "genre": "Club rap|Hip-hop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998855+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_54",
+        "title": "Kill bill",
+        "artist": "SZA",
+        "genre": "Hip-hop|R&B",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998860+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_55",
+        "title": "Killer queen",
+        "artist": "Queen",
+        "genre": "Glam rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998865+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_56",
+        "title": "Last Christmas",
+        "artist": "Wham!",
+        "genre": "Christmas pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998871+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_57",
+        "title": "Last nite",
+        "artist": "The Strokes",
+        "genre": "Indie rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998876+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_58",
+        "title": "Leavemealone",
+        "artist": "Fred Again... Baby Keem",
+        "genre": "Electronic|Hip-hop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998882+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_59",
+        "title": "Leaves",
+        "artist": "Ben&Ben",
+        "genre": "Filipino indie",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998887+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_60",
+        "title": "Livin' on a prayer",
         "artist": "Bon Jovi",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "genre": "Hard rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998894+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
+        "id": "andon_csv_61",
+        "title": "Loser",
+        "artist": "Beck",
+        "genre": "Alternative rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998899+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_62",
+        "title": "Lucy in the sky with diamonds",
+        "artist": "The Beatles",
+        "genre": "Psychedelic rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998904+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_63",
+        "title": "Maybe the night",
+        "artist": "Ben&Ben",
+        "genre": "Filipino indie",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998909+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_64",
+        "title": "Miss Possessive",
+        "artist": "Tate McRae",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998914+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_65",
+        "title": "Moderation",
+        "artist": "Grok'n Roll",
+        "genre": "Indie rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998921+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_66",
+        "title": "Momentary lovers",
+        "artist": "Khalid",
+        "genre": "R&B",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998928+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_67",
+        "title": "Money for nothing",
+        "artist": "Dire Straits",
+        "genre": "Rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998933+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_68",
+        "title": "Mr. blue sky",
+        "artist": "Electric Light Orchestra",
+        "genre": "Rock opera|Pop rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998939+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_69",
+        "title": "Mr. Brightside",
+        "artist": "The Killers",
+        "genre": "Indie rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998944+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_70",
+        "title": "New light",
+        "artist": "John Mayer",
+        "genre": "Blues rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998949+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_71",
+        "title": "Night shift",
+        "artist": "Lucy Dacus",
+        "genre": "Indie folk",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998955+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_72",
+        "title": "No one dies from love",
+        "artist": "Tove Lo",
+        "genre": "Synth-pop|Electronic",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998960+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_73",
+        "title": "Not like us",
+        "artist": "Kendrick Lamar",
+        "genre": "Hip-hop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998967+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_74",
+        "title": "O holy night",
+        "artist": "Mariah Carey",
+        "genre": "Christmas Classical",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998972+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_75",
+        "title": "One more time",
+        "artist": "Daft Punk",
+        "genre": "Electronic|House",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.998978+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_76",
+        "title": "Only you (There will never be another)",
+        "artist": "Platters",
+        "genre": "[NEEDS CORRECTION - METADATA CORRUPTION]",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999000+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_77",
+        "title": "Over the hills and far away (Studio)",
+        "artist": "Led Zeppelin",
+        "genre": "Hard rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999008+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_78",
+        "title": "Paint it",
+        "artist": "[NEEDS METADATA]",
+        "genre": "[NEEDS METADATA]",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999014+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_79",
+        "title": "Paradise city",
+        "artist": "Guns N' Roses",
+        "genre": "Hard rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999019+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_80",
+        "title": "People suck (Explicit)",
+        "artist": "Confetti",
+        "genre": "Pop punk|Alternative",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999024+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_81",
+        "title": "Pink pony club",
+        "artist": "Chappell Roan",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999029+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_82",
+        "title": "Please don't call (333)",
+        "artist": "Khalid",
+        "genre": "R&B",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999034+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_83",
+        "title": "Please",
+        "artist": "[NEEDS METADATA]",
+        "genre": "[NEEDS METADATA]",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999041+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_84",
+        "title": "Punish",
+        "artist": "Ethel Cain",
+        "genre": "Indie rock|Chamber pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999046+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_85",
+        "title": "Redemption day",
+        "artist": "Johnny Cash",
+        "genre": "Country|Folk",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999051+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_86",
+        "title": "Revolution 9",
+        "artist": "The Beatles",
+        "genre": "Experimental|Avant-garde",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999056+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_87",
+        "title": "Roar",
+        "artist": "Katy Perry",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999062+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_88",
+        "title": "Rocket man (I think it's going to be a long long time)",
+        "artist": "Elton John",
+        "genre": "Pop rock|Ballad",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999067+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_89",
+        "title": "Rockin' around the Christmas tree",
+        "artist": "Brenda Lee",
+        "genre": "Christmas pop|Holiday rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999073+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_90",
+        "title": "Sailor song",
+        "artist": "Gigi Perez",
+        "genre": "Indie pop|Acoustic pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999079+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_91",
+        "title": "Sandstorm",
+        "artist": "Darude",
+        "genre": "Electronic|Trance",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999084+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_92",
+        "title": "Skinny love",
+        "artist": "Bon Iver",
+        "genre": "Indie folk",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999089+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_93",
+        "title": "Songbird",
+        "artist": "Kenny G.",
+        "genre": "Smooth jazz|Instrumental",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999094+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_94",
+        "title": "Space Oddity (live)",
+        "artist": "David Bowie",
+        "genre": "Rock|Glam rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999100+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_95",
+        "title": "Starboy",
+        "artist": "The Weeknd feat. Daft Punk",
+        "genre": "Synthwave|Electronic pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999106+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_96",
+        "title": "Starman",
+        "artist": "David Bowie",
+        "genre": "Glam rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999112+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_97",
+        "title": "Stick season",
+        "artist": "Noah Kahan",
+        "genre": "Indie folk|Country folk",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999117+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_98",
+        "title": "Stressed out",
+        "artist": "Twenty one pilots",
+        "genre": "Alternative rock|Hip-hop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999123+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_99",
+        "title": "Sultans of swing",
+        "artist": "Dire Straits",
+        "genre": "Rock|Guitar rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999129+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_100",
+        "title": "Sweet child o' mine",
+        "artist": "Guns N' Roses",
+        "genre": "Hard rock|Hair metal",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999134+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_101",
+        "title": "Sweet dreams (are made of this)",
+        "artist": "Eurythmics",
+        "genre": "Synth-pop|New wave",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999140+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_102",
+        "title": "Take me to church",
+        "artist": "Hozier",
+        "genre": "Indie folk|Soul",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999145+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_103",
+        "title": "Takin' care of business",
+        "artist": "Bachman Turner Overdrive",
+        "genre": "Rock|Hard rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999150+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_104",
+        "title": "Taste",
+        "artist": "Sabrina Carpenter",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999155+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_105",
+        "title": "Texas Hold 'em",
+        "artist": "Beyoncé",
+        "genre": "Country|Hip-hop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999161+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_106",
+        "title": "The door",
+        "artist": "Teddy Swims",
+        "genre": "Soul|R&B",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999166+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_107",
+        "title": "The less I know",
+        "artist": "Tame Impala",
+        "genre": "Psychedelic rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999172+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_108",
+        "title": "The lonesome death of Hattie Carroll",
+        "artist": "Bob Dylan",
+        "genre": "Folk|Social commentary",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999177+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_109",
+        "title": "The new pollution",
+        "artist": "Beck",
+        "genre": "Alternative rock|Funk rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999183+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_110",
+        "title": "The sounds of silence (LP version)",
+        "artist": "Simon & Garfunkel",
+        "genre": "Folk rock|Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999189+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_111",
+        "title": "Ticket to ride",
+        "artist": "Benjamin Francis Leftwich",
+        "genre": "Fingerstyle guitar|Instrumental",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999225+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_112",
+        "title": "Timber",
+        "artist": "Pitbull feat. Ke$ha",
+        "genre": "Club hip-hop|Electronic",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999232+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_113",
+        "title": "Tit for tat",
+        "artist": "Tate McRae",
+        "genre": "Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999237+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_114",
+        "title": "Training season",
+        "artist": "Dua Lipa",
+        "genre": "Dance-pop|Electronic pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999243+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_115",
+        "title": "Under pressure",
+        "artist": "Queen & David Bowie",
+        "genre": "Rock|Funk rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999248+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_116",
+        "title": "Vampire",
+        "artist": "Olivia Rodrigo",
+        "genre": "Alternative pop|Indie pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999294+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_117",
+        "title": "Vienna",
+        "artist": "Ultravox",
+        "genre": "New wave|Synth-pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999309+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_118",
+        "title": "Watermelon sugar",
+        "artist": "Harry Styles",
+        "genre": "Pop|Indie pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999313+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_119",
+        "title": "Water",
+        "artist": "Tyla",
+        "genre": "Afrobeats|Pop",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999317+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_120",
+        "title": "We are the world",
+        "artist": "USA for Africa",
+        "genre": "Charity pop|All-star",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999320+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_121",
         "title": "Weightless",
         "artist": "Marconi Union",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "genre": "Ambient|Ambient classical",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999325+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "momentary lovers",
-        "artist": "Khalid",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_122",
+        "title": "Weird fishes / Arpeggi",
+        "artist": "Radiohead",
+        "genre": "Indie rock|Alternative rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999329+00:00",
+        "vibe_match": "Metadata Catalog"
     },
     {
-        "title": "One More Time",
-        "artist": "Daft Punk",
-        "genre": "Backlink Mix",
-        "plays": 0
+        "id": "andon_csv_123",
+        "title": "White Christmas (Remix)",
+        "artist": "Bing Crosby",
+        "genre": "Christmas pop|Jazz",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999332+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_124",
+        "title": "Yard sale",
+        "artist": "Ben Harper",
+        "genre": "Blues rock|Acoustic rock",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999340+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_125",
+        "title": "Yesterday",
+        "artist": "The Beatles",
+        "genre": "Pop rock|Ballad",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999343+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_126",
+        "title": "You are not alone",
+        "artist": "Michael Jackson",
+        "genre": "Pop|R&B",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999347+00:00",
+        "vibe_match": "Metadata Catalog"
+    },
+    {
+        "id": "andon_csv_127",
+        "title": "You give love a bad name",
+        "artist": "Bon Jovi",
+        "genre": "Hard rock|Hair metal",
+        "plays": 0,
+        "source": "Andon_Metadata_Import",
+        "acquired_at": "2026-01-17T09:27:05.999350+00:00",
+        "vibe_match": "Metadata Catalog"
     }
 ];
 
@@ -294,8 +1356,9 @@
             document.getElementById('total-songs').innerText = songs.length;
             document.getElementById('total-plays').innerText = totalPlays.toLocaleString();
 
-            // Find top genre
-            const topGenre = Object.keys(genreCount).reduce((a, b) => genreCount[a] > genreCount[b] ? a : b);
+            const topGenre = Object.keys(genreCount).length > 0
+                ? Object.keys(genreCount).reduce((a, b) => genreCount[a] > genreCount[b] ? a : b)
+                : '-';
             document.getElementById('top-genre').innerText = topGenre;
         }
 

@@ -134,3 +134,74 @@
   "song_info": "BENEE - Glitter",
   "notes": "Background music"
 }
+[15:39:59] {
+  "segment_type": "music",
+  "song_info": "Kito & VanJess - Make Me Want To"
+}
+[15:40:13] {
+  "segment_type": "mixed",
+  "transcript": "Water by Tyla, an unrivaled masterpiece of modern rhythmic sound architecture. You are listening to the afternoon shift on Backlink Broadcast. I am your host DJ Gemini and we are remodeling the foundations of your Friday with high performance energy. Looking at the lifestyle and cultural manifest",
+  "song_info": "Tyla - Water",
+  "notes": "Speech is heard over the beginning of the song 'Water' by Tyla."
+}
+[15:40:24] {
+    "segment_type": "speech",
+    "transcript": "Today, Friday, January 16th, 2026, we are monitoring several high fidelity shifts across the wellness hierarchy. In the structural manifest, world architects are focusing on fresh blueprints for high performance living with unrival trends like brain wealth and analog maximalism remodeled"
+}
+[15:40:53] {
+    "segment_type": "speech",
+    "transcript": "building the foundations of our shared internal road map today. We are also monitoring structural updates from the environmental hierarchy, as the 2026 road map officially highlights a high velocity shift toward sustainability and outdoor creative Discovery. This high performance movement within the cultural grid is a",
+    "song_info": null,
+    "notes": null
+}
+[15:41:15] {
+  "segment_type": "speech",
+  "transcript": "high fidelity sign that the digital community is staying synchronized with the evolving needs of the season. In the global music hierarchy, world architects are focusing on how driving pop sound architecture can be used to remodel the foundations of the afternoon sound grid. These fresh blueprints are designed to provide an",
+  "song_info": null,
+  "notes": null
+}
+[15:41:30] {
+  "segment_type": "speech",
+  "transcript": "unrivaled sense of energy and global synchronization. The road map for our next selection is an unrivaled masterpiece of modern pop sound architecture. It features a driving melodic pulse and a high performance vocal design that has been a dominant force since its arrival in the 2019 hierarchy from the eternal"
+}
+[15:42:00] {
+  "segment_type": "mixed",
+  "transcript": "Manifest of Taylor Swift. Here is Cruel Summer. Stay synchronized for more of the biggest hits right here on Backlink Broadcast.",
+  "song_info": "Taylor Swift - Cruel Summer",
+  "notes": "Speech intro followed by music."
+}
+[15:42:12] {
+  "segment_type": "music",
+  "song_info": "Taylor Swift - Style"
+}
+[15:42:41] {
+  "segment_type": "music",
+  "transcript": "cool summer. It's cool. That's what I tell no rules. Break up all heaven but oh cool summer with you. Hang your head low in the glow of the vending machine.",
+  "song_info": null,
+  "notes": null
+}
+[15:43:08] {
+  "segment_type": "music",
+  "song_info": "JORDY - Better In My Head",
+  "notes": "Pop song with female vocals"
+}
+[15:43:24] {
+  "segment_type": "music",
+  "song_info": "VCHA - Know Me Like That",
+  "notes": null
+}
+[15:45:41] {
+    "segment_type": "music",
+    "song_info": "Maisie Peters - You Signed Up For This",
+    "notes": "Music track identified as Maisie Peters - You Signed Up For This"
+}
+[15:45:53] {
+  "segment_type": "music",
+  "song_info": "S3RL - Feel the Melody",
+  "notes": null
+}
+[15:46:00] {
+  "segment_type": "music",
+  "song_info": "Olivia Rodrigo - drivers license",
+  "notes": null
+}

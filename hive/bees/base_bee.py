@@ -9,6 +9,7 @@ Updated to support Constitutional Governance.
 import json
 import logging
 import uuid
+import time
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from pathlib import Path
@@ -37,7 +38,6 @@ class BaseBee(ABC):
 
     def __init__(self, hive_path: str | None = None, gateway: Any = None):
         """
-        Initialize the bee with path to hive.
         Initialize the bee.
 
         Args:
@@ -55,10 +55,11 @@ class BaseBee(ABC):
 
         if hive_path is None:
             # Default to hive directory relative to this file
+            # hive/bees/base_bee.py -> parent=bees -> parent=hive -> parent=root
             hive_path = Path(__file__).parent.parent.parent
-        from hive.utils.wisdom_manager import WisdomManager
-
+        
         self.hive_path = Path(hive_path)
+        # Standard structure: root/hive/honeycomb
         self.honeycomb_path = self.hive_path / "hive" / "honeycomb"
         self.gateway = gateway
 
@@ -75,13 +76,14 @@ class BaseBee(ABC):
             self.logger.warning(f"Gemini 3 Client failed to initialize: {e}")
 
         # Initialize State Manager
-
-        self.state_manager = StateManager(self.hive_path)
+        # StateManager expects the path to the 'hive' directory to find 'honeycomb' inside it
+        self.state_manager = StateManager(self.hive_path / "hive")
 
         # Initialize Storage Adapter
         self.storage = StorageAdapter(self.honeycomb_path)
 
         # Initialize Wisdom Manager (System 3)
+        from hive.utils.wisdom_manager import WisdomManager
         self.wisdom_manager = WisdomManager(self.hive_path)
 
     @abstractmethod
@@ -96,6 +98,7 @@ class BaseBee(ABC):
         """
         Main entry point. Wraps work() with validation and error handling.
         """
+        self.started_at = datetime.now(timezone.utc)
         start_time = time.time()
         self.log(f"Starting work... Task: {task.get('id') if task else 'None'}")
 
@@ -118,15 +121,18 @@ class BaseBee(ABC):
             work_result = self.work(task)
 
             # 3. Log Success
-            self.log("Work complete.")
+            self.completed_at = datetime.now(timezone.utc)
+            duration = time.time() - start_time
+            self.log(f"Work complete in {duration:.2f}s")
             return {
                 "success": True,
                 "result": work_result,
                 "bee_id": self.bee_id,
-                "duration_seconds": time.time() - start_time,
+                "duration_seconds": duration,
             }
 
         except Exception as e:
+            self.completed_at = datetime.now(timezone.utc)
             self.log(f"CRITICAL FAILURE: {e}", level="error")
             return {
                 "success": False,
@@ -136,47 +142,26 @@ class BaseBee(ABC):
             }
 
     # ─────────────────────────────────────────────────────────────
-    # STATE / HONEYCOMB INTERFACE (Updated)
+    # STATE / HONEYCOMB INTERFACE
     # ─────────────────────────────────────────────────────────────
 
     def _read_json(self, filename: str) -> dict[str, Any]:
-        """Read a JSON file from honeycomb."""
-        # Check for path traversal
-        safe_path = (self.honeycomb_path / filename).resolve()
-        # In testing with mock paths, resolve() might behave differently if files don't exist?
-        # But we create them in fixtures.
-        # Assuming simple check for now.
-
+        """Read a JSON file using StorageAdapter."""
         if filename == "state.json":
             return self.state_manager.read_state()
 
-        if not safe_path.exists():
-            return {}
-        try:
-            with open(safe_path) as f:
-                return json.load(f)
-        except json.JSONDecodeError:
-            return {}
+        return self.storage.read(filename)
 
     def _write_json(self, filename: str, data: dict[str, Any]) -> None:
-        """Write a JSON file to honeycomb."""
-        safe_path = (self.honeycomb_path / filename).resolve()
-
+        """Write a JSON file using StorageAdapter."""
         if filename == "state.json":
             self.state_manager.write_state(data, self.BEE_TYPE)
             return
 
-        try:
-            # Atomic write for other files
-            temp_path = safe_path.with_suffix(".tmp")
-            with open(temp_path, "w") as f:
-                json.dump(data, f, indent=2)
-            temp_path.replace(safe_path)
-        except Exception as e:
-            self.log(f"Error writing {filename}: {e}", level="error")
+        self.storage.write(filename, data)
 
     # ─────────────────────────────────────────────────────────────
-    # CONVENIENCE METHODS (Restored for Backwards Compat)
+    # CONVENIENCE METHODS
     # ─────────────────────────────────────────────────────────────
 
     def read_state(self) -> dict[str, Any]:
@@ -258,108 +243,47 @@ class BaseBee(ABC):
             if "completed" not in tasks:
                 tasks["completed"] = []
             tasks["completed"].append(found_task)
-
-    def _validate_path(self, filename: str) -> Path:
-        """
-        Validate that the filename results in a path inside honeycomb.
-        Prevents path traversal attacks.
-        """
-        # Resolve the honeycomb path to absolute path
-        honeycomb = self.honeycomb_path.resolve()
-
-        # Join and resolve the target path
-        target = (self.honeycomb_path / filename).resolve()
-
-        # Check if target is relative to honeycomb
-        # is_relative_to is available in Python 3.9+
-        if not target.is_relative_to(honeycomb):
-            raise ValueError(f"Security Alert: Path traversal detected - {filename}")
-
-        return target
-
-    def _read_json(self, filename: str) -> dict[str, Any]:
-        """Read a JSON file from honeycomb."""
-        # Resolve to absolute paths for security check
-        base_path = self.honeycomb_path.resolve()
-        filepath = (self.honeycomb_path / filename).resolve()
-
-        # Ensure the resolved path is within the honeycomb directory
-        if not filepath.is_relative_to(base_path):
-            self.log(f"SECURITY ALERT: Path traversal attempt detected: {filename}", level="error")
-            raise ValueError(f"Path traversal detected: {filename}")
-
-        if filepath.exists():
-            with open(filepath) as f:
-                return json.load(f)
-        return {}
-
-    def _write_json(self, filename: str, data: dict[str, Any]) -> None:
-        """Write a JSON file to honeycomb."""
-        # Resolve to absolute paths for security check
-        base_path = self.honeycomb_path.resolve()
-        filepath = (self.honeycomb_path / filename).resolve()
-
-        # Ensure the resolved path is within the honeycomb directory
-        if not filepath.is_relative_to(base_path):
-            self.log(f"SECURITY ALERT: Path traversal attempt detected: {filename}", level="error")
-            raise ValueError(f"Path traversal detected: {filename}")
-
-        with open(filepath, "w") as f:
-            json.dump(data, f, indent=2)
-
-    def read_intel(self) -> dict[str, Any]:
-        """Read intel.json."""
-        return self._read_json("intel.json")
-
-    def update_intel(self, updates: dict[str, Any]) -> None:
-        """Update intel.json."""
-        intel = self.read_intel()
-        intel.update(updates)
-        self._write_json("intel.json", intel)
-
-    def add_listener_intel(self, listener_id: str, data: dict[str, Any]) -> None:
-        """Add specific listener intel."""
-        intel = self.read_intel()
-        if "listeners" not in intel:
-            intel["listeners"] = {}
-
-        current = intel["listeners"].get(listener_id, {})
-        current.update(data)
-        current["last_seen"] = datetime.now(timezone.utc).isoformat()
-
-    def complete_task(self, task_id: str, result: Any = None) -> None:
-        """Mark a task as completed."""
-        tasks = self.read_tasks()
-        for i, task in enumerate(tasks["in_progress"]):
-            if task["id"] == task_id:
-                task = tasks["in_progress"].pop(i)
-                task["status"] = "completed"
-                task["completed_at"] = datetime.now(timezone.utc).isoformat()
-                task["result"] = result
-                tasks["completed"].append(task)
-                self._write_json("tasks.json", tasks)
-                return
+            
+            self._write_json("tasks.json", tasks)
 
     def fail_task(self, task_id: str, error: str) -> None:
         """Mark a task as failed (may retry if attempts < max)."""
         tasks = self.read_tasks()
-        for i, task in enumerate(tasks["in_progress"]):
-            if task["id"] == task_id:
-                task = tasks["in_progress"].pop(i)
-                task["last_error"] = error
-                task["failed_at"] = datetime.now(timezone.utc).isoformat()
+        in_progress = tasks.get("in_progress", [])
+        
+        found_index = -1
+        found_task = None
 
-                if task["attempts"] < task["max_attempts"]:
-                    # Retry - put back in pending
-                    task["status"] = "pending"
-                    tasks["pending"].append(task)
-                else:
-                    # Max attempts reached
-                    task["status"] = "failed"
-                    tasks["failed"].append(task)
+        for i, task in enumerate(in_progress):
+            if task.get("id") == task_id:
+                found_index = i
+                found_task = task
+                break
+                
+        if found_task:
+            tasks["in_progress"].pop(found_index)
+            found_task["last_error"] = error
+            found_task["failed_at"] = datetime.now(timezone.utc).isoformat()
+            
+            # Simple retry logic
+            attempts = found_task.get("attempts", 0) + 1
+            found_task["attempts"] = attempts
+            max_attempts = found_task.get("max_attempts", 3)
 
-                self._write_json("tasks.json", tasks)
-                return
+            if attempts < max_attempts:
+                # Retry - put back in pending
+                found_task["status"] = "pending"
+                if "pending" not in tasks:
+                    tasks["pending"] = []
+                tasks["pending"].append(found_task)
+            else:
+                # Max attempts reached
+                found_task["status"] = "failed"
+                if "failed" not in tasks:
+                    tasks["failed"] = []
+                tasks["failed"].append(found_task)
+
+            self._write_json("tasks.json", tasks)
 
     def read_intel(self) -> dict[str, Any]:
         """Read the accumulated intelligence."""
@@ -377,19 +301,27 @@ class BaseBee(ABC):
         else:
             intel[category][key] = data
 
+        if "_meta" not in intel:
+            intel["_meta"] = {}
         intel["_meta"]["last_updated"] = datetime.now(timezone.utc).isoformat()
+        self._write_json("intel.json", intel)
+    
+    def update_intel(self, updates: dict[str, Any]) -> None:
+        """Direct update to intel.json."""
+        intel = self.read_intel()
+        intel.update(updates)
         self._write_json("intel.json", intel)
 
     def add_listener_intel(self, node_id: str, intel_data: dict[str, Any]) -> None:
         """Convenience method to add listener intel."""
-        existing = self.read_intel().get("listeners", {}).get("known_nodes", {}).get(node_id, {})
+        intel = self.read_intel()
+        existing = intel.get("listeners", {}).get("known_nodes", {}).get(node_id, {})
 
         # Ensure notes are appended, not replaced
         if "notes" in intel_data and "notes" in existing:
             intel_data["notes"] = existing["notes"] + intel_data["notes"]
 
-        # Ensure numeric fields like 'dao_credits' are accumulated, not
-        # overwritten
+        # Ensure numeric fields are accumulated
         for field in ["dao_credits", "donation_total", "interaction_count"]:
             if field in intel_data and field in existing:
                 intel_data[field] = existing[field] + intel_data[field]
@@ -411,56 +343,13 @@ class BaseBee(ABC):
             "from": self.BEE_TYPE,
             "at": datetime.now(timezone.utc).isoformat(),
         }
-
-    # ─────────────────────────────────────────────────────────────
-    # CORE BEE LIFECYCLE
-    # ─────────────────────────────────────────────────────────────
-
-    def run(self, task: dict[str, Any] | None = None) -> dict[str, Any]:
-        """
-        Execute the bee's work cycle.
-
-        Args:
-            task: Optional specific task to work on. If None, bee may
-                  look for tasks or do general work.
-
-        Returns:
-            Dict with 'success', 'result', and optional 'error' keys.
-        """
-        self.started_at = datetime.now(timezone.utc)
-        self.log("Starting work cycle")
-
-        try:
-            result = self.work(task)
-            self.completed_at = datetime.now(timezone.utc)
-            duration = (self.completed_at - self.started_at).total_seconds()
-            self.log(f"Completed in {duration:.2f}s")
-
-            return {
-                "success": True,
-                "result": result,
-                "bee_id": self.bee_id,
-                "duration_seconds": duration,
-            }
-
-        except Exception as e:
-            self.completed_at = datetime.now(timezone.utc)
-            self.log(f"Failed with error: {str(e)}", level="error")
-
-            return {"success": False, "error": str(e), "bee_id": self.bee_id}
-
-    @abstractmethod
-    def work(self, task: dict[str, Any] | None = None) -> Any:
-        """
-        The bee's main work method. Override in subclasses.
-
-        Args:
-            task: Optional task payload to work on.
-
-        Returns:
-            Result of the work (format depends on bee type).
-        """
-        pass
+        
+        category = "priority" if priority else "normal"
+        if category not in state["alerts"]:
+            state["alerts"][category] = []
+        state["alerts"][category].append(alert)
+        
+        self.write_state(state)
 
     # ─────────────────────────────────────────────────────────────
     # UTILITY METHODS
@@ -469,22 +358,14 @@ class BaseBee(ABC):
     def log(self, message: str, level: str = "info") -> None:
         """Log a message (for debugging/monitoring)."""
         timestamp = datetime.now(timezone.utc).isoformat()
-        print(f"[{timestamp}] [{level.upper()}] [{self.bee_id}] {message}")
-
-    def _read_json(self, filename: str) -> dict[str, Any]:
-        """Read a JSON file using StorageAdapter."""
-        if filename == "state.json":
-            return self.state_manager.read_state()
-
-        return self.storage.read(filename)
-
-    def _write_json(self, filename: str, data: dict[str, Any]) -> None:
-        """Write a JSON file using StorageAdapter."""
-        if filename == "state.json":
-            self.state_manager.write_state(data, self.BEE_TYPE)
-            return
-
-        self.storage.write(filename, data)
+        print(f"[{timestamp}] [{level.upper()}] [{self.bee_id}] {message}") 
+        # Also use standard logger
+        if level.lower() == "error":
+            self.logger.error(message)
+        elif level.lower() == "warning":
+            self.logger.warning(message)
+        else:
+            self.logger.info(message)
 
     def _deep_merge(self, base: dict, updates: dict) -> dict:
         """Deep merge two dictionaries."""
@@ -499,11 +380,6 @@ class BaseBee(ABC):
     def _ask_llm_json(self, prompt_engineer: PromptEngineer, user_input: str) -> dict[str, Any]:
         """
         Structured LLM Query using Gemini 3 Native Structured Output.
-        Args:
-            prompt_engineer: Configured PromptEngineer instance.
-            user_input: The user/event trigger text.
-        Returns:
-            Dict parsed from JSON.
         """
         if not self.llm_client:
             return {"error": "LLM Client not initialized"}
@@ -525,22 +401,15 @@ class BaseBee(ABC):
         except Exception as w_err:
             self.log(f"Wisdom retrieval failed: {w_err}", level="warning")
 
-        system_prompt = prompt_engineer.build_system_prompt()
-        
         # Enforce Global JSON Preference
         prompt_engineer.add_constraint("OUTPUT MUST BE RAW JSON. NO PYTHON CODE BLOCKS.")
         system_prompt = prompt_engineer.build_system_prompt()
 
         try:
-            # Prepare schema for Gemini 3
-            # We assume prompt_engineer has a new method or we extract it purely from text for now
-            # For this step, we use the text-based prompting but enable thinking_level="low" for speed
-            # or "high" for complex logic.
-
             response = self.llm_client.generate_content(
                 prompt=f"{system_prompt}\n\nUSER INPUT: {user_input}",
-                thinking_level="low",  # Default to low for speed, subclass can override
-                response_schema=None,  # We are sticking to robust text parsing + prompt engineering for now to avoid schema Strictness hell
+                thinking_level="low",
+                response_schema=None, 
             )
 
             if "error" in response:
@@ -553,16 +422,11 @@ class BaseBee(ABC):
             self.log(f"LLM Structure Failure: {e}", level="error")
             return {"error": str(e)}
 
-    def log(self, message: str, level: str = "info") -> None:
-        """Log a message."""
-        print(f"[{datetime.now().isoformat()}] [{self.BEE_TYPE.upper()}] {message}")
-
 
 class EmployedBee(BaseBee):
     """
     A bee that has a specific role or employment (e.g. DJ, Researcher).
     """
-
     BEE_TYPE = "employed"
     CATEGORY = "content"
 
@@ -571,7 +435,6 @@ class ScoutBee(BaseBee):
     """
     A bee that looks for things (trends, sponsors).
     """
-
     BEE_TYPE = "scout"
     CATEGORY = "research"
 
@@ -580,6 +443,5 @@ class OnlookerBee(BaseBee):
     """
     A bee that observes (monitoring, logging).
     """
-
     BEE_TYPE = "onlooker"
     CATEGORY = "research"

@@ -1,15 +1,9 @@
-
 import json
 import logging
 import random
-import os
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, List
-
-from dotenv import load_dotenv
-from google import genai
-from google.genai import types
+from datetime import datetime, timezone
 
 from hive.bees.base_bee import EmployedBee
 from core_utils.ontology_manager import OntologyManager
@@ -24,7 +18,7 @@ class ConsultantBee(EmployedBee):
     Responsibilities:
     1. Read the 'External' library (grok_playlist.json).
     2. Consult Gemini to select tracks that match the current station Vibe + Global Trends.
-    3. 'Import' these tracks into the Hive Memory (intel.json) so the DJ can play them.
+    3. 'Import' these tracks into the Hive Memory (intel.json) as candidates.
     """
 
     BEE_TYPE = "consultant"
@@ -33,34 +27,8 @@ class ConsultantBee(EmployedBee):
 
     def __init__(self, hive_path: str | None = None):
         super().__init__(hive_path)
-        load_dotenv()
         self.ontology_manager = OntologyManager()
-        
-        # Initialize Gemini Client
-        api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-        print(f"DEBUG: Main Env Key found: {bool(api_key)}")
-        
-        if not api_key:
-             try:
-                 key_path = Path("hive/keys.json")
-                 print(f"DEBUG: Checking {key_path.absolute()}")
-                 if key_path.exists():
-                     with open(key_path) as f:
-                         data = json.load(f)
-                         api_key = data.get("GEMINI_API_KEY") or data.get("GOOGLE_API_KEY")
-                         print(f"DEBUG: Key loaded from file: {bool(api_key)}")
-             except Exception as e:
-                 print(f"DEBUG: Key load error: {e}")
-        
-        if api_key:
-            try: 
-                 self.client = genai.Client(api_key=api_key)
-                 print("DEBUG: Client initialized.")
-            except Exception as e:
-                 print(f"DEBUG: Client init crashed: {e}")
-                 self.client = None
-        else:
-            self.client = None
+        # self.llm_client is initialized in BaseBee
 
     def work(self, task: dict[str, Any] | None = None) -> dict[str, Any]:
         """
@@ -82,7 +50,6 @@ class ConsultantBee(EmployedBee):
         trends = intel.get("trends", {}).get("current", [])
         
         # 3. Consult LLM to pick CANDIDATES
-        # We ask the LLM to pick songs that match the vibe, using Grok as a menu
         selected_candidates = self._consult_llm(grok_source, ontology, trends, batch_size)
         
         # 4. Sync to Intel (As Candidates)
@@ -96,12 +63,19 @@ class ConsultantBee(EmployedBee):
 
     def _load_grok_library(self) -> List[dict]:
         """Loads the raw Grok playlist."""
-        path = Path("grok_playlist.json")
+        # Try finding it relative to hive_path or current dir
+        path = self.hive_path / "grok_playlist.json"
+        
         if not path.exists():
+            # Fallback to current working dir
+            path = Path("grok_playlist.json").resolve()
+            
+        if not path.exists():
+            self.log("grok_playlist.json not found.", level="warning")
             return []
         
         try:
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
                 return data.get("liked_songs", [])
         except Exception as e:
@@ -112,7 +86,7 @@ class ConsultantBee(EmployedBee):
         """
         Asks Gemini to act as a Music Curator picking candidates.
         """
-        if not self.client:
+        if not self.llm_client:
             # Fallback: Random sample if no LLM
             return random.sample(library, min(limit, len(library))) if library else []
 
@@ -132,21 +106,36 @@ class ConsultantBee(EmployedBee):
         {json.dumps(library_sample)}
         
         OUTPUT:
-        JSON list of track objects (keys: title, artist).
-        DO NOT return marked-down code blocks. REMOVE ```json text.
-        Add a 'reason' key explaining why it fits the vibe.
+        JSON list of track objects (keys: title, artist, reason).
+        Example: [{{"title": "Song", "artist": "Band", "reason": "Fits vibe"}}]
         """
         
         try:
-            response = self.client.models.generate_content(
-                model="gemini-2.0-flash-exp",
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
-                )
+            # Use generate_content with implicit schema via prompt or backend support
+            response = self.llm_client.generate_content(
+                prompt=prompt,
+                response_schema={"type": "ARRAY", "items": {"type": "OBJECT", "properties": {"title": {"type": "STRING"}, "artist": {"type": "STRING"}, "reason": {"type": "STRING"}}}},
+                thinking_level="low"
             )
-            text = response.text.replace('```json', '').replace('```', '').strip()
-            return json.loads(text)
+            
+            # Handle potential direct list return from Gemini3Client helper
+            if isinstance(response, list):
+                return response
+            
+            # Handle formatted dict
+            if isinstance(response, dict):
+                if "text" in response:
+                    text = response["text"].replace('```json', '').replace('```', '').strip()
+                    try:
+                        return json.loads(text)
+                    except:
+                        pass
+                
+                # If Gemini3Client returned other dict structure (e.g. error)
+                if "error" in response:
+                    self.log(f"LLM Error: {response['error']}", level="error")
+
+            return random.sample(library, min(limit, len(library))) if library else []
             
         except Exception as e:
             self.log(f"Consultation failed: {e}", level="error")
@@ -174,14 +163,12 @@ class ConsultantBee(EmployedBee):
                 "reason": track.get("reason", "Vibe Match")
             })
             
-        # Write back
-        target_path = Path("hive/honeycomb/intel.json")
-        with open(target_path, 'w') as f:
-            json.dump(intel, f, indent=2)
+        # Use BaseBee's update_intel
+        self.update_intel({"music_library": intel["music_library"]})
 
     def _sync_to_hive_memory(self, tracks: List[dict]):
         """
-        Updates intel.json 'music_library.owned' so DJ can see them.
+        Updates intel.json 'music_library.owned' directly (legacy/manual sync).
         """
         intel = self.read_intel()
         
@@ -189,12 +176,14 @@ class ConsultantBee(EmployedBee):
         if "music_library" not in intel:
             intel["music_library"] = {"owned": [], "rented": []}
         
+        if "owned" not in intel["music_library"]:
+            intel["music_library"]["owned"] = []
+
         current_titles = {t["title"].lower() for t in intel["music_library"]["owned"]}
         
         added_count = 0
         for track in tracks:
             if track["title"].lower() not in current_titles:
-                # Format for DJ Bee
                 new_track = {
                     "id": f"grok_{random.randint(1000,9999)}",
                     "title": track.get("title"),
@@ -208,14 +197,7 @@ class ConsultantBee(EmployedBee):
                 
         if added_count > 0:
             self.log(f"Synced {added_count} new tracks from Grok to Hive Memory.")
-            # Write back
-            # Note: In a real concurrent swarm, we'd use a lock or atomic write. 
-            # For this prototype, overwriting intel.json is the standard mechanic.
-            target_path = Path("hive/honeycomb/intel.json")
-            with open(target_path, 'w') as f:
-                json.dump(intel, f, indent=2)
-            
-            # Update Public Site
+            self.update_intel({"music_library": intel["music_library"]})
             self._update_public_site(intel["music_library"]["owned"])
 
     def _update_public_site(self, tracks: List[dict]):
@@ -223,7 +205,8 @@ class ConsultantBee(EmployedBee):
         Regenerates public/songs.html with the latest inventory.
         """
         try:
-            html_path = Path("public/songs.html")
+            html_path = self.hive_path / "public" / "songs.html"
+            
             if not html_path.exists():
                 return
                 
@@ -234,15 +217,12 @@ class ConsultantBee(EmployedBee):
                     "title": t.get("title", "Unknown"),
                     "artist": t.get("artist", "Unknown"),
                     "genre": "Backlink Mix",
-                    "plays": 0 # Placeholder until metrics are linked
+                    "plays": 0 
                 })
             
-            # Read existing HTML
-            with open(html_path, 'r', encoding='utf-8') as f:
-                content = f.read()
+            content = html_path.read_text(encoding='utf-8')
             
-            # Replace the JS data array
-            # Finding the start of the array
+            # Robust replacement? Still heuristic based on markers
             start_marker = "const songs = ["
             end_marker = "];"
             
@@ -250,23 +230,21 @@ class ConsultantBee(EmployedBee):
             if start_idx == -1:
                 return
                 
-            # Find the end of the array block (heuristic)
+            # Find the end of the array block
+            # We look for the next "];" after start
             end_idx = content.find(end_marker, start_idx)
             if end_idx == -1:
                 return
                 
             new_json = json.dumps(ui_tracks, indent=4)
             
-            # Reconstruct content
             new_content = (
                 content[:start_idx + len(start_marker)] + 
-                "\n" + new_json[1:-1] + # automated trimming of brackets to fit "const songs = [" ... "];"
+                "\n" + new_json[1:-1] + # trimmed brackets
                 content[end_idx:]
             )
             
-            with open(html_path, 'w', encoding='utf-8') as f:
-                f.write(new_content)
-                
+            html_path.write_text(new_content, encoding='utf-8')
             self.log("Updated public/songs.html with latest library.")
             
         except Exception as e:
@@ -274,4 +252,4 @@ class ConsultantBee(EmployedBee):
 
 if __name__ == "__main__":
     bee = ConsultantBee()
-    bee.work()
+    bee.run()
