@@ -1,0 +1,52 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "UHI Service Definition",
+    "description": "Standard definition for a Sovereign High Income Service",
+    "type": "object",
+    "properties": {
+        "service_name": {
+            "type": "string",
+            "description": "e.g., The Watchtower"
+        },
+        "version": {
+            "type": "string",
+            "default": "1.0.0"
+        },
+        "operator_wallet": {
+            "type": "string",
+            "description": "The Safe Vault address (Iron Dome)"
+        },
+        "pricing": {
+            "type": "object",
+            "properties": {
+                "asset": {
+                    "type": "string",
+                    "default": "USDC"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "interval": {
+                    "type": "string",
+                    "enum": [
+                        "one_time",
+                        "monthly",
+                        "per_request"
+                    ]
+                }
+            }
+        },
+        "deliverables": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "What the user gets (File, API Access, Report)"
+            }
+        }
+    },
+    "required": [
+        "service_name",
+        "operator_wallet",
+        "pricing"
+    ]
+}

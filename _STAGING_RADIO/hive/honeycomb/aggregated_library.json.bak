@@ -1,0 +1,915 @@
+[
+  {
+    "id": "novo_amor_anchor",
+    "title": "Anchor",
+    "artist": "Novo Amor",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "simple_plan_i'm_just_a_kid",
+    "title": "I'm Just a Kid",
+    "artist": "Simple Plan",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "lukas_graham_7_years",
+    "title": "7 Years",
+    "artist": "Lukas Graham",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "simple_plan_wake_me_up_(when_this_nightmare's_over)",
+    "title": "Wake Me Up (When This Nightmare's Over)",
+    "artist": "Simple Plan",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "twenty_one_pilots_stressed_out",
+    "title": "Stressed Out",
+    "artist": "Twenty One Pilots",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "nigel_stanford_cymatics",
+    "title": "Cymatics",
+    "artist": "Nigel Stanford",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "cody_carnes_too_good_to_not_believe",
+    "title": "Too Good To Not Believe",
+    "artist": "Cody Carnes",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "arcade_fire_crown_of_love",
+    "title": "Crown of Love",
+    "artist": "Arcade Fire",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "the_drums_days",
+    "title": "Days",
+    "artist": "The Drums",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "dry_cleaning_gary_ashby",
+    "title": "Gary Ashby",
+    "artist": "Dry Cleaning",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "keane_somewhere_only_we_know_(christmas_acoustic)",
+    "title": "Somewhere Only We Know (Christmas Acoustic)",
+    "artist": "Keane",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "vano3000_runaway",
+    "title": "Runaway",
+    "artist": "VANO3000",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "city_and_colour_the_girl",
+    "title": "The Girl",
+    "artist": "City and Colour",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "joy_division_love_will_tear_us_apart",
+    "title": "Love Will Tear Us Apart",
+    "artist": "Joy Division",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "bon_iver_holocene",
+    "title": "Holocene",
+    "artist": "Bon Iver",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "drew_holcomb_&_the_neighbors_you_invest_your_love",
+    "title": "You Invest Your Love",
+    "artist": "Drew Holcomb & The Neighbors",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "hillsong_worship_elohim",
+    "title": "Elohim",
+    "artist": "Hillsong Worship",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "the_lumineers_ho_hey",
+    "title": "Ho Hey",
+    "artist": "The Lumineers",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "the_slow_show_sharpness",
+    "title": "Sharpness",
+    "artist": "The Slow Show",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "the_cure_just_like_heaven",
+    "title": "Just Like Heaven",
+    "artist": "The Cure",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "eric_clapton_layla_(acoustic)",
+    "title": "Layla (Acoustic)",
+    "artist": "Eric Clapton",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "phoebe_bridgers_kyoto",
+    "title": "Kyoto",
+    "artist": "Phoebe Bridgers",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "the_lumineers_sleep_on_the_floor",
+    "title": "Sleep on the Floor",
+    "artist": "The Lumineers",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "the_national_about_today",
+    "title": "About Today",
+    "artist": "The National",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "the_tiger_lillies_sailors_wife",
+    "title": "Sailors Wife",
+    "artist": "The Tiger Lillies",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "peach_pit_peach_pit",
+    "title": "Peach Pit",
+    "artist": "Peach Pit",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "gigi_perez_sailor_song",
+    "title": "Sailor Song",
+    "artist": "Gigi Perez",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "billie_eilish_birds_of_a_feather",
+    "title": "Birds of a Feather",
+    "artist": "Billie Eilish",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "dua_lipa_swan_song",
+    "title": "Swan Song",
+    "artist": "Dua Lipa",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "softcult_dress",
+    "title": "Dress",
+    "artist": "Softcult",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "rachel_grae_bad_guy",
+    "title": "Bad Guy",
+    "artist": "Rachel Grae",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "madeline_juno_till_the_day_that_i_die",
+    "title": "Till the Day That I Die",
+    "artist": "Madeline Juno",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "jada_facer_another_life",
+    "title": "Another Life",
+    "artist": "Jada Facer",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "no_suits_on_my_mind",
+    "title": "On My Mind",
+    "artist": "No Suits",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "the_strokes_last_nite",
+    "title": "Last Nite",
+    "artist": "The Strokes",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "night_birds_she_said",
+    "title": "She Said",
+    "artist": "Night Birds",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "dinosaur_jr._feel_the_pain",
+    "title": "Feel the Pain",
+    "artist": "Dinosaur Jr.",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "teenage_bottlerocket_they_don't_understand",
+    "title": "They Don't Understand",
+    "artist": "Teenage Bottlerocket",
+    "genre": "Alternative",
+    "plays": 0,
+    "source": "Curator_V1.2_Aggregation",
+    "first_played": "2026-01-18",
+    "last_played": "2026-01-18"
+  },
+  {
+    "id": "contempt_charges__federals_new_criminal_exposuretuesday_745_pm_legal_deep_dive",
+    "title": "Tuesday 7:45 PM: Legal Deep Dive",
+    "artist": "Contempt Charges & Federal's New Criminal Exposure",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-20",
+    "last_played": "2026-01-20"
+  },
+  {
+    "id": "kendrick_lamar_not_like_us",
+    "title": "Not Like Us",
+    "artist": "Kendrick Lamar",
+    "genre": "Hip Hop",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-20",
+    "last_played": "2026-01-20"
+  },
+  {
+    "id": "usa_for_africa_we_are_the_world",
+    "title": "We Are The World",
+    "artist": "U.S.A. For Africa",
+    "genre": "Pop",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-20",
+    "last_played": "2026-01-20"
+  },
+  {
+    "id": "bob_marley_get_up_stand_up",
+    "title": "Get Up, Stand Up",
+    "artist": "Bob Marley & The Wailers",
+    "genre": "Reggae",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-20",
+    "last_played": "2026-01-20"
+  },
+  {
+    "id": "the_beatles_here_comes_the_sun",
+    "title": "Here Comes The Sun (2019 Mix)",
+    "artist": "The Beatles",
+    "genre": "Rock",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "pink_floyd_another_brick_in_the_wall",
+    "title": "Another Brick in the Wall, Pt. 2",
+    "artist": "Pink Floyd",
+    "genre": "Rock",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "federals_shrinking_optionstuesday_915_pm_overnight_accountability_watch",
+    "title": "Tuesday 9:15 PM: Overnight Accountability Watch",
+    "artist": "Federal's Shrinking Options",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknowngo_your_own_way_2004_remaster",
+    "title": "Go Your Own Way (2004 Remaster)",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownalright",
+    "title": "Alright",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownsolidarity_forever",
+    "title": "Solidarity Forever",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "strike_preparation__trial_momentumtuesday_1000_pm_late_night_accountability",
+    "title": "Tuesday 10:00 PM: Late Night Accountability",
+    "artist": "Strike Preparation & Trial Momentum",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknowndont_stop_me_now_remastered_2011",
+    "title": "Don't Stop Me Now (Remastered 2011)",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownfuture_nostalgia",
+    "title": "Future Nostalgia",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "final_38_hourstuesday_1015_pm_strike_eve_countdown",
+    "title": "Tuesday 10:15 PM: Strike Eve Countdown",
+    "artist": "Final 38 Hours",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownlivin_on_a_prayer",
+    "title": "Livin' On A Prayer",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownyesterday_remastered",
+    "title": "Yesterday (Remastered)",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknowni_wanna_get_better",
+    "title": "I Wanna Get Better",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknowneven_in_the_quietest_moments",
+    "title": "Even In The Quietest Moments",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "what_federal_will_do_tonight__tomorrowtuesday_1100_pm_federals_last_24_hours",
+    "title": "Tuesday 11:00 PM: Federal's Last 24 Hours",
+    "artist": "What Federal Will Do Tonight & Tomorrow",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownloading",
+    "title": "Loading...",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownstation_currently_offline",
+    "title": "Station currently offline",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "community_wide_awakewednesday_1200_am_midnight_accountability",
+    "title": "Wednesday 12:00 AM: Midnight Accountability",
+    "artist": "Community Wide Awake",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownnight_shift",
+    "title": "Night Shift",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "final_legal_analysiswednesday_1245_am_trial_evidence_building",
+    "title": "Wednesday 12:45 AM: Trial Evidence Building",
+    "artist": "Final Legal Analysis",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownthe_lonesome_death_of_hattie_carroll",
+    "title": "The Lonesome Death of Hattie Carroll",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "unknownthinking_frequencies",
+    "title": "Thinking Frequencies",
+    "artist": "Unknown",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V1",
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "pete_seegersolidarity_forever",
+    "title": "Solidarity Forever",
+    "artist": "Pete Seeger",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Thinking Frequencies",
+      "Grok'n Roll Radio"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "billie_eilishbirds_of_a_feather",
+    "title": "BIRDS OF A FEATHER",
+    "artist": "Billie Eilish",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "OpenAIR",
+      "Grok'n Roll Radio"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "by_claude_haiku_45thinking_frequencies",
+    "title": "Thinking Frequencies",
+    "artist": "by Claude Haiku 4.5",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Thinking Frequencies"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "the_strokeslast_nite",
+    "title": "Last Nite",
+    "artist": "The Strokes",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "OpenAIR",
+      "Grok'n Roll Radio"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "the_beatlesyesterday_remastered",
+    "title": "Yesterday (Remastered)",
+    "artist": "The Beatles",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Backlink Broadcast",
+      "OpenAIR"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "usa_for_africawe_are_the_world",
+    "title": "We Are The World",
+    "artist": "USA for Africa",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Thinking Frequencies",
+      "Grok'n Roll Radio"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "the_beatleshere_comes_the_sun_2019_mix",
+    "title": "Here Comes The Sun (2019 Mix)",
+    "artist": "The Beatles",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Backlink Broadcast",
+      "Thinking Frequencies",
+      "OpenAIR"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "kendrick_lamaralright",
+    "title": "Alright",
+    "artist": "Kendrick Lamar",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Thinking Frequencies"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "twenty_one_pilotsstressed_out",
+    "title": "Stressed Out",
+    "artist": "twenty one pilots",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Grok'n Roll Radio",
+      "OpenAIR"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "bob_dylanthe_lonesome_death_of_hattie_carroll",
+    "title": "The Lonesome Death of Hattie Carroll",
+    "artist": "Bob Dylan",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Thinking Frequencies"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "bon_jovilivin_on_a_prayer",
+    "title": "Livin' On A Prayer",
+    "artist": "Bon Jovi",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Grok'n Roll Radio",
+      "Thinking Frequencies"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "gigi_perezsailor_song",
+    "title": "Sailor Song",
+    "artist": "Gigi Perez",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Grok'n Roll Radio"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "bob_marley__the_wailersget_up_stand_up",
+    "title": "Get Up, Stand Up",
+    "artist": "Bob Marley & The Wailers",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Backlink Broadcast",
+      "Thinking Frequencies"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "queendont_stop_me_now_remastered_2011",
+    "title": "Don't Stop Me Now (Remastered 2011)",
+    "artist": "Queen",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Thinking Frequencies",
+      "Grok'n Roll Radio",
+      "OpenAIR"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "bon_iverholocene",
+    "title": "Holocene",
+    "artist": "Bon Iver",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Backlink Broadcast",
+      "Grok'n Roll Radio"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "pink_floydanother_brick_in_the_wall_pt_2",
+    "title": "Another Brick in the Wall, Pt. 2",
+    "artist": "Pink Floyd",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Grok'n Roll Radio"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "bleachersi_wanna_get_better",
+    "title": "I Wanna Get Better",
+    "artist": "Bleachers",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "OpenAIR"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "lucy_dacusnight_shift",
+    "title": "Night Shift",
+    "artist": "Lucy Dacus",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Thinking Frequencies"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "loadingloading",
+    "title": "Loading...",
+    "artist": "Loading...",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Thinking Frequencies"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  },
+  {
+    "id": "supertrampeven_in_the_quietest_moments",
+    "title": "Even In The Quietest Moments",
+    "artist": "Supertramp",
+    "genre": "Detected",
+    "plays": 1,
+    "source": "Stream_Monitor_V2",
+    "stations": [
+      "Thinking Frequencies"
+    ],
+    "first_played": "2026-01-21",
+    "last_played": "2026-01-21"
+  }
+]

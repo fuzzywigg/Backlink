@@ -1,0 +1,35 @@
+{
+  "data": {
+    "broadcast": {
+      "status": "online",
+      "listener_count": 0
+    },
+    "health": {
+      "timestamp": "2026-01-12T02:53:56.207578+00:00",
+      "stream_online": true,
+      "audio_ok": true,
+      "latency_ok": true,
+      "bitrate_ok": true,
+      "listener_count": 0,
+      "issues": [],
+      "stream_url": "https://das-edge12-live365-dal02.cdnstream.com/a13541",
+      "checked_at": "2026-01-12T02:53:56.208110+00:00",
+      "status_code": 200,
+      "error": null,
+      "response_time_ms": 264.4,
+      "loudness_db": -17.6323,
+      "latency_ms": 251.99,
+      "bitrate_kbps": 192
+    },
+    "_meta": {
+      "last_updated": "2026-01-12T04:01:28.240626+00:00",
+      "last_updated_by": "queen"
+    },
+    "queen": {
+      "last_heartbeat": "2026-01-12T04:01:28.239156+00:00",
+      "status": "alive"
+    }
+  },
+  "signature": "da3d8ed663c143793ac6e3f650017f7798819761c9f3267256f417b6a2c97192",
+  "ver": "1.0"
+}

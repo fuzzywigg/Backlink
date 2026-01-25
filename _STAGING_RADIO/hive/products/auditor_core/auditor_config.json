@@ -1,0 +1,54 @@
+{
+    "dangerous_patterns": [
+        {
+            "name": "Private Key (Hex)",
+            "regex": "0x[a-fA-F0-9]{64}",
+            "description": "Standard 64-character hex private key"
+        },
+        {
+            "name": "RSA Private Key",
+            "regex": "-----BEGIN RSA PRIVATE KEY-----",
+            "description": "PEM encoded private key"
+        },
+        {
+            "name": "OpenAI API Key",
+            "regex": "sk-[a-zA-Z0-9]{48}",
+            "description": "Standard OpenAI Secret Key"
+        },
+        {
+            "name": "Google API Key",
+            "regex": "AIza[0-9A-Za-z-_]{35}",
+            "description": "Google Cloud API Key"
+        },
+        {
+            "name": "Slack Token",
+            "regex": "xox[baprs]-([a-zA-Z0-9]{10,88})",
+            "description": "Slack Bot/User Token"
+        },
+        {
+            "name": "AWS Access Key",
+            "regex": "AKIA[0-9A-Z]{16}",
+            "description": "AWS Identity Access Key"
+        }
+    ],
+    "ignore_dirs": [
+        ".git",
+        "node_modules",
+        "venv",
+        ".venv",
+        "__pycache__",
+        "dist",
+        "build",
+        ".pytest_cache",
+        "antigravity_evidence_package",
+        "hive/products/beehive"
+    ],
+    "ignore_files": [
+        "package-lock.json",
+        "pnpm-lock.yaml",
+        "yarn.lock",
+        "poetry.lock",
+        ".env.example",
+        "auditor_config.json"
+    ]
+}

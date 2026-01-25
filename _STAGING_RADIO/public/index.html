@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuzzRadio | Sovereign Ops</title>
+    <!-- Modern Typography -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then((reg) => console.log('Service Worker Registered scope:', reg.scope))
+                .catch((err) => console.log('Service Worker Registration Failed:', err));
+        }
+    </script>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #e0e0e0;
+            --accent-cyan: #00ffcc;
+            --accent-magenta: #ff00ff;
+            --border-color: #333;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+
+        p.subtitle {
+            color: #888;
+            font-size: 1.1rem;
+            margin-bottom: 4rem;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .nav-card {
+            background: #111;
+            border: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card:hover {
+            border-color: var(--accent-magenta);
+            transform: translateY(-2px);
+            background: #161616;
+        }
+
+        .nav-card h2 {
+            color: var(--accent-cyan);
+            font-size: 1.5rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .nav-card p {
+            color: #666;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .status {
+            position: absolute;
+            bottom: 2rem;
+            width: 100%;
+            left: 0;
+            font-size: 0.7rem;
+            color: #444;
+            text-transform: uppercase;
+        }
+
+        .nav-card:hover .status {
+            color: var(--accent-magenta);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>FuzzRadio</h1>
+        <p class="subtitle">Sovereign Intelligence & Radio Operations</p>
+    </header>
+
+    <div class="nav-grid">
+        <a href="songs.html" class="nav-card">
+            <h2>🎵 Sonic Library</h2>
+            <p>Access the real-time aggregated music log, sovereign station verification, and deep metadata.</p>
+            <div class="status">Status: Online</div>
+        </a>
+
+        <a href="manual.html" class="nav-card">
+            <h2>📘 System Manual</h2>
+            <p>Operational documentation, setup guides, and constitutional protocols for the Hive.</p>
+            <div class="status">Status: V3.2.0</div>
+        </a>
+    </div>
+
+</body>
+
+</html>

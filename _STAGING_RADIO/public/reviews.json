@@ -1,0 +1,77 @@
+[
+  {
+    "timestamp": "2026-01-11T00:52:39.599305",
+    "url": "https://platform.claude.com/cookbook",
+    "name": "Pending Review: platform.claude.com",
+    "summary": "Submitted via Dashboard. Waiting for AI/Human analysis.",
+    "scores": {
+      "strategic": 0,
+      "sovereign": 0,
+      "agentic": 0,
+      "technical": 0
+    },
+    "weighted_score": 0.0,
+    "analysis": "Content has been queued. Please ask Antigravity to 'Process Pending Reviews' or configure the API key in start_dashboard.py.",
+    "recommendation": "PENDING"
+  },
+  {
+    "timestamp": "2026-01-11T00:52:25.271441",
+    "url": "https://github.com/alexzhang13/rlm",
+    "name": "Pending Review: github.com",
+    "summary": "Submitted via Dashboard. Waiting for AI/Human analysis.",
+    "scores": {
+      "strategic": 0,
+      "sovereign": 0,
+      "agentic": 0,
+      "technical": 0
+    },
+    "weighted_score": 0.0,
+    "analysis": "Content has been queued. Please ask Antigravity to 'Process Pending Reviews' or configure the API key in start_dashboard.py.",
+    "recommendation": "PENDING"
+  },
+  {
+    "timestamp": "2026-01-11T00:48:37.704715",
+    "url": "https://github.com/fuzzywigg/agents-standard/tree/alpha",
+    "name": "Pending Review: github.com",
+    "summary": "Submitted via Dashboard. Waiting for AI/Human analysis.",
+    "scores": {
+      "strategic": 0,
+      "sovereign": 0,
+      "agentic": 0,
+      "technical": 0
+    },
+    "weighted_score": 0.0,
+    "analysis": "Content has been queued. Please ask Antigravity to 'Process Pending Reviews' or configure the API key in start_dashboard.py.",
+    "recommendation": "PENDING"
+  },
+  {
+    "timestamp": "2026-01-11T00:26:16.091551",
+    "url": "https://backlink-hive-123509617840.us-central1.run.app",
+    "name": "Backlink Broadcast",
+    "summary": "The core sovereign AI radio station.",
+    "scores": {
+      "strategic": 10,
+      "sovereign": 10,
+      "agentic": 10,
+      "technical": 9
+    },
+    "weighted_score": 98.0,
+    "analysis": "This is the primary project repository. It scores perfectly on alignment because it IS the alignment standard.",
+    "recommendation": "INTEGRATE"
+  },
+  {
+    "timestamp": "2026-01-11T00:49:48.130551",
+    "url": "https://github.com/fuzzywigg/agents-standard/tree/alpha",
+    "name": "Agentic Intelligence Standard (Alpha)",
+    "summary": "A public standard for persistent cognitive context in LLM workflows (AGENTS.md).",
+    "scores": {
+      "strategic": 9,
+      "sovereign": 10,
+      "agentic": 10,
+      "technical": 8
+    },
+    "weighted_score": 93.0,
+    "analysis": "This repository provides the sanitized public baseline for Hive agent behaviors. It acts as the 'Constitutional AI' layer. Highly sovereign (markdown-based) and machine-readable. Critical for maintaining prompt consistency across the swarm.",
+    "recommendation": "INTEGRATE"
+  }
+]

@@ -1,0 +1,15 @@
+{
+    "entity": "Oracle_Human",
+    "name": "Andrew Pappas",
+    "contact": {
+        "email": "andrew.pappas@nft2.me",
+        "discord": "fuzzywigg",
+        "telegram": "@nft_2me"
+    },
+    "wallets": {
+        "btc": "bc1qm93r0kmrwpapgfcayatqyzxt27gg7kd4ulv7wa",
+        "sol": "H5VnZQXDw3cvxiCKHsiTDbXiHurJ8Z5aPtXWcWrcvPeG",
+        "evm": "0x7aa67bfefb4fdafc779ff1843c6e3b3dfa0af0a8"
+    },
+    "authenticity_token": "O_HIL-VERIFIED-5753421337"
+}
