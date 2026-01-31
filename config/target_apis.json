@@ -11,10 +11,20 @@
             "notes": "Code management, issue tracking. Needs PAT."
         },
         {
+            "service": "GoDaddy",
+            "integration_type": "SSH/SCP",
+            "status": "configured_needs_secrets",
+            "notes": "Web hosting deployment via GitHub Actions. SSH credentials required in GitHub Secrets.",
+            "workflow": ".github/workflows/deploy_godaddy.yml",
+            "required_secrets": ["SSH_HOST", "SSH_USER", "SSH_PRIVATE_KEY"]
+        },
+        {
             "service": "Cloudflare",
             "integration_type": "API/Terraform",
             "status": "pending_auth",
-            "notes": "DNS, Workers. Needs API Token."
+            "notes": "DNS, Workers, CDN. Needs API Token and Zone ID.",
+            "documentation": "docs/EXTERNAL_SERVICE_INTEGRATION.md",
+            "required_env_vars": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ZONE_ID"]
         },
         {
             "service": "Stripe",
@@ -25,8 +35,10 @@
         {
             "service": "Google Cloud",
             "integration_type": "API",
-            "status": "pending_auth",
-            "notes": "Vertex AI, storage."
+            "status": "active",
+            "notes": "Vertex AI, Cloud Run, Firestore. Service account configured.",
+            "project_id": "smtp-ai-5be89",
+            "documentation": "docs/DEPLOYMENT_HANDOFF.md"
         },
         {
             "service": "Slack",
