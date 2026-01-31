@@ -1,9 +1,0 @@
-{
-    "rpc_url": "https://eth.llamarpc.com",
-    "targets": {
-        "0x0000000000000000000000000000000000000000": "Example Target (Replace Me)",
-        "0x1111111111111111111111111111111111111111": "Attacker Wallet"
-    },
-    "log_file": "hunter_log.json",
-    "scan_interval": 15
-}

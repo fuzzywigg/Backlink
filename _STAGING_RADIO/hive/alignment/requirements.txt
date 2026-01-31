@@ -1,1 +1,0 @@
-git+https://github.com/AndonLabs/claude-code-sdk-python-andon-special.git

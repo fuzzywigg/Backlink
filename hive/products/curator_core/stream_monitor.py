@@ -20,6 +20,14 @@ except ImportError:
     sys.path.append(os.path.dirname(__file__))
     from enricher import MetadataEnricher
 
+# Import Local Intelligence (DJ Brain)
+try:
+    from hive.intelligence.dj_brain import generate_dj_script
+    DJ_BRAIN_ACTIVE = True
+except ImportError:
+    print("⚠️ Local Brain Interface not found. Falling back to Silent Mode.")
+    DJ_BRAIN_ACTIVE = False
+
 class StreamMonitor:
     def __init__(self):
         self.enricher = MetadataEnricher()
@@ -233,6 +241,11 @@ class StreamMonitor:
                             self.known_titles.add(title.lower())
                             self.save_library()
                             print(f"   💾 SAVED MUSIC: {title} [Mood: {new_entry['mood']}]")
+                            
+                            # --- LOCAL INTELLIGENCE INJECTION ---
+                            if DJ_BRAIN_ACTIVE:
+                                script = generate_dj_script(new_entry)
+                                print(f"   🧠 CURATOR VOICE: \"{script}\"")
                             
                     else:
                         # --- DJ EVENTS PATH ---
