@@ -237,13 +237,9 @@ class PaymentGate:
         # Construct message
         message = ""
         if data.get("type") == "refund":
-            message = f"💸 **Refund Issued**\nUser: `{data.get('user')}`\nAmount: `${
-                data.get('amount')
-            }`\nReason: {data.get('reason')}"
+            message = f"💸 **Refund Issued**\nUser: `{data.get('user')}`\nAmount: `${data.get('amount')}`\nReason: {data.get('reason')}"
         elif data.get("type") == "slashing":
-            message = f"⚔️ **Node Slashed**\nNode: `{data.get('node_id')}`\nAmount: `{
-                data.get('slash_amount')
-            }` tokens"
+            message = f"⚔️ **Node Slashed**\nNode: `{data.get('node_id')}`\nAmount: `{data.get('slash_amount')}` tokens"
 
         with contextlib.suppress(Exception):
             requests.post(webhook_url, json={"content": message}, timeout=2)
