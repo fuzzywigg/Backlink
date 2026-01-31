@@ -51,6 +51,12 @@ dependencies = [
     "cognee>=0.1.0",
     "networkx>=3.0.0",
     "playwright>=1.40.0",
+    # Security updates (2026-01-31)
+    "cryptography>=43.0.1",
+    "urllib3>=2.6.3",
+    "python-multipart>=0.0.22",
+    "certifi>=2024.7.4",
+    "idna>=3.7",
 ]
 
 [project.optional-dependencies]

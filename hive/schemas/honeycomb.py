@@ -105,8 +105,8 @@ class WisdomSchema(BaseSchema):
     entries: list[WisdomEntrySchema] = Field(
         default_factory=list, description="Wisdom entries"
     )
-    _meta: MetadataSchema = Field(
-        default_factory=MetadataSchema, description="File metadata"
+    meta: MetadataSchema = Field(
+        default_factory=MetadataSchema, description="File metadata", alias="_meta"
     )
 
 
@@ -145,10 +145,11 @@ class HoneycombStateSchema(BaseSchema):
     )
 
     # Metadata
-    _meta: MetadataSchema = Field(
-        default_factory=MetadataSchema, description="State metadata"
+    meta: MetadataSchema = Field(
+        default_factory=MetadataSchema, description="State metadata", alias="_meta"
     )
 
     model_config = {
         "extra": "allow",  # Allow extra fields for extensibility
+        "populate_by_name": True,  # Allow using alias or field name
     }
