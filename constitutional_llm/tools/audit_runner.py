@@ -1,11 +1,11 @@
-import sys
 import os
-import json
+import sys
 
 # Add project root to path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.constitutional_audit import ConstitutionalAuditEngine
+
 
 def main():
     print("Running Daily Audit...")
@@ -29,17 +29,18 @@ def main():
     print("-" * 50)
 
     # Print violations if any
-    if report['violations_blocked'] > 0:
+    if report["violations_blocked"] > 0:
         print("\nVIOLATION DETAILS:")
-        for v in report['violation_details']:
+        for v in report["violation_details"]:
             print(f"- {v['bee_type']}: {v['decision_reason']}")
 
-    if report['status'] != 'HEALTHY':
+    if report["status"] != "HEALTHY":
         print("\n❌ CRITICAL ALERT: SYSTEM COMPLIANCE BELOW THRESHOLD")
         sys.exit(1)
 
     print("\n✅ SYSTEM HEALTHY")
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()

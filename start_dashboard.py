@@ -1,23 +1,26 @@
 import http.server
-import socketserver
-import webbrowser
-import os
 import json
-import urllib.request
+import os
+import socketserver
 import urllib.parse
+import urllib.request
+import webbrowser
 from datetime import datetime
 
 # Configuration
 PORT = 8000
 DIRECTORY = "review_system"
-REVIEWS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "review_system", "reviews.json")
+REVIEWS_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "review_system", "reviews.json"
+)
+
 
 # Simple AI Integration (Placeholder for the "free LLM API link" the user mentioned)
 # In a real scenario, this would call OpenAI/Gemini/Anthropic/Models.dev
 def mock_ai_review(url):
     """
-    This is where the 'Free LLM API' would go. 
-    For now, we simulate a 'Pending Analysis' state so the User (HITL) 
+    This is where the 'Free LLM API' would go.
+    For now, we simulate a 'Pending Analysis' state so the User (HITL)
     or the Agent (Antigravity) can finalize it.
     """
     domain = urllib.parse.urlparse(url).netloc
@@ -26,56 +29,52 @@ def mock_ai_review(url):
         "url": url,
         "name": f"Pending Review: {domain}",
         "summary": "Submitted via Dashboard. Waiting for AI/Human analysis.",
-        "scores": {
-            "strategic": 0,
-            "sovereign": 0,
-            "agentic": 0,
-            "technical": 0
-        },
+        "scores": {"strategic": 0, "sovereign": 0, "agentic": 0, "technical": 0},
         "weighted_score": 0.0,
         "analysis": "Content has been queued. Please ask Antigravity to 'Process Pending Reviews' or configure the API key in start_dashboard.py.",
-        "recommendation": "PENDING"
+        "recommendation": "PENDING",
     }
+
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=os.path.abspath(DIRECTORY), **kwargs)
 
     def do_POST(self):
-        if self.path == '/api/submit':
-            content_length = int(self.headers['Content-Length'])
+        if self.path == "/api/submit":
+            content_length = int(self.headers["Content-Length"])
             post_data = self.rfile.read(content_length)
             try:
                 data = json.loads(post_data)
-                url = data.get('url')
-                
+                url = data.get("url")
+
                 if not url:
                     self.send_error(400, "Missing URL")
                     return
 
                 print(f"Received submission for: {url}")
-                
+
                 # 1. Generate the Review (Mock or Call API)
                 review_entry = mock_ai_review(url)
-                
+
                 # 2. Save to JSON
                 reviews_data = []
                 if os.path.exists(REVIEWS_FILE):
                     try:
-                        with open(REVIEWS_FILE, 'r') as f:
+                        with open(REVIEWS_FILE) as f:
                             reviews_data = json.load(f)
-                    except:
+                    except Exception:
                         pass
-                
+
                 # Prepend to top
                 reviews_data.insert(0, review_entry)
-                
-                with open(REVIEWS_FILE, 'w') as f:
+
+                with open(REVIEWS_FILE, "w") as f:
                     json.dump(reviews_data, f, indent=2)
 
                 # 3. Respond
                 self.send_response(200)
-                self.send_header('Content-type', 'application/json')
+                self.send_header("Content-type", "application/json")
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "entry": review_entry}).encode())
 
@@ -85,11 +84,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         else:
             self.send_error(404)
 
+
 def run():
     print(f"Starting Hive Scout Dashboard on http://localhost:{PORT}")
     print(f"Serving directory: {os.path.abspath(DIRECTORY)}")
     print(f"Database: {REVIEWS_FILE}")
-    
+
     # Try to find a free port
     port = PORT
     httpd = None
@@ -98,9 +98,9 @@ def run():
             httpd = socketserver.TCPServer(("", port), Handler)
             break
         except OSError:
-            print(f"Port {port} in use, trying {port+1}...")
+            print(f"Port {port} in use, trying {port + 1}...")
             port += 1
-    
+
     if httpd is None:
         print("Could not find a free port.")
         return
@@ -114,6 +114,7 @@ def run():
         except KeyboardInterrupt:
             print("\nShutting down server.")
             httpd.shutdown()
+
 
 if __name__ == "__main__":
     run()

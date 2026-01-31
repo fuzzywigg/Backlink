@@ -6,13 +6,13 @@ This package provides shared utilities for the hive:
 - GraphNode, GraphStore: Knowledge graph utilities
 """
 
-from core_utils.ontology_manager import OntologyManager
-from core_utils.model_registry_loader import ModelRegistryLoader
 from core_utils.graph_store import GraphNode, GraphStore
+from core_utils.model_registry_loader import ModelRegistryLoader
+from core_utils.ontology_manager import OntologyManager
 
 __all__ = [
     "OntologyManager",
-    "ModelRegistryLoader", 
+    "ModelRegistryLoader",
     "GraphNode",
     "GraphStore",
 ]

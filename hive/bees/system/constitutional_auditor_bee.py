@@ -30,7 +30,7 @@ class ConstitutionalAuditorBee(BaseBee):
         """
         Audit DJ behavior and system state against manifesto and constitution.
         """
-        manifesto_text = self._load_manifesto()
+        self._load_manifesto()
         recent_outputs = self._get_recent_dj_outputs(limit=10)
 
         violations = []
@@ -137,10 +137,7 @@ class ConstitutionalAuditorBee(BaseBee):
             "as an artificial",
         ]
 
-        for phrase in forbidden_phrases:
-            if phrase in text:
-                return True
-        return False
+        return any(phrase in text for phrase in forbidden_phrases)
 
     def _calculate_music_ratio(self, output: dict) -> float:
         """Calculate music vs talk ratio."""

@@ -48,12 +48,8 @@ class BeeConfig(BaseSchema):
     category: BeeCategory
     role: BeeRole = Field(default=BeeRole.SCOUT, description="ABC role")
     enabled: bool = Field(default=True, description="Whether bee is enabled")
-    schedule: dict[str, Any] | None = Field(
-        None, description="Scheduling configuration"
-    )
-    config: dict[str, Any] = Field(
-        default_factory=dict, description="Bee-specific configuration"
-    )
+    schedule: dict[str, Any] | None = Field(None, description="Scheduling configuration")
+    config: dict[str, Any] = Field(default_factory=dict, description="Bee-specific configuration")
 
 
 class BeeWorkResult(TimestampedSchema):
@@ -62,16 +58,12 @@ class BeeWorkResult(TimestampedSchema):
     bee_type: str = Field(..., description="Type of bee that performed work")
     status: BeeStatus
     success: bool = Field(..., description="Whether work was successful")
-    data: dict[str, Any] = Field(
-        default_factory=dict, description="Work result data"
-    )
+    data: dict[str, Any] = Field(default_factory=dict, description="Work result data")
     error: str | None = Field(None, description="Error message if failed")
     intel_generated: list[str] = Field(
         default_factory=list, description="IDs of intel entries created"
     )
-    tasks_spawned: list[str] = Field(
-        default_factory=list, description="IDs of tasks created"
-    )
+    tasks_spawned: list[str] = Field(default_factory=list, description="IDs of tasks created")
     execution_time_ms: float | None = Field(
         None, ge=0, description="Execution time in milliseconds"
     )

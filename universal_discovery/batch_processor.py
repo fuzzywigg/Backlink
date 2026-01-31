@@ -1,8 +1,5 @@
-import sys
 import os
-import json
-import requests
-from bs4 import BeautifulSoup
+import sys
 
 # Ensure we can import local modules
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -10,10 +7,11 @@ sys.path.append(os.path.dirname(current_dir))
 
 from universal_discovery.engine import DiscoveryEngine
 
+
 def run():
     engine = DiscoveryEngine()
     engine.set_context("backlink_hive_scout")
-    
+
     pending = engine.get_pending_reviews()
     if not pending:
         print("No pending items.")
@@ -24,7 +22,7 @@ def run():
     for item in pending:
         url = item.get("url")
         print(f"\nProcessing: {url}")
-        
+
         # Default Logic
         name = item.get("name")
         summary = item.get("summary")
@@ -91,9 +89,10 @@ def run():
             analysis=analysis,
             rubric_scores=scores,
             update=True,
-            recommendation=status
+            recommendation=status,
         )
         print(f" -> {status}")
+
 
 if __name__ == "__main__":
     run()

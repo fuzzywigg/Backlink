@@ -1,4 +1,6 @@
+import json
 import random
+import uuid
 from datetime import datetime, timezone
 from typing import Any
 
@@ -268,17 +270,15 @@ class DjBee(EmployedBee):
         time_used += 5
 
         # 2. OPTIONAL: Add-ons if time permits
-        if available_seconds >= 15:
+        if available_seconds >= 15 and self._has_new_nodes():
             # New node announcement
-            if self._has_new_nodes():
-                segments.append(self.announce_new_nodes())
-                time_used += 10
+            segments.append(self.announce_new_nodes())
+            time_used += 10
 
-        if available_seconds >= 30:
+        if available_seconds >= 30 and self.is_update_time():
             # Update on the 8s content (if at :08 or :38)
-            if self.is_update_time():
-                segments.append(self.get_update_on_8s())
-                time_used += 15
+            segments.append(self.get_update_on_8s())
+            time_used += 15
 
         # Generate speech, verify timing
         # In this simulation, we just join segments.
@@ -338,7 +338,7 @@ class DjBee(EmployedBee):
                 try:
                     file_path = self.hive_path.parent / "GROK.txt"
                     if file_path.exists():
-                        with open(file_path) as f:
+                        with open(file_path):
                             # Just a mock parsing for now as GROK.txt structure
                             # is unknown
                             self.log(f"Loaded tracks from {filename}")
@@ -351,16 +351,16 @@ class DjBee(EmployedBee):
         Pick a song when no requests are active.
         Prioritizes 'Smart Acquisition' of candidates.
         """
-        
+
         # 1. Check for Candidates (The Smart DJ Path)
         # If the Consultant has found songs that fit the vibe, we "acquire" one.
         candidates = library.get("candidates", [])
         if candidates:
             # Pick the first one (FIFO or prioritized by LLM)
             candidate = candidates.pop(0)
-            
+
             self.log(f"Autopilot acquiring candidate song: {candidate.get('title')}")
-            
+
             # SIMULATE PURCHASE / ACQUISITION
             # In real system, this calls Andon's Blackbox Tool
             # Here we move it to 'owned'
@@ -370,35 +370,35 @@ class DjBee(EmployedBee):
                 "artist": candidate.get("artist"),
                 "source": "Smart_Acquisition",
                 "acquired_at": datetime.now().isoformat(),
-                "vibe_match": candidate.get("reason", "Autopilot Selection")
+                "vibe_match": candidate.get("reason", "Autopilot Selection"),
             }
-            
+
             if "owned" not in library:
                 library["owned"] = []
-            
+
             library["owned"].append(new_track)
-            
+
             # Save the state change (removing from candidates, adding to owned)
             self._save_library_state(library)
-            
+
             return new_track
 
         # 2. Fallback to Owned Library
         if library.get("owned"):
             return random.choice(library["owned"])
-            
+
         # 3. Emergency Fallback
         return {"title": "Lo-Fi Beats - Free Stream", "source": "free_archive", "id": "free_01"}
 
     def _save_library_state(self, library: dict):
         """Helper to save library state back to intel.json"""
         try:
-            with open("hive/honeycomb/intel.json", 'r') as f:
+            with open("hive/honeycomb/intel.json") as f:
                 intel = json.load(f)
-            
+
             intel["music_library"] = library
-            
-            with open("hive/honeycomb/intel.json", 'w') as f:
+
+            with open("hive/honeycomb/intel.json", "w") as f:
                 json.dump(intel, f, indent=2)
         except Exception as e:
             self.log(f"Failed to save library state: {e}", level="error")

@@ -64,7 +64,7 @@ class ListenerIntelBee(ScoutBee):
         elif task and task.get("refresh_all"):
             # Refresh all known nodes
             known = self.read_intel().get("listeners", {}).get("known_nodes", {})
-            for node_id in known.keys():
+            for node_id in known:
                 intel = self._research_node(node_id)
                 intel_gathered.append(intel)
 

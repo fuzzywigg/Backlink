@@ -8,6 +8,7 @@ Responsibilities:
 - Alert on problems
 """
 
+import contextlib
 import json
 import time
 import urllib.request
@@ -91,9 +92,8 @@ class StreamMonitorBee(OnlookerBee):
         health_status["bitrate_ok"] = bitrate_check.get("ok", False)
         health_status["bitrate_kbps"] = bitrate_check.get("bitrate_kbps", 0)
 
-        if not bitrate_check.get("ok"):
-            if bitrate_check.get("bitrate_kbps", 0) > 0:
-                health_status["issues"].append(f"Low bitrate: {bitrate_check['bitrate_kbps']}kbps")
+        if not bitrate_check.get("ok") and bitrate_check.get("bitrate_kbps", 0) > 0:
+            health_status["issues"].append(f"Low bitrate: {bitrate_check['bitrate_kbps']}kbps")
 
         # Update broadcast state
         self.write_state(
@@ -165,10 +165,8 @@ class StreamMonitorBee(OnlookerBee):
 
             # Extract headers before closing
             if "X-Loudness" in response.headers:
-                try:
+                with contextlib.suppress(ValueError, TypeError):
                     result["loudness_db"] = float(response.headers["X-Loudness"])
-                except (ValueError, TypeError):
-                    pass
 
             response.close()  # Close connection immediately
             duration = (datetime.now() - start_time).total_seconds() * 1000

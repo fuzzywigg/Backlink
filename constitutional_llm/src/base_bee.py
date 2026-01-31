@@ -1,9 +1,11 @@
 # base_bee.py
 
 from abc import ABC, abstractmethod
-from typing import Dict, Any
-from .constitutional_gateway import ConstitutionalGateway
+from typing import Any
+
 from .constitutional_audit import ConstitutionalAuditEngine
+from .constitutional_gateway import ConstitutionalGateway
+
 
 class BaseBee(ABC):
     """
@@ -16,7 +18,7 @@ class BaseBee(ABC):
         self.gateway = ConstitutionalGateway(bee_type)
         self.audit = ConstitutionalAuditEngine()
 
-    def safe_action(self, action: Dict[str, Any]) -> Dict[str, Any]:
+    def safe_action(self, action: dict[str, Any]) -> dict[str, Any]:
         """
         Wrapper that sends action to Gateway before execution.
         Returns the safe action (which might be modified) or raises an error if blocked.
@@ -28,12 +30,12 @@ class BaseBee(ABC):
         self.audit.log_action(self.bee_type, action, decision)
 
         # 3. Execute or Halt
-        if decision['status'] == 'BLOCK':
+        if decision["status"] == "BLOCK":
             # In a real agent, we might catch this and retry with different params.
             # Here we raise to stop execution.
             raise ValueError(f"Constitutional Violation (BLOCKED): {decision.get('reason')}")
 
-        return decision['action'] # Returns modified or original action
+        return decision["action"]  # Returns modified or original action
 
     @abstractmethod
     def run(self):

@@ -86,11 +86,11 @@ class AudioStreamAdapter:
 class RadioTuner:
     """
     Sovereign Radio Interface (Adopts 'GooseFM' Concept).
-    
+
     Provides the standard interface for an AI agent to 'tune' into audio sources,
     whether they are physical FM frequencies (via RTL-SDR) or digital streams (Live365).
     """
-    
+
     def __init__(self, mode: str = "digital"):
         self.mode = mode
         self.logger = logging.getLogger("RadioTuner")
@@ -100,16 +100,16 @@ class RadioTuner:
     async def tune_radio(self, frequency_or_url: str) -> str:
         """
         Tunes the radio to a specific frequency (SDR) or URL (Digital).
-        
+
         Args:
             frequency_or_url: e.g., "88.5 FM" or "http://stream.live365.com/..."
         """
         self.logger.info(f"Tuning radio to: {frequency_or_url} (Mode: {self.mode})")
         self.current_source = frequency_or_url
         self.is_playing = True
-        
+
         if self.mode == "sdr":
-            return f"tuned-sdr::{frequency_or_url}" # Placeholder for rtl_fm execution
+            return f"tuned-sdr::{frequency_or_url}"  # Placeholder for rtl_fm execution
         else:
             return f"tuned-stream::{frequency_or_url}"
 
@@ -118,4 +118,3 @@ class RadioTuner:
         self.logger.info("Stopping radio.")
         self.is_playing = False
         return "radio-stopped"
-

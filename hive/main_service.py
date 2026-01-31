@@ -5,7 +5,6 @@ import os
 import threading
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Any
 
 from fastapi import FastAPI, Header, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
@@ -14,7 +13,6 @@ from pydantic import ValidationError
 
 from hive.queen.orchestrator import QueenOrchestrator
 from hive.schemas import (
-    APIErrorResponse,
     APISuccessResponse,
     EventTriggerRequest,
     HealthCheckResponse,
@@ -36,6 +34,7 @@ async def lifespan(app: FastAPI):
 
     # Track startup time for uptime calculation
     import time
+
     app.state.start_time = time.time()
 
     # Initialize Queen
@@ -86,12 +85,12 @@ async def health_check():
     """Health check endpoint for Cloud Run."""
     if not queen:
         raise HTTPException(status_code=503, detail="Queen not initialized")
-    
+
     import time
-    
+
     # Calculate uptime (simplified)
     uptime = time.time() - getattr(app.state, "start_time", time.time())
-    
+
     return HealthCheckResponse(
         status="healthy" if queen else "unhealthy",
         version="1.1.0",
@@ -215,9 +214,9 @@ async def trigger_event(event_type: str, request: EventTriggerRequest):
             data={"results": results, "event_type": event_type},
         )
     except ValidationError as e:
-        raise HTTPException(status_code=422, detail=str(e))
+        raise HTTPException(status_code=422, detail=str(e)) from e
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to trigger event: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to trigger event: {str(e)}") from e
 
 
 @app.get("/intel")

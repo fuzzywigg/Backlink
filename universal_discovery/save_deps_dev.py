@@ -1,6 +1,6 @@
-import sys
 import json
 import subprocess
+import sys
 
 # Define the data
 url = "https://github.com/google/deps.dev"
@@ -15,13 +15,20 @@ status = "INTEGRATE"
 cmd = [
     sys.executable,
     "universal_discovery/save_record.py",
-    "--url", url,
-    "--name", name,
-    "--summary", summary,
-    "--analysis", analysis,
-    "--scores", json.dumps(scores),
-    "--context", context,
-    "--status", status
+    "--url",
+    url,
+    "--name",
+    name,
+    "--summary",
+    summary,
+    "--analysis",
+    analysis,
+    "--scores",
+    json.dumps(scores),
+    "--context",
+    context,
+    "--status",
+    status,
 ]
 
 # Run

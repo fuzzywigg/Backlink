@@ -1,5 +1,6 @@
-import time
 import argparse
+import time
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -16,6 +17,7 @@ def main():
             time.sleep(1)
     except KeyboardInterrupt:
         print("\nStopping dashboard.")
+
 
 if __name__ == "__main__":
     main()

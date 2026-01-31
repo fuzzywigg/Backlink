@@ -32,18 +32,14 @@ class HealthCheckResponse(BaseSchema):
     status: Literal["healthy", "degraded", "unhealthy"]
     version: str = Field(..., description="API version")
     uptime_seconds: float = Field(..., ge=0, description="Service uptime in seconds")
-    hive_status: dict[str, Any] = Field(
-        default_factory=dict, description="Hive operational status"
-    )
+    hive_status: dict[str, Any] = Field(default_factory=dict, description="Hive operational status")
 
 
 class BeeSpawnRequest(BaseSchema):
     """Request to spawn a specific bee."""
 
     bee_type: str = Field(..., description="Type of bee to spawn")
-    task_data: dict[str, Any] | None = Field(
-        None, description="Optional task data for the bee"
-    )
+    task_data: dict[str, Any] | None = Field(None, description="Optional task data for the bee")
 
 
 class BeeSpawnResponse(TimestampedSchema):
@@ -59,9 +55,7 @@ class EventTriggerRequest(BaseSchema):
     """Request to trigger a hive event."""
 
     event_type: str = Field(..., description="Type of event to trigger")
-    data: dict[str, Any] = Field(
-        default_factory=dict, description="Event-specific data"
-    )
+    data: dict[str, Any] = Field(default_factory=dict, description="Event-specific data")
 
 
 class TaskCreateRequest(BaseSchema):
@@ -69,6 +63,4 @@ class TaskCreateRequest(BaseSchema):
 
     bee_type: str = Field(..., description="Type of bee to assign task to")
     priority: Literal["low", "medium", "high", "urgent"] = "medium"
-    payload: dict[str, Any] = Field(
-        default_factory=dict, description="Task payload"
-    )
+    payload: dict[str, Any] = Field(default_factory=dict, description="Task payload")

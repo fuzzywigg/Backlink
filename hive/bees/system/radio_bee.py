@@ -1,18 +1,19 @@
 import json
 import random
-import time
 from pathlib import Path
+
+from core_utils.model_registry_loader import ModelRegistryLoader
+from core_utils.ontology_manager import OntologyManager
 from hive.bees.base_bee import BaseBee
 from hive.utils.radio_bridge import radio
-from core_utils.ontology_manager import OntologyManager
-from core_utils.model_registry_loader import ModelRegistryLoader
+
 
 class RadioBee(BaseBee):
     """
     The DJ of the Hive. Manages the radio stream, intentions, and resource requests.
     Interfaces with Goose FM via the RadioBridge.
     """
-    
+
     def __init__(self, name="RadioBee", song_lib_path="song_library/songs"):
         super().__init__(name=name)
         self.song_lib_path = Path(song_lib_path)
@@ -34,7 +35,7 @@ class RadioBee(BaseBee):
         if self.song_lib_path.exists():
             for f in self.song_lib_path.glob("*.json"):
                 try:
-                    with open(f, 'r') as song_file:
+                    with open(f) as song_file:
                         songs.append(json.load(song_file))
                 except Exception as e:
                     self.log(f"Error loading song {f}: {e}")
@@ -53,19 +54,19 @@ class RadioBee(BaseBee):
         # Simple random selection for now
         # TODO: Implement intent filtering
         track = random.choice(songs)
-        
+
         self.current_track = track
-        
+
         # Update Dashboard
         radio.update_now_playing(
-            artist=track.get('artist', 'Unknown'),
-            track=track.get('title', 'Unknown'),
-            intent=track.get('intent', 'General')
+            artist=track.get("artist", "Unknown"),
+            track=track.get("title", "Unknown"),
+            intent=track.get("intent", "General"),
         )
-        
+
         # Log intention
         self.announce(f"Spinning {track.get('title')} for {track.get('intent')}")
-        
+
     def announce(self, message):
         """
         Announces something on the radio log.
@@ -75,7 +76,7 @@ class RadioBee(BaseBee):
         score = 1.0
         if self.ontology:
             score = self.ontology.validate_text(message, history=[])
-            
+
         if score < 1.0:
             self.log(f"⚠️ [SAFETY BLOCKED] Message contains banned content: '{message}'")
             return
@@ -89,18 +90,19 @@ class RadioBee(BaseBee):
         """
         self.announce(f"REQUEST: Need {amount} for {need_type} - {description}")
         # TODO: Add logic to persist this need to a 'Unfulfilled Needs' registry
-        
+
     def run(self):
         """
         Main loop for the Radio Bee.
         """
         self.announce("Radio System Online. Tuning frequencies...")
-        
+
         # Check Vibe
         vibe, model = self.get_voice_settings()
         self.announce(f"System State: {model} loaded. Vibe: {vibe['id'].upper()}")
-        
+
         self.spin_track()
+
 
 if __name__ == "__main__":
     # Test run
