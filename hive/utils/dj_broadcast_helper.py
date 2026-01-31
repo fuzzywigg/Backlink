@@ -2,11 +2,12 @@
 DJ Broadcast Helper - Integration of Agent.md personality with DJ operations.
 
 This module provides helper functions to integrate the Agent.md personality
-and DJ memory into broadcast operations, making it easy for the DJ to:
+and DJ memory into broadcast operations, providing context and awareness to help
+the DJ make informed, autonomous decisions:
 - Load personality context for broadcasts
-- Check anti-repetition rules
-- Access listener and song history
-- Generate context-aware responses
+- Track songs and listeners for memory/context
+- Provide awareness of recent patterns
+- Offer suggestions based on history (not blocking rules)
 """
 
 from typing import Any, Optional
@@ -160,15 +161,19 @@ class DJBroadcastHelper:
         hours_since_last_play: int = 4
     ) -> tuple[bool, str]:
         """
-        Check if a song can be played (hasn't been played recently).
+        Check if a song was played recently (for awareness, not blocking).
+        
+        This provides information to help the DJ make informed decisions,
+        but doesn't enforce hard rules. The DJ can choose to replay a song
+        if the moment calls for it.
         
         Args:
             song_title: Song title to check
             artist: Artist name
-            hours_since_last_play: Minimum hours since last play
+            hours_since_last_play: Hours to look back (default: 4)
             
         Returns:
-            Tuple of (can_play: bool, reason: str)
+            Tuple of (was_played_recently: bool, context: str)
         """
         was_recent = self.memory.was_song_played_recently(
             song_title,
@@ -177,36 +182,40 @@ class DJBroadcastHelper:
         )
         
         if was_recent:
-            return False, f"Song played within last {hours_since_last_play} hours"
+            return True, f"Note: Song played within last {hours_since_last_play} hours"
         
-        return True, "OK to play"
+        return False, "Not recently played"
     
     def check_genre_variety(self, proposed_genre: str, limit: int = 3) -> tuple[bool, str]:
         """
-        Check if playing this genre would violate the Rule of 3.
+        Check recent genre patterns (for awareness, not enforcement).
+        
+        Provides information about recent genre selections to help the DJ
+        make informed decisions about variety. This is advisory context,
+        not a hard rule—the DJ may choose to stay in a genre if it fits.
         
         Args:
             proposed_genre: Genre being considered
-            limit: Maximum consecutive same-genre plays (default: 3)
+            limit: Number of recent tracks to check (default: 3)
             
         Returns:
-            Tuple of (is_ok: bool, reason: str)
+            Tuple of (would_repeat: bool, context: str)
         """
         recent_songs = self.memory.get_recent_songs(limit=limit)
         
         if len(recent_songs) < limit:
-            return True, "Not enough history to check"
+            return False, "Not enough history for pattern detection"
         
-        # Check if all recent songs are the same genre
+        # Check recent genre pattern
         recent_genres = [
             song.get('genre', '').lower() 
             for song in recent_songs[:limit-1]  # Check last N-1 songs
         ]
         
         if all(g == proposed_genre.lower() for g in recent_genres if g):
-            return False, f"Would be {limit} consecutive {proposed_genre} tracks (Rule of 3 violation)"
+            return True, f"Note: Would be {limit} consecutive {proposed_genre} tracks"
         
-        return True, "Genre variety OK"
+        return False, "Genre variety present"
     
     def remember_listener(
         self,
@@ -290,38 +299,44 @@ class DJBroadcastHelper:
         """
         self.memory.track_phrase_usage(phrase, category)
     
-    def get_forbidden_phrases(self) -> list[str]:
+    def get_language_patterns(self) -> list[str]:
         """
-        Get list of forbidden phrases from Agent.md.
+        Get list of recently overused phrases (for awareness).
         
         Returns:
-            List of phrases to avoid
+            List of phrases used recently
         """
+        # This could be expanded to track actual usage patterns
+        # For now, just returns phrases the personality suggests varying
         return self.personality.get_forbidden_phrases()
     
-    def validate_content(self, content: str) -> tuple[bool, list[str]]:
+    def get_content_suggestions(self, content: str) -> list[str]:
         """
-        Validate content against anti-repetition rules.
+        Get suggestions about content based on recent patterns (advisory).
+        
+        This provides awareness about language patterns without blocking.
+        The DJ can choose whether to adjust based on these suggestions.
         
         Args:
-            content: Content to validate
+            content: Content to analyze
             
         Returns:
-            Tuple of (is_valid: bool, violations: list[str])
+            List of suggestion strings (empty if no suggestions)
         """
-        violations = []
+        suggestions = []
         content_lower = content.lower()
         
-        # Check forbidden phrases
-        for phrase in self.get_forbidden_phrases():
+        # Check for recently used phrases (informational only)
+        pattern_phrases = self.get_language_patterns()
+        for phrase in pattern_phrases:
             if phrase.lower() in content_lower:
                 was_recent, count = self.check_phrase_repetition(phrase, hours=1)
-                if was_recent:
-                    violations.append(
-                        f"Forbidden phrase '{phrase}' used {count} time(s) in last hour"
+                if was_recent and count > 1:
+                    suggestions.append(
+                        f"Note: '{phrase}' used {count} time(s) recently—consider varying"
                     )
         
-        return len(violations) == 0, violations
+        return suggestions
     
     def get_broadcast_summary(self) -> dict[str, Any]:
         """
