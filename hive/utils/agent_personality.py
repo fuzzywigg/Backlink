@@ -8,10 +8,13 @@ This module reads the Agent.md file and provides utilities to:
 - Track personality version for updates
 """
 
+import logging
 from pathlib import Path
 from typing import Any, Optional
 import re
 from datetime import datetime, timezone
+
+logger = logging.getLogger(__name__)
 
 
 class AgentPersonality:
@@ -50,6 +53,7 @@ class AgentPersonality:
         try:
             if not self.agent_md_path.exists():
                 self.load_error = f"Agent.md not found at {self.agent_md_path}"
+                logger.warning(self.load_error)
                 return
             
             with open(self.agent_md_path, 'r', encoding='utf-8') as f:
@@ -64,9 +68,14 @@ class AgentPersonality:
             self._parse_sections()
             
             self.loaded = True
+            logger.info(f"Loaded Agent.md v{self.version} from {self.agent_md_path}")
             
+        except UnicodeDecodeError as e:
+            self.load_error = f"Error decoding Agent.md (invalid UTF-8): {e}"
+            logger.error(self.load_error)
         except Exception as e:
             self.load_error = f"Error loading Agent.md: {e}"
+            logger.error(self.load_error)
     
     def _parse_sections(self) -> None:
         """Parse major sections from Agent.md."""

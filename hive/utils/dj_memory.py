@@ -12,12 +12,15 @@ Designed to work with Agent.md instructions for context-aware broadcasting.
 """
 
 import json
+import logging
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Optional
 from collections import defaultdict
 
 from hive.utils.state_manager import StateManager
+
+logger = logging.getLogger(__name__)
 
 
 class DJMemory:
@@ -32,11 +35,16 @@ class DJMemory:
     """
     
     def __init__(self, hive_path: Path | None = None):
-        """Initialize DJ Memory."""
+        """Initialize DJ Memory.
+        
+        Args:
+            hive_path: Path to hive directory (optional)
+        """
         self.state_manager = StateManager(hive_path)
         self.hive_path = self.state_manager.hive_path
         self.memory_path = self.hive_path / "honeycomb" / "dj_memory.json"
         self._cache: dict[str, Any] = {}
+        self._dirty: bool = False  # Track if cache needs saving
         self._load_memory()
     
     def _load_memory(self) -> None:
@@ -45,10 +53,15 @@ class DJMemory:
             try:
                 with open(self.memory_path, 'r') as f:
                     self._cache = json.load(f)
+                logger.info(f"Loaded DJ memory from {self.memory_path}")
+            except json.JSONDecodeError as e:
+                logger.error(f"Invalid JSON in DJ memory file: {e}")
+                self._cache = self._initialize_memory_structure()
             except Exception as e:
-                print(f"Warning: Could not load DJ memory: {e}")
+                logger.error(f"Could not load DJ memory: {e}")
                 self._cache = self._initialize_memory_structure()
         else:
+            logger.info(f"No existing DJ memory found, initializing new memory at {self.memory_path}")
             self._cache = self._initialize_memory_structure()
     
     def _initialize_memory_structure(self) -> dict[str, Any]:
@@ -65,14 +78,25 @@ class DJMemory:
             }
         }
     
-    def _save_memory(self) -> None:
-        """Persist memory to disk."""
+    def _save_memory(self, force: bool = False) -> None:
+        """Persist memory to disk.
+        
+        Args:
+            force: Force save even if not dirty
+        """
+        if not force and not self._dirty:
+            return
+            
         try:
             self.memory_path.parent.mkdir(parents=True, exist_ok=True)
             with open(self.memory_path, 'w') as f:
                 json.dump(self._cache, f, indent=2)
+            self._dirty = False
+            logger.debug(f"Saved DJ memory to {self.memory_path}")
+        except OSError as e:
+            logger.error(f"Could not create directory for DJ memory: {e}")
         except Exception as e:
-            print(f"Warning: Could not save DJ memory: {e}")
+            logger.error(f"Could not save DJ memory: {e}")
     
     # Song History Methods
     
@@ -87,18 +111,26 @@ class DJMemory:
         Record a song that was played.
         
         Args:
-            song_title: Title of the song
-            artist: Artist name
+            song_title: Title of the song (required, non-empty)
+            artist: Artist name (required, non-empty)
             genre: Optional genre classification
             mood: Optional mood descriptor
+            
+        Raises:
+            ValueError: If song_title or artist is empty
         """
+        if not song_title or not song_title.strip():
+            raise ValueError("song_title cannot be empty")
+        if not artist or not artist.strip():
+            raise ValueError("artist cannot be empty")
+            
         timestamp = datetime.now(timezone.utc).isoformat()
         
         song_entry = {
-            "title": song_title,
-            "artist": artist,
-            "genre": genre,
-            "mood": mood,
+            "title": song_title.strip(),
+            "artist": artist.strip(),
+            "genre": genre.strip() if genre else None,
+            "mood": mood.strip() if mood else None,
             "played_at": timestamp
         }
         
@@ -107,8 +139,11 @@ class DJMemory:
         # Keep only last 100 songs in memory
         if len(self._cache["song_history"]) > 100:
             self._cache["song_history"] = self._cache["song_history"][:100]
+            logger.debug("Trimmed song history to last 100 entries")
         
+        self._dirty = True
         self._save_memory()
+        logger.debug(f"Tracked song: '{song_title}' by {artist}")
     
     def get_recent_songs(self, limit: int = 10) -> list[dict[str, Any]]:
         """
@@ -183,31 +218,42 @@ class DJMemory:
         Store or update listener profile.
         
         Args:
-            listener_id: Unique listener identifier
+            listener_id: Unique listener identifier (required, non-empty)
             name: Listener's name
             location: Listener's location
             preferences: Optional preferences dictionary
+            
+        Raises:
+            ValueError: If listener_id is empty
         """
+        if not listener_id or not listener_id.strip():
+            raise ValueError("listener_id cannot be empty")
+            
+        listener_id = listener_id.strip()
+        
         if listener_id not in self._cache["listeners"]:
             self._cache["listeners"][listener_id] = {
                 "id": listener_id,
                 "first_seen": datetime.now(timezone.utc).isoformat(),
                 "interactions": 0
             }
+            logger.debug(f"Created new listener profile: {listener_id}")
         
         listener = self._cache["listeners"][listener_id]
         
         if name:
-            listener["name"] = name
+            listener["name"] = name.strip()
         if location:
-            listener["location"] = location
+            listener["location"] = location.strip()
         if preferences:
             listener["preferences"] = preferences
         
         listener["last_seen"] = datetime.now(timezone.utc).isoformat()
         listener["interactions"] += 1
         
+        self._dirty = True
         self._save_memory()
+        logger.debug(f"Updated listener profile: {listener_id} (interactions: {listener['interactions']})")
     
     def get_listener_profile(self, listener_id: str) -> dict[str, Any] | None:
         """
@@ -269,6 +315,7 @@ class DJMemory:
         if len(self._cache["phrases_used"][phrase_key]) > 20:
             self._cache["phrases_used"][phrase_key] = self._cache["phrases_used"][phrase_key][-20:]
         
+        self._dirty = True
         self._save_memory()
     
     def was_phrase_used_recently(
@@ -347,6 +394,7 @@ class DJMemory:
             "value": value,
             "updated_at": datetime.now(timezone.utc).isoformat()
         }
+        self._dirty = True
         self._save_memory()
     
     def get_session_context(self, key: str) -> Any | None:
@@ -367,6 +415,7 @@ class DJMemory:
     def clear_session_context(self) -> None:
         """Clear all session context."""
         self._cache["session_context"] = {}
+        self._dirty = True
         self._save_memory()
     
     # Utility Methods
@@ -400,5 +449,7 @@ class DJMemory:
             return False
         
         self._cache = self._initialize_memory_structure()
-        self._save_memory()
+        self._dirty = True
+        self._save_memory(force=True)
+        logger.info("DJ memory was reset")
         return True

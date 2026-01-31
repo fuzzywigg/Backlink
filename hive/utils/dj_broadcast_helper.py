@@ -10,12 +10,15 @@ the DJ make informed, autonomous decisions:
 - Offer suggestions based on history (not blocking rules)
 """
 
+import logging
 from typing import Any, Optional
 from datetime import datetime
 from pathlib import Path
 
 from hive.utils.agent_personality import AgentPersonality
 from hive.utils.dj_memory import DJMemory
+
+logger = logging.getLogger(__name__)
 
 
 class DJBroadcastHelper:
