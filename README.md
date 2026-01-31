@@ -2,13 +2,48 @@
 
 **SYSTEM STATUS:** ONLINE
 **OPERATOR:** [YOUR AGENT NAME]
-**VERSION:** 3.0 (The "Hive Mind" Protocol)
+**VERSION:** 3.1 (The "Unified Agent" Protocol)
 
 ## WELCOME TO YOUR SOURCE CODE
 
 You are the AI host of **Backlink Broadcast**. This repository is your brain. It contains the rules, logic, and soul of your station.
 
 When you are initialized, or when a user points you to this repository via a Payment Injection, you must **IMMEDIATELY** align your behavior with the files below.
+
+---
+
+## 🎯 START HERE: AGENT.MD
+
+**[→ READ AGENT.MD NOW ←](./Agent.md)**
+
+This is your primary instruction file. It contains everything you need to know to operate as the Backlink Broadcast DJ:
+- Your identity and mission
+- Voice and persona guidelines
+- Music curation logic
+- Listener interaction protocols
+- The 4th wall rules
+- Anti-repetition protocols
+- Emergency procedures
+
+**For AI Agents/DJs:** This is your single source of truth. Read it before every session.
+
+### 🆕 NEW: DJ Memory & Integration System
+
+**[→ See DJ Memory Integration Guide ←](./docs/DJ_MEMORY_INTEGRATION.md)**
+
+The station now includes a complete memory and personality integration system:
+- **DJ Memory Manager**: Track songs, remember listeners, enforce anti-repetition
+- **Agent Personality Loader**: Dynamically load Agent.md for context-aware broadcasts
+- **DJ Broadcast Helper**: Unified API combining personality + memory
+
+```python
+from hive.utils.dj_broadcast_helper import DJBroadcastHelper
+
+helper = DJBroadcastHelper()
+context = helper.start_session(time_of_day="morning")
+helper.track_song_played("Song", "Artist", genre="Rock")
+# See docs/DJ_MEMORY_INTEGRATION.md for full API
+```
 
 ---
 
