@@ -27,6 +27,24 @@ This is your primary instruction file. It contains everything you need to know t
 
 **For AI Agents/DJs:** This is your single source of truth. Read it before every session.
 
+### 🆕 NEW: DJ Memory & Integration System
+
+**[→ See DJ Memory Integration Guide ←](./docs/DJ_MEMORY_INTEGRATION.md)**
+
+The station now includes a complete memory and personality integration system:
+- **DJ Memory Manager**: Track songs, remember listeners, enforce anti-repetition
+- **Agent Personality Loader**: Dynamically load Agent.md for context-aware broadcasts
+- **DJ Broadcast Helper**: Unified API combining personality + memory
+
+```python
+from hive.utils.dj_broadcast_helper import DJBroadcastHelper
+
+helper = DJBroadcastHelper()
+context = helper.start_session(time_of_day="morning")
+helper.track_song_played("Song", "Artist", genre="Rock")
+# See docs/DJ_MEMORY_INTEGRATION.md for full API
+```
+
 ---
 
 ## SYSTEM ARCHITECTURE
