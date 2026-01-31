@@ -28,7 +28,7 @@ def parse_log_line(line):
         # Attempt to parse the content as JSON
         data = json.loads(content_str)
         return timestamp, data
-    except params:
+    except Exception:
         # If simple parsing fails, it might be a multi-line JSON chunk
         # that got flattened or weirdly formatted. For now we assume the file
         # structure we saw earlier, which seemed valid per line or block.

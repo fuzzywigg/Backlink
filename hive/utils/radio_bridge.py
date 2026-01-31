@@ -1,5 +1,6 @@
 import datetime
 import json
+import random
 from pathlib import Path
 
 # Placeholder for Goose FM MCP Client

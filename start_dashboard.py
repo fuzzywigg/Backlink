@@ -64,7 +64,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     try:
                         with open(REVIEWS_FILE) as f:
                             reviews_data = json.load(f)
-                    except:
+                    except Exception:
                         pass
 
                 # Prepend to top

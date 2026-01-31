@@ -48,7 +48,7 @@ class DiscoveryEngine:
             with open(storage_path) as f:
                 data = json.load(f)
             return [item for item in data if item.get("recommendation") == "PENDING"]
-        except:
+        except Exception:
             return []
 
     def save_review(self, url, name, summary, analysis, rubric_scores, update=True, recommendation=None):
@@ -78,7 +78,7 @@ class DiscoveryEngine:
             try:
                 with open(storage_path) as f:
                     data = json.load(f)
-            except:
+            except Exception:
                 pass
 
         if update:
