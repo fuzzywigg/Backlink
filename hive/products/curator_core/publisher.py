@@ -29,11 +29,13 @@ def deploy():
     # We use --only hosting to be fast
     try:
         log("🚀 Deploying to Firebase Hosting...")
-        # shell=True is often needed on Windows for batch commands
-        subprocess.run(["firebase", "deploy", "--only", "hosting"], check=True, shell=True)
+        # Use shell=False for security - avoid shell injection
+        subprocess.run(["firebase", "deploy", "--only", "hosting"], check=True, shell=False)
         log("✨ Deployment Complete. Site updated.")
     except subprocess.CalledProcessError as e:
         log(f"⚠️ Deployment Failed: {e}")
+    except FileNotFoundError:
+        log("⚠️ Firebase CLI not found. Install with: npm install -g firebase-tools")
 
 def run_publisher():
     log("📡 Sovereign Publisher Online.")

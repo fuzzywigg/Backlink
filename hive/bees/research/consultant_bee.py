@@ -128,8 +128,8 @@ class ConsultantBee(EmployedBee):
                     text = response["text"].replace('```json', '').replace('```', '').strip()
                     try:
                         return json.loads(text)
-                    except:
-                        pass
+                    except (json.JSONDecodeError, ValueError) as e:
+                        self.log(f"Failed to parse JSON from response: {e}", level="warning")
                 
                 # If Gemini3Client returned other dict structure (e.g. error)
                 if "error" in response:

@@ -25,11 +25,11 @@ from hive.utils.storage_adapter import StorageAdapter
 class StateManager:
     """
     Secure client for reading/writing hive state.
+    
+    Security:
+        - HIVE_SECRET_KEY environment variable MUST be set in production
+        - Never use the default development key in production
     """
-
-    # Default secret for dev/testing.
-    # IN PRODUCTION: MUST be set via env var HIVE_SECRET_KEY
-    DEFAULT_SECRET = "dev_secret_key_change_me_in_prod"
 
     def __init__(self, hive_path: Path | None = None):
         """Initialize the manager."""
@@ -43,7 +43,27 @@ class StateManager:
             self.hive_path = hive_path
 
         self.honeycomb_path = self.hive_path / "honeycomb"
-        self.secret_key = os.environ.get("HIVE_SECRET_KEY", self.DEFAULT_SECRET).encode()
+        
+        # Get secret key from environment
+        secret_key_str = os.environ.get("HIVE_SECRET_KEY")
+        
+        # If not set, check if we're in a development environment
+        if not secret_key_str:
+            # Check for explicit dev mode flag
+            is_dev = os.environ.get("ENVIRONMENT", "").lower() in ("dev", "development", "test")
+            
+            if is_dev:
+                # Use a development key only when explicitly in dev mode
+                secret_key_str = "dev_secret_key_change_me_in_prod"
+                print("WARNING: Using development secret key. Set HIVE_SECRET_KEY for production.")
+            else:
+                # In production, secret key is required
+                raise ValueError(
+                    "HIVE_SECRET_KEY environment variable must be set in production. "
+                    "For development, set ENVIRONMENT=dev"
+                )
+        
+        self.secret_key = secret_key_str.encode()
         self.storage = StorageAdapter(self.honeycomb_path)
 
     def _sign_data(self, data: dict[str, Any]) -> str:

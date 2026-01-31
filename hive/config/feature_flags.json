@@ -1,0 +1,34 @@
+{
+  "features": {
+    "validation_layer": {
+      "status": "enabled",
+      "description": "Pydantic validation for all data",
+      "rollout_percentage": 100.0
+    },
+    "rate_limiting": {
+      "status": "disabled",
+      "description": "API rate limiting",
+      "rollout_percentage": 0.0
+    },
+    "mcp_integration": {
+      "status": "disabled",
+      "description": "Model Context Protocol integration",
+      "rollout_percentage": 0.0
+    },
+    "stripe_webhooks": {
+      "status": "enabled",
+      "description": "Stripe payment webhook handling",
+      "rollout_percentage": 100.0
+    },
+    "cognee_knowledge_graph": {
+      "status": "testing",
+      "description": "Cognee-based knowledge graph",
+      "rollout_percentage": 50.0
+    },
+    "constitutional_gateway": {
+      "status": "enabled",
+      "description": "Constitutional LLM governance",
+      "rollout_percentage": 100.0
+    }
+  }
+}

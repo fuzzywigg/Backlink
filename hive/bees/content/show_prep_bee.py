@@ -51,8 +51,8 @@ class ShowPrepBee(EmployedBee):
                  with open("hive/keys.json") as f:
                      data = json.load(f)
                      api_key = data.get("GEMINI_API_KEY") or data.get("GOOGLE_API_KEY")
-             except:
-                 pass
+             except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+                 logger.warning(f"Could not load API key from keys.json: {e}")
         
         self.client = genai.Client(api_key=api_key) if api_key else None
         if not self.client:
