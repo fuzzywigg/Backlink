@@ -6,6 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from core_utils.graph_store import GraphStore
 
+
 def map_repository():
     """
     Crawls the repository and builds a dependency graph.
@@ -15,7 +16,7 @@ def map_repository():
 
     # Manual mapping for critical path
     # In a real Cognee implementation, this would use AST parsing
-    
+
     # Nodes
     utils = [
         ("core_utils/model_registry_loader.py", "utility"),
@@ -32,14 +33,14 @@ def map_repository():
     # Edges (Dependencies)
     graph.add_edge("hive/bees/system/radio_bee.py", "core_utils/model_registry_loader.py", "imports")
     graph.add_edge("hive/bees/research/scout_interface.py", "config/target_apis.json", "reads")
-    
+
     print("Graph mapping complete.")
     print(f"Nodes in Memory: {len(graph.nodes)}")
-    
+
     # Verification
     deps = graph.get_related("hive/bees/system/radio_bee.py")
     print(f"RadioBee Dependencies: {deps}")
-    
+
     if "core_utils/model_registry_loader.py" in deps:
         print("✅ Graph Integrity Verified")
     else:

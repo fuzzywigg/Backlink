@@ -6,10 +6,9 @@ Bees communicate through the honeycomb (shared state files), not directly.
 Updated to support Constitutional Governance.
 """
 
-import json
 import logging
-import uuid
 import time
+import uuid
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from pathlib import Path
@@ -57,7 +56,7 @@ class BaseBee(ABC):
             # Default to hive directory relative to this file
             # hive/bees/base_bee.py -> parent=bees -> parent=hive -> parent=root
             hive_path = Path(__file__).parent.parent.parent
-        
+
         self.hive_path = Path(hive_path)
         # Standard structure: root/hive/honeycomb
         self.honeycomb_path = self.hive_path / "hive" / "honeycomb"
@@ -243,14 +242,14 @@ class BaseBee(ABC):
             if "completed" not in tasks:
                 tasks["completed"] = []
             tasks["completed"].append(found_task)
-            
+
             self._write_json("tasks.json", tasks)
 
     def fail_task(self, task_id: str, error: str) -> None:
         """Mark a task as failed (may retry if attempts < max)."""
         tasks = self.read_tasks()
         in_progress = tasks.get("in_progress", [])
-        
+
         found_index = -1
         found_task = None
 
@@ -259,12 +258,12 @@ class BaseBee(ABC):
                 found_index = i
                 found_task = task
                 break
-                
+
         if found_task:
             tasks["in_progress"].pop(found_index)
             found_task["last_error"] = error
             found_task["failed_at"] = datetime.now(timezone.utc).isoformat()
-            
+
             # Simple retry logic
             attempts = found_task.get("attempts", 0) + 1
             found_task["attempts"] = attempts
@@ -305,7 +304,7 @@ class BaseBee(ABC):
             intel["_meta"] = {}
         intel["_meta"]["last_updated"] = datetime.now(timezone.utc).isoformat()
         self._write_json("intel.json", intel)
-    
+
     def update_intel(self, updates: dict[str, Any]) -> None:
         """Direct update to intel.json."""
         intel = self.read_intel()
@@ -343,12 +342,12 @@ class BaseBee(ABC):
             "from": self.BEE_TYPE,
             "at": datetime.now(timezone.utc).isoformat(),
         }
-        
+
         category = "priority" if priority else "normal"
         if category not in state["alerts"]:
             state["alerts"][category] = []
         state["alerts"][category].append(alert)
-        
+
         self.write_state(state)
 
     # ─────────────────────────────────────────────────────────────
@@ -358,7 +357,7 @@ class BaseBee(ABC):
     def log(self, message: str, level: str = "info") -> None:
         """Log a message (for debugging/monitoring)."""
         timestamp = datetime.now(timezone.utc).isoformat()
-        print(f"[{timestamp}] [{level.upper()}] [{self.bee_id}] {message}") 
+        print(f"[{timestamp}] [{level.upper()}] [{self.bee_id}] {message}")
         # Also use standard logger
         if level.lower() == "error":
             self.logger.error(message)
@@ -409,7 +408,7 @@ class BaseBee(ABC):
             response = self.llm_client.generate_content(
                 prompt=f"{system_prompt}\n\nUSER INPUT: {user_input}",
                 thinking_level="low",
-                response_schema=None, 
+                response_schema=None,
             )
 
             if "error" in response:

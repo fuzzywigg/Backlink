@@ -244,14 +244,14 @@ class SocialPosterBee(EmployedBee):
         """Craft a prompt for image generation based on the social content."""
         if not self.llm_client:
             return ""
-            
+
         pe = PromptEngineer(role="Visual Director", goal="Create an image prompt for a social media post.")
         pe.add_context(f"Topic: {topic}")
         pe.add_context(f"Tweet Text: {tweet_text}")
         pe.add_constraint("STYLE: Cyberpunk, Neon-Noir, Glitch Art, 'The Hive'.")
         pe.add_constraint("FORMAT: Output JSON with 'image_prompt'.")
         pe.set_output_format('{"image_prompt": "description of image"}')
-        
+
         result = self._ask_llm_json(pe, "Generate image prompt.")
         return result.get("image_prompt", "")
 

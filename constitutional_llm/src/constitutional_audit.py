@@ -2,9 +2,9 @@
 
 import json
 import logging
-from datetime import datetime, timezone
-from typing import Dict, Any, List
 import os
+from datetime import datetime, timezone
+from typing import Any
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -18,15 +18,15 @@ class ConstitutionalAuditEngine:
 
     def __init__(self, log_file: str = "constitutional_log.jsonl"):
         self.log_file = log_file
-        self.actions_today: List[Dict] = []
+        self.actions_today: list[dict] = []
         self._ensure_log_file()
 
     def _ensure_log_file(self):
         if not os.path.exists(self.log_file):
-            with open(self.log_file, 'w') as f:
+            with open(self.log_file, 'w'):
                 pass
 
-    def log_action(self, bee_type: str, action: Dict[str, Any], decision: Dict[str, Any]):
+    def log_action(self, bee_type: str, action: dict[str, Any], decision: dict[str, Any]):
         """
         Records an action and the gateway's decision.
         """
@@ -62,7 +62,7 @@ class ConstitutionalAuditEngine:
 
         return compliant_count / total_count
 
-    def generate_daily_report(self) -> Dict[str, Any]:
+    def generate_daily_report(self) -> dict[str, Any]:
         """
         Generates a summary report for the day.
         """

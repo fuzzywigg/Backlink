@@ -1,6 +1,6 @@
-import sys
 import json
 import subprocess
+import sys
 
 # Define the data
 url = "https://github.com/google/heir"

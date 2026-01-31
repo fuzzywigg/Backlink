@@ -62,7 +62,7 @@ class PayoutProcessorBee(BaseBee):
         user_wallet = payload.get("user_wallet")
         amount = payload.get("amount")
         reason = payload.get("reason", "content_delivery_failure")
-        tx_id = payload.get("original_tx_id")
+        payload.get("original_tx_id")
 
         self.log(f"Initiating REFUND: {amount} to {user_wallet}. Reason: {reason}")
 
@@ -70,7 +70,7 @@ class PayoutProcessorBee(BaseBee):
         path = self._select_payment_path()
 
         # 2. Construct Transaction (MCP Flow Simulation)
-        refund_tx = {
+        {
             "to": user_wallet,
             "value": amount,
             "data": "0x",  # Simple transfer
@@ -79,7 +79,6 @@ class PayoutProcessorBee(BaseBee):
         }
 
         # 3. Broadcast (Simulated)
-        success = True  # Assume success for simulation
 
         # 4. Log & Alert
         self.post_alert(f"REFUND ISSUED: {amount} to {user_wallet} ({reason})", priority=True)

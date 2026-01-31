@@ -1,13 +1,14 @@
 import json
 import os
-from typing import Dict, List, Any, Optional
+from typing import Any
+
 
 class GraphNode:
-    def __init__(self, id: str, type: str, content: Dict[str, Any]):
+    def __init__(self, id: str, type: str, content: dict[str, Any]):
         self.id = id
         self.type = type
         self.content = content
-        self.edges: List[Dict] = []
+        self.edges: list[dict] = []
 
     def to_dict(self):
         return {
@@ -22,22 +23,22 @@ class GraphStore:
     Sovereign Graph Memory Implementation (Proto-Cognee).
     Stores knowledge as a directed graph of nodes and edges.
     """
-    
+
     def __init__(self, storage_path: str = "data/memory_graph.json"):
         self.storage_path = storage_path
-        self.nodes: Dict[str, GraphNode] = {}
+        self.nodes: dict[str, GraphNode] = {}
         self._load()
 
-    def add_node(self, node_id: str, node_type: str, content: Dict[str, Any] = None):
+    def add_node(self, node_id: str, node_type: str, content: dict[str, Any] = None):
         """Adds or updates a node in the graph."""
         if content is None:
             content = {}
-        
+
         if node_id not in self.nodes:
             self.nodes[node_id] = GraphNode(node_id, node_type, content)
         else:
             self.nodes[node_id].content.update(content)
-        
+
         self._save()
 
     def add_edge(self, source_id: str, target_id: str, relation: str):
@@ -58,11 +59,11 @@ class GraphStore:
         })
         self._save()
 
-    def get_related(self, node_id: str, relation: str = None) -> List[str]:
+    def get_related(self, node_id: str, relation: str = None) -> list[str]:
         """Returns IDs of related nodes."""
         if node_id not in self.nodes:
             return []
-        
+
         related = []
         for edge in self.nodes[node_id].edges:
             if relation is None or edge["relation"] == relation:
@@ -80,7 +81,7 @@ class GraphStore:
         """Loads graph from disk."""
         if os.path.exists(self.storage_path):
             try:
-                with open(self.storage_path, 'r') as f:
+                with open(self.storage_path) as f:
                     data = json.load(f)
                     for k, v in data.items():
                         node = GraphNode(v["id"], v["type"], v["content"])
@@ -95,6 +96,6 @@ if __name__ == "__main__":
     graph.add_node("radio_bee.py", "file", {"path": "hive/bees/system/radio_bee.py"})
     graph.add_node("model_registry.py", "file", {"path": "core_utils/model_registry.py"})
     graph.add_edge("radio_bee.py", "model_registry.py", "imports")
-    
+
     related = graph.get_related("radio_bee.py")
     print(f"Radio Bee depends on: {related}")

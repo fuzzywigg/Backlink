@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Rubric(ABC):
     @abstractmethod
     def evaluate(self, content_summary: str) -> dict:
@@ -11,9 +12,9 @@ class GenericSME(Rubric):
         # Placeholder logic - in real usage, this might call an LLM
         return {
             "scores": {
-                "Utility": 5, 
-                "Quality": 5, 
-                "Relevance": 5, 
+                "Utility": 5,
+                "Quality": 5,
+                "Relevance": 5,
                 "Safety": 10
             },
             "analysis": "Generic analysis placeholder. This resource appears to be standard content."

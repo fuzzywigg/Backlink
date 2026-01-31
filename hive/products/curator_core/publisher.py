@@ -1,8 +1,7 @@
-import time
-import shutil
-import os
-import subprocess
 import datetime
+import shutil
+import subprocess
+import time
 from pathlib import Path
 
 # --- CONFIGURATION ---
@@ -16,7 +15,7 @@ def log(msg):
 
 def deploy():
     log("🔄 Change detected. Preparing deployment...")
-    
+
     # 1. Update Public File
     if not SOURCE_DB.exists():
         log("❌ Error: Source DB not found.")
@@ -43,26 +42,26 @@ def run_publisher():
     log(f"   Interval: {DEPLOY_INTERVAL_SECONDS}s")
 
     last_deploy_time = 0
-    
+
     while True:
         try:
             # Check modification time
             if SOURCE_DB.exists():
                 mtime = SOURCE_DB.stat().st_mtime
-                
+
                 # If modified SINCE last deploy
                 if mtime > last_deploy_time:
-                    # Optional: specific logic to wait for file close? 
+                    # Optional: specific logic to wait for file close?
                     # For JSON, usually safe enough if we retry.
-                    
+
                     deploy()
                     last_deploy_time = time.time()
                 else:
                     # No changes
                     pass
-            
+
             time.sleep(DEPLOY_INTERVAL_SECONDS)
-            
+
         except KeyboardInterrupt:
             log("🛑 Publisher stopping.")
             break

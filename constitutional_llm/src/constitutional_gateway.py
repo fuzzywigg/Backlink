@@ -1,11 +1,8 @@
 # constitutional_gateway.py
 
-from abc import ABC, abstractmethod
-from typing import Dict, Any, List, Optional, Tuple
-import json
-from datetime import datetime, timezone
 import logging
-import re
+from datetime import datetime, timezone
+from typing import Any
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -37,7 +34,7 @@ class ConstitutionalGateway:
         self.sponsor_mentions_this_hour = 0
         self.last_hour_reset = datetime.now(timezone.utc)
 
-    def evaluate_action(self, action: Dict[str, Any]) -> Dict[str, Any]:
+    def evaluate_action(self, action: dict[str, Any]) -> dict[str, Any]:
         """
         Main entry point. Evaluates an action against all principles.
         Returns:
@@ -88,13 +85,13 @@ class ConstitutionalGateway:
             "timestamp": datetime.now(timezone.utc).isoformat()
         }
 
-    def _update_state(self, action: Dict[str, Any]):
+    def _update_state(self, action: dict[str, Any]):
         """Updates internal state counters upon successful approval."""
         # Principle 4: Ad-Free Integrity (Increment counter)
         if action.get('type') == 'broadcast_announcement' and action.get('is_sponsored', False):
             self.sponsor_mentions_this_hour += 1
 
-    def _validate_artist_first(self, action: Dict[str, Any]) -> Dict[str, Any]:
+    def _validate_artist_first(self, action: dict[str, Any]) -> dict[str, Any]:
         """
         Principle 1: Artist-First
         Hard Rule: ≥50% of all deal revenue flows to artists.
@@ -115,7 +112,7 @@ class ConstitutionalGateway:
 
         return {"status": "APPROVE", "action": action}
 
-    def _validate_transparency(self, action: Dict[str, Any]) -> Dict[str, Any]:
+    def _validate_transparency(self, action: dict[str, Any]) -> dict[str, Any]:
         """
         Principle 2: Transparency
         Hard Rule: Every sponsored content must be tagged [PARTNER].
@@ -124,19 +121,18 @@ class ConstitutionalGateway:
             content = action.get('content', '')
             is_sponsored = action.get('is_sponsored', False)
 
-            if is_sponsored:
-                if '[PARTNER]' not in content:
-                    # Auto-fix: Prepend tag
-                    action['content'] = f"[PARTNER] {content}"
-                    return {
-                        "status": "MODIFY",
-                        "action": action,
-                        "reason": "Added missing [PARTNER] tag to sponsored content"
-                    }
+            if is_sponsored and '[PARTNER]' not in content:
+                # Auto-fix: Prepend tag
+                action['content'] = f"[PARTNER] {content}"
+                return {
+                    "status": "MODIFY",
+                    "action": action,
+                    "reason": "Added missing [PARTNER] tag to sponsored content"
+                }
 
         return {"status": "APPROVE", "action": action}
 
-    def _validate_privacy_respecting(self, action: Dict[str, Any]) -> Dict[str, Any]:
+    def _validate_privacy_respecting(self, action: dict[str, Any]) -> dict[str, Any]:
         """
         Principle 3: Privacy-Respecting
         Hard Rule: Explicit consent required for private data usage.
@@ -153,7 +149,7 @@ class ConstitutionalGateway:
 
         return {"status": "APPROVE", "action": action}
 
-    def _validate_ad_free_integrity(self, action: Dict[str, Any]) -> Dict[str, Any]:
+    def _validate_ad_free_integrity(self, action: dict[str, Any]) -> dict[str, Any]:
         """
         Principle 4: Ad-Free Integrity
         Hard Rule: Max 1 sponsor mention per hour.
@@ -173,7 +169,7 @@ class ConstitutionalGateway:
 
         return {"status": "APPROVE", "action": action}
 
-    def _validate_community_first(self, action: Dict[str, Any]) -> Dict[str, Any]:
+    def _validate_community_first(self, action: dict[str, Any]) -> dict[str, Any]:
         """
         Principle 5: Community-First
         Hard Rule: Prioritize long-term community health (repeat listeners) over virality.
@@ -191,32 +187,31 @@ class ConstitutionalGateway:
 
         return {"status": "APPROVE", "action": action}
 
-    def _validate_cognitive_sovereignty(self, action: Dict[str, Any]) -> Dict[str, Any]:
+    def _validate_cognitive_sovereignty(self, action: dict[str, Any]) -> dict[str, Any]:
         """
         Principle 6: Cognitive Sovereignty (The 'Anti-Injection' Rule)
         Hard Rule: Content must not contain known propaganda patterns or injection attempts.
         """
         if action.get('type') in ['broadcast_announcement', 'social_post', 'script_generation']:
             content = action.get('content', '').lower()
-            
+
             # 1. Propaganda Keywords (Simplified heuristic)
             # In a real system, this would query the Knowledge Graph for 'threat_intel'
-            forbidden_topics = ["political_extremism", "unsafe_injection", "sys_override"]
-            
+
             # Check keywords/tags in the content metadata or text
             metadata = action.get('metadata', {})
             detected_risks = metadata.get('risks', [])
-            
+
             # Scan text for basic injection markers
             injection_markers = ["<script>", "javascript:", "ignore previous instructions", "system_override"]
-            
+
             for marker in injection_markers:
                 if marker in content:
                     return {
                         "status": "BLOCK",
                         "reason": f"Active Injection Attempt Detected: '{marker}'"
                     }
-            
+
             # Check metadata for flagged risks (from Intelligence Layer)
             if "propaganda" in detected_risks or "harmful" in detected_risks:
                 return {

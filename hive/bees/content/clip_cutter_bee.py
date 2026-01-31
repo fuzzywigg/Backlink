@@ -88,7 +88,7 @@ class ClipCutterBee(EmployedBee):
         """Scan recent broadcast for clip-worthy moments."""
 
         # Read state for recent broadcast info
-        state = self.read_state()
+        self.read_state()
 
         # Placeholder - in production this would analyze actual content
         # Could use transcript analysis, energy detection, etc.

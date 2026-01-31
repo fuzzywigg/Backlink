@@ -5,8 +5,9 @@ Manages SMS, Voice Calls, and Listener Interactions via Twilio.
 Enables "Rally" features and Voicemail-to-Text for the station.
 """
 
-from hive.bees.base_bee import BaseBee
 import os
+
+from hive.bees.base_bee import BaseBee
 
 try:
     from twilio.rest import Client
@@ -18,14 +19,14 @@ class ListenerLineBee(BaseBee):
     """
     Handles Twilio interactions: SMS replies, Voice logs, and Call routing.
     """
-    
+
     def __init__(self, hive_path, gateway=None):
         super().__init__(hive_path, gateway)
-        
+
         self.account_sid = os.getenv("TWILIO_ACCOUNT_SID")
         self.auth_token = os.getenv("TWILIO_AUTH_TOKEN")
         self.phone_number = os.getenv("TWILIO_PHONE_NUMBER")
-        
+
         if TWILIO_AVAILABLE and self.account_sid and self.auth_token:
             try:
                 self.client = Client(self.account_sid, self.auth_token)
@@ -43,15 +44,15 @@ class ListenerLineBee(BaseBee):
     def work(self, task):
         instruction = task.get("instruction", "").lower()
         args = task.get("args", {})
-        
+
         if not self.client:
             return {"success": False, "reason": "Twilio not configured"}
-            
+
         if "sms" in instruction:
             return self.send_sms(args.get("to"), args.get("message"))
         elif "log_calls" in instruction:
             return self.fetch_call_logs(args.get("limit", 10))
-            
+
         return {"success": False, "reason": "Unknown instruction"}
 
     def send_sms(self, to_number, message_body):
@@ -71,7 +72,7 @@ class ListenerLineBee(BaseBee):
         try:
             calls = self.client.calls.list(limit=limit)
             return {
-                "success": True, 
+                "success": True,
                 "calls": [{"from": c.from_, "status": c.status, "duration": c.duration} for c in calls]
             }
         except Exception as e:

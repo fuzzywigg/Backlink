@@ -1,7 +1,7 @@
 import json
 import os
-import time
 import sys
+import time
 from datetime import datetime
 
 # Setup paths
@@ -17,7 +17,7 @@ except ImportError:
 
 def load_reviews():
     if os.path.exists(REVIEWS_FILE):
-        with open(REVIEWS_FILE, 'r') as f:
+        with open(REVIEWS_FILE) as f:
             try:
                 return json.load(f)
             except json.JSONDecodeError:
@@ -30,16 +30,16 @@ def save_reviews(data):
 
 def poll_firestore():
     print(f"[{datetime.now().isoformat()}] Polling 'scout_inbox' for project {PROJECT_ID}...")
-    
+
     try:
         # Client init (relies on ADC - Application Default Credentials)
         db = firestore.Client(project=PROJECT_ID)
-        
+
         # Query PENDING
         inbox_ref = db.collection("scout_inbox")
         query = inbox_ref.where(filter=firestore.FieldFilter("status", "==", "PENDING"))
         docs = list(query.stream())
-        
+
         if not docs:
             print("No pending submissions.")
             return
@@ -51,8 +51,8 @@ def poll_firestore():
             data = doc.to_dict()
             url = data.get("url")
             source = data.get("source", "unknown")
-            timestamp = data.get("timestamp") # Firestore timestamp
-            
+            data.get("timestamp") # Firestore timestamp
+
             if not url:
                 continue
 
@@ -69,7 +69,7 @@ def poll_firestore():
                 "analysis": "Received via remote inbox. Waiting for HITL review.",
                 "recommendation": "PENDING"
             }
-            
+
             # Prepend
             reviews.insert(0, new_entry)
             new_count += 1

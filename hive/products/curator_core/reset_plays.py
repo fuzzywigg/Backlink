@@ -8,14 +8,14 @@ def reset_unverified_plays():
     # Resolve path
     base_dir = os.path.dirname(__file__)
     file_path = os.path.abspath(os.path.join(base_dir, LIBRARY_PATH))
-    
+
     print(f"📂 Opening Library: {file_path}")
-    
+
     if not os.path.exists(file_path):
         print("❌ Library file not found.")
         return
 
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, encoding='utf-8') as f:
         try:
             data = json.load(f)
         except json.JSONDecodeError:
@@ -23,15 +23,14 @@ def reset_unverified_plays():
             return
 
     count_modified = 0
-    
+
     print(f"📊 Total Songs: {len(data)}")
-    
+
     for song in data:
         # Check the condition: First played on Jan 18
-        if song.get("first_played") == "2026-01-18":
-            if song.get("plays", 0) != 0:
-                song["plays"] = 0
-                count_modified += 1
+        if song.get("first_played") == "2026-01-18" and song.get("plays", 0) != 0:
+            song["plays"] = 0
+            count_modified += 1
 
     # Save back
     if count_modified > 0:

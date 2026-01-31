@@ -6,22 +6,23 @@ Uses Gemini 2.0 schemas to strictly enforce the output structure of valid plans.
 """
 
 import json
-from typing import Any, List, Dict
 import os
+from typing import Any
 
 from hive.utils.llm import LLMClient
 
+
 class TaskRouter:
     """
-    Analyzes high-level instructions and routes them to specific bees 
+    Analyzes high-level instructions and routes them to specific bees
     using a structured execution plan.
     """
-    
+
     def __init__(self, llm_client: LLMClient = None):
         # Pass a minimal config if initializing a new client
         self.llm = llm_client or LLMClient(config={"llm": {"model": "gemini-2.0-flash-exp"}})
-        
-    def route_task(self, instruction: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
+
+    def route_task(self, instruction: str, context: dict[str, Any] = None) -> dict[str, Any]:
         """
         Analyze a task and return a routing plan.
         """
@@ -77,7 +78,7 @@ class TaskRouter:
         prompt = f"""
         You are the Routing Logic for the Hive Queen.
         Your goal is to break down a high-level User Instruction into a concrete Execution Plan.
-        
+
         AVAILABLE BEES:
         - scout: Research, web scraping, link analysis.
         - dj: Play music, manage playlist, buy songs (with treasury approval).
@@ -89,12 +90,12 @@ class TaskRouter:
         - kv_store: Read/Write persistent memory.
 
         USER INSTRUCTION: "{instruction}"
-        
+
         CONTEXT: {json.dumps(context or {})}
-        
+
         OUTPUT SCHEMA (JSON):
         {json.dumps(plan_schema, indent=2)}
-        
+
         Generate a VALID JSON object matching this schema exactly.
         """
 
@@ -102,7 +103,7 @@ class TaskRouter:
         try:
             # Access the underlying GenerativeModel instance
             model = self.llm.default_model
-            
+
             response = model.generate_content(
                 prompt,
                 generation_config={
@@ -110,9 +111,9 @@ class TaskRouter:
                     # "response_schema": plan_schema # Disabled to allow dynamic task_args
                 }
             )
-            
+
             return json.loads(response.text)
-            
+
         except Exception as e:
             print(f"Router Error: {e}")
             return {
@@ -126,13 +127,13 @@ if __name__ == "__main__":
     # Self-test
     print("Initializing Router...")
     # Mocking correct environment for the test
-    os.environ['GOOGLE_API_KEY'] = os.environ.get('GOOGLE_API_KEY', '') 
-    
+    os.environ['GOOGLE_API_KEY'] = os.environ.get('GOOGLE_API_KEY', '')
+
     router = TaskRouter()
-    
+
     test_instruction = "Check the stream health and then find me some news about AI agents."
     print(f"\nRouting Instruction: '{test_instruction}'")
-    
+
     plan = router.route_task(test_instruction)
     print("\nGenerated Plan:")
     print(json.dumps(plan, indent=2))

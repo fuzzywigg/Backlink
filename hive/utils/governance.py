@@ -5,21 +5,19 @@ Implements the Memory Constitution v2.0
 
 import json
 import logging
+
+# Assuming payment_gate or similar exists, or we define a stub here
+# from hive.utils.payment_gate import PaymentGate
+# ─────────────────────────────────────────────────────────────
+# CONFIGURATION
+# ─────────────────────────────────────────────────────────────
+import os
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from hive.utils.cache_manager import BacklinkCacheManager
 
-# Assuming payment_gate or similar exists, or we define a stub here
-# from hive.utils.payment_gate import PaymentGate
-
-
-
-# ─────────────────────────────────────────────────────────────
-# CONFIGURATION
-# ─────────────────────────────────────────────────────────────
-import os
 GOVERNANCE_AI_MODEL = os.getenv("GOVERNANCE_AI_MODEL", "gemini-pro-3")
 GOVERNANCE_AI_ENDPOINT = os.getenv("GOVERNANCE_AI_ENDPOINT", "https://generativelanguage.googleapis.com")
 

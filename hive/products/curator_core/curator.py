@@ -1,14 +1,14 @@
-import pandas as pd
-import json
-import os
 import argparse
+import json
+
+import pandas as pd
 
 # --- CONFIGURATION ---
 DEFAULT_SCHEMA = {
     "title": "string",
     "artist": "string",
     "genre": "string",
-    "bpm": "integer", 
+    "bpm": "integer",
     "key": "string",
     "mood": "string"
 }
@@ -22,7 +22,7 @@ class TheCurator:
 
     def run(self):
         print(f"🧹 THE CURATOR: Ingesting {self.input_file}...")
-        
+
         # 1. Ingest
         try:
             if self.input_file.endswith(".csv"):
@@ -50,7 +50,7 @@ class TheCurator:
         # 3. Output
         print(f"   Successfully Cured: {len(clean_data)} records.")
         print(f"   Rejected: {len(self.errors)} records.")
-        
+
         self.save_output(clean_data)
 
     def process_row(self, row):
@@ -62,17 +62,17 @@ class TheCurator:
         try:
             # Handle varied capitalization in headers
             row_lower = {k.lower(): v for k, v in row.items()}
-            
+
             title = str(row_lower.get("title", row_lower.get("name", ""))).strip()
             artist = str(row_lower.get("artist", "")).strip()
-            
+
             # Filter out "Unknown" or empty
             if not title or not artist or "unknown" in artist.lower():
-                return None 
+                return None
 
             # Deduplication ID
             id_str = f"{artist}_{title}".lower().replace(" ", "_")
-            
+
             # Construct Golden Record
             return {
                 "id": id_str,
@@ -91,7 +91,7 @@ class TheCurator:
             with open(self.output_file, 'w') as f:
                 json.dump(data, f, indent=2)
             print(f"✅ GOLDEN DATASET SAVED to {self.output_file}")
-            print(f"   (This intellectual property is now a sovereign asset.)")
+            print("   (This intellectual property is now a sovereign asset.)")
         except Exception as e:
             print(f"❌ Save Failed: {e}")
 
@@ -99,8 +99,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="The Curator: Data Cleaning Agent")
     parser.add_argument("input", help="Path to raw CSV/JSON")
     parser.add_argument("output", help="Path to save Golden JSON")
-    
+
     args = parser.parse_args()
-    
+
     bot = TheCurator(args.input, args.output)
     bot.run()

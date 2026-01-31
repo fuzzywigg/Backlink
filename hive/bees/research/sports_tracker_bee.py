@@ -27,7 +27,7 @@ class SportsTrackerBee(EmployedBee):
         self.log("Sports Bee tracking games...")
 
         # 1. Get Locations
-        intel = self.read_intel()
+        self.read_intel()
         # Simulated check for locations
 
         # 2. Check Games (Simulated)

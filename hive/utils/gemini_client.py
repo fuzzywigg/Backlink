@@ -1,6 +1,6 @@
 import json
-import os
 import logging
+import os
 from typing import Any
 
 # Conditional imports
@@ -33,7 +33,7 @@ class Gemini3Client:
         self.backend = "google"
         self.client = None
         self.model_name = model_name
-        
+
         # Check Configuration
         # We reuse the gov config or a simpler GENAI_BACKEND flag
         self.gov_model = os.environ.get("GOVERNANCE_AI_MODEL", "gemini-pro-3")
@@ -60,8 +60,8 @@ class Gemini3Client:
 
         self.backend = "local"
         # LocalAI doesn't strictly need a real key, but OpenAI client might check for one
-        api_key = os.environ.get("LOCALAI_API_KEY", "sk-xxx-local") 
-        
+        api_key = os.environ.get("LOCALAI_API_KEY", "sk-xxx-local")
+
         self.client = OpenAI(
             base_url=self.local_endpoint,
             api_key=api_key
@@ -120,14 +120,14 @@ class Gemini3Client:
                 messages=messages,
                 response_format=response_format
             )
-            
+
             content = completion.choices[0].message.content
             if response_schema:
                 try:
                     return json.loads(content)
                 except json.JSONDecodeError:
                     return {"error": "Failed to parse JSON from LocalAI", "raw": content}
-            
+
             return {"text": content}
 
         except Exception as e:
@@ -141,14 +141,14 @@ class Gemini3Client:
         config = types.GenerateContentConfig(
             thinking_config=types.ThinkingConfig(thinking_level=thinking_level)
         )
-        
+
         if tools:
             config.tools = tools
 
         if response_schema:
             config.response_mime_type = "application/json"
             config.response_schema = response_schema
-        
+
         if system_instruction:
              config.system_instruction = system_instruction
 
@@ -156,16 +156,16 @@ class Gemini3Client:
             response = self.client.models.generate_content(
                 model=self.model_name, contents=prompt, config=config
             )
-            
+
             if response_schema:
                 try:
                     return json.loads(response.text)
                 except (json.JSONDecodeError, ValueError) as e:
                     print(f"Warning: Failed to parse JSON response: {e}")
                     return {"text": response.text}  # Fallback
-            
+
             return {"text": response.text}
-        
+
         except Exception as e:
             return {"error": str(e)}
 

@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Any, List, Optional
-import json
+
 
 class ScoutInterface(ABC):
     """
@@ -30,11 +29,12 @@ class ScoutInterface(ABC):
 
 from playwright.sync_api import sync_playwright
 
+
 class SovereignScout(ScoutInterface):
     """
     Implementation of ScoutInterface using Sovereign tools (Playwright, local).
     """
-    
+
     def __init__(self, headless: bool = True):
         self.headless = headless
         self.playwright = None

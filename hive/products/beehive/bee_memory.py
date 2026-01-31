@@ -1,9 +1,7 @@
-import os
 import json
+import os
+
 import requests
-import glob
-import time
-from datetime import datetime
 
 # THE BEEHIVE: Local Vector Memory System
 # Ingests docs/ and knowledge/ into a local vector store using Ollama.
@@ -49,20 +47,20 @@ def get_embedding(text):
 
 def ingest():
     print("🐝 THE BEEHIVE: Starting Ingestion (Full Vectorization)...")
-    
+
     if not check_ollama():
         print("❌ OLLAMA OFFLINE or UNREACHABLE.")
         print("   Please run 'ollama serve' in a separate terminal.")
         return
 
     vectors = []
-    
+
     # Simple recursive walk
     count = 0
     for root_path in ROOT_DIRS:
         abs_root = os.path.abspath(os.path.join(os.path.dirname(__file__), root_path))
         print(f"   Scanning: {abs_root}")
-        
+
         if not os.path.exists(abs_root):
             print(f"⚠️  PATH NOT FOUND: {abs_root}")
             continue
@@ -72,22 +70,22 @@ def ingest():
                 if f.endswith(".md") or f.endswith(".txt"):
                     fullpath = os.path.join(dirpath, f)
                     try:
-                        with open(fullpath, 'r', encoding='utf-8') as file:
+                        with open(fullpath, encoding='utf-8') as file:
                             content = file.read()
-                            
+
                         # Naive chunking (paragraphs)
                         chunks = content.split("\n\n")
                         for i, chunk in enumerate(chunks):
                             if len(chunk) < 50: continue # Skip noise
-                            
+
                             # Indexing Logic:
                             # 1. First chunk is usually the summary/header -> High Priority
                             # 2. Limit to 3 chunks per file for MVP speed (unless critical)
-                            if i > 5: break 
-                            
+                            if i > 5: break
+
                             print(f"      Embed: {f} [{i}]")
                             vec = get_embedding(chunk)
-                            
+
                             if vec:
                                 vectors.append({
                                     "source": f,
@@ -96,14 +94,14 @@ def ingest():
                                     "vector": vec
                                 })
                                 count += 1
-                                
+
                     except Exception as e:
                         print(f"   Skipped {f}: {e}")
 
     print(f"✅ Indexed {count} vector segments.")
 
     print("   To enable full vectorization, uncomment line 86.")
-    
+
     with open(INDEX_FILE, 'w') as f:
         json.dump(vectors, f, indent=2)
     print(f"💾 Index saved to {INDEX_FILE}")

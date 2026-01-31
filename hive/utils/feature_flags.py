@@ -43,7 +43,7 @@ class FeatureFlag(BaseModel):
 class FeatureFlagManager:
     """
     Manages feature flags for the hive.
-    
+
     Usage:
         manager = FeatureFlagManager()
         if manager.is_enabled("new_payment_flow"):
@@ -121,10 +121,10 @@ class FeatureFlagManager:
     def is_enabled(self, feature_name: str) -> bool:
         """
         Check if a feature is enabled.
-        
+
         Args:
             feature_name: Name of the feature to check
-            
+
         Returns:
             True if feature is enabled, False otherwise
         """
@@ -165,7 +165,7 @@ class FeatureFlagManager:
     def set_status(self, feature_name: str, status: FeatureStatus) -> None:
         """
         Set the status of a feature flag.
-        
+
         Note: This updates in-memory only. Use save() to persist.
         """
         if feature_name not in self.flags:

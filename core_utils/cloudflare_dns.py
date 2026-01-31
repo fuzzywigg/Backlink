@@ -13,7 +13,7 @@ Usage:
 
 import os
 import sys
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 try:
     import requests
@@ -27,7 +27,7 @@ class CloudflareClient:
 
     def __init__(self, api_token: str, zone_id: str):
         """Initialize Cloudflare client.
-        
+
         Args:
             api_token: Cloudflare API token with DNS edit permissions
             zone_id: Zone ID for the target domain
@@ -40,9 +40,9 @@ class CloudflareClient:
             "Content-Type": "application/json",
         }
 
-    def list_dns_records(self) -> List[Dict[str, Any]]:
+    def list_dns_records(self) -> list[dict[str, Any]]:
         """List all DNS records for the zone.
-        
+
         Returns:
             List of DNS record dictionaries
         """
@@ -51,12 +51,12 @@ class CloudflareClient:
         response.raise_for_status()
         return response.json()["result"]
 
-    def get_dns_record(self, record_id: str) -> Dict[str, Any]:
+    def get_dns_record(self, record_id: str) -> dict[str, Any]:
         """Get details of a specific DNS record.
-        
+
         Args:
             record_id: DNS record ID
-            
+
         Returns:
             DNS record dictionary
         """
@@ -72,16 +72,16 @@ class CloudflareClient:
         content: str,
         ttl: int = 1,
         proxied: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Create a new DNS record.
-        
+
         Args:
             record_type: DNS record type (A, CNAME, TXT, etc.)
             name: Record name (e.g., 'www', '@', 'api')
             content: Record content (IP address, domain, etc.)
             ttl: Time to live (1 = automatic)
             proxied: Whether to proxy through Cloudflare (orange cloud)
-            
+
         Returns:
             Created DNS record dictionary
         """
@@ -105,9 +105,9 @@ class CloudflareClient:
         content: str,
         ttl: int = 1,
         proxied: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Update an existing DNS record.
-        
+
         Args:
             record_id: DNS record ID to update
             record_type: DNS record type
@@ -115,7 +115,7 @@ class CloudflareClient:
             content: Record content
             ttl: Time to live
             proxied: Whether to proxy through Cloudflare
-            
+
         Returns:
             Updated DNS record dictionary
         """
@@ -131,12 +131,12 @@ class CloudflareClient:
         response.raise_for_status()
         return response.json()["result"]
 
-    def delete_dns_record(self, record_id: str) -> Dict[str, Any]:
+    def delete_dns_record(self, record_id: str) -> dict[str, Any]:
         """Delete a DNS record.
-        
+
         Args:
             record_id: DNS record ID to delete
-            
+
         Returns:
             Deletion confirmation dictionary
         """

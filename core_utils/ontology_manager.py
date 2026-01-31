@@ -1,14 +1,12 @@
 import json
 import os
-import random
 from datetime import datetime
-from typing import Dict, List, Optional
 
 LIBRARY_PATH = "config/ontology_library.json"
 
 class OntologyManager:
     """
-    Manages the rotation of linguistic ontologies (vocabularies) 
+    Manages the rotation of linguistic ontologies (vocabularies)
     to prevent repetitive 'Mad Libs' loops in agent outputs.
     """
 
@@ -17,17 +15,17 @@ class OntologyManager:
         self.library = self._load_library()
         self.current_ontology = None
 
-    def _load_library(self) -> Dict:
+    def _load_library(self) -> dict:
         if not os.path.exists(self.library_path):
             return {}
         try:
-            with open(self.library_path, 'r') as f:
+            with open(self.library_path) as f:
                 return json.load(f)
         except Exception as e:
             print(f"[Ontology] Load error: {e}")
             return {}
 
-    def get_current_ontology(self, offset_hour: int = 0, override_hour: int = None) -> Dict:
+    def get_current_ontology(self, offset_hour: int = 0, override_hour: int = None) -> dict:
         """
         Determines the ontology based on the current hour.
         Rotation Cycle:
@@ -41,9 +39,8 @@ class OntologyManager:
         else:
              now = datetime.now()
              hour = (now.hour + offset_hour) % 24
-        
-        keys = ["cyber_noir", "solar_punk", "high_tech", "abstract_flow"]
-        
+
+
         # Quadrant check
         if 0 <= hour < 6:
             key = "cyber_noir"
@@ -57,7 +54,7 @@ class OntologyManager:
         # Safe fallback if config is broken
         if "ontologies" not in self.library or key not in self.library["ontologies"]:
             return self._get_fallback_ontology()
-            
+
         self.current_ontology = self.library["ontologies"][key]
         return self.current_ontology
 
@@ -68,15 +65,15 @@ class OntologyManager:
             "prompt_injection": "Speak clearly and concisely."
         }
 
-    def validate_text(self, text: str, history: List[str]) -> float:
+    def validate_text(self, text: str, history: list[str]) -> float:
         """
-        Scores text for freshness. 
+        Scores text for freshness.
         0.0 = Repetitive trash
         1.0 = Fresh and compliant
         """
         if not text:
             return 0.0
-            
+
         # 1. Check Banned Words
         if self.current_ontology and "banned_words" in self.current_ontology:
             for word in self.current_ontology["banned_words"]:
@@ -86,7 +83,7 @@ class OntologyManager:
 
         # 2. Check Repetition against History
         # (Simple N-gram overlap or keyword check would go here)
-        
+
         return 1.0
 
 if __name__ == "__main__":

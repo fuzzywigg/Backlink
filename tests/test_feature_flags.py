@@ -3,7 +3,6 @@ Tests for feature flags system.
 """
 
 import json
-import os
 import tempfile
 from pathlib import Path
 
@@ -109,7 +108,7 @@ class TestFeatureFlagManager:
     def test_set_status(self, test_manager):
         """Test setting feature status."""
         test_manager.set_status("rate_limiting", FeatureStatus.ENABLED)
-        
+
         flag = test_manager.flags["rate_limiting"]
         assert flag.status == FeatureStatus.ENABLED
 
@@ -132,7 +131,7 @@ class TestFeatureFlagManager:
         """Test checking if feature is in beta."""
         # Set a feature to beta
         test_manager.flags["cognee_knowledge_graph"].status = FeatureStatus.BETA
-        
+
         assert test_manager.is_beta("cognee_knowledge_graph") is True
         assert test_manager.is_beta("validation_layer") is False
 
@@ -144,14 +143,14 @@ class TestFeatureFlagManager:
 
         # Create new manager with same config file
         new_manager = FeatureFlagManager(config_path=test_manager.config_path)
-        
+
         # Should have the updated status
         assert new_manager.get_status("rate_limiting") == FeatureStatus.ENABLED
 
     def test_list_all(self, test_manager):
         """Test listing all flags."""
         all_flags = test_manager.list_all()
-        
+
         assert isinstance(all_flags, dict)
         assert len(all_flags) > 0
         assert "validation_layer" in all_flags
@@ -179,7 +178,7 @@ class TestGlobalFunctions:
         """Test getting global manager instance."""
         manager1 = get_feature_flag_manager()
         manager2 = get_feature_flag_manager()
-        
+
         # Should be same instance
         assert manager1 is manager2
 
@@ -187,7 +186,7 @@ class TestGlobalFunctions:
         """Test convenience function for checking enabled."""
         # This uses the global manager
         result = is_feature_enabled("validation_layer")
-        
+
         # Should be a boolean
         assert isinstance(result, bool)
 
@@ -209,7 +208,7 @@ class TestConfigFileFormat:
             data = json.load(f)
 
         validation_layer = data["features"]["validation_layer"]
-        
+
         assert "status" in validation_layer
         assert "description" in validation_layer
         assert "rollout_percentage" in validation_layer

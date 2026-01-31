@@ -1,5 +1,6 @@
-import time
 import argparse
+import time
+
 
 def main():
     parser = argparse.ArgumentParser()

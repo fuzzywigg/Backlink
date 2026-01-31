@@ -1,6 +1,5 @@
-import json
-import os
 import datetime
+import json
 from pathlib import Path
 
 # Placeholder for Goose FM MCP Client
@@ -15,7 +14,7 @@ class RadioBridge:
         self.storage_path = Path(storage_path)
         # Ensure directory exists if we are writing directly to frontend (dev mode)
         # In prod, this might write to a DB or bucket
-        
+
     def update_now_playing(self, artist, track, intent=None):
         """
         Updates the 'Now Playing' status.
@@ -37,7 +36,7 @@ class RadioBridge:
         status = self._read_status()
         if 'intention_queue' not in status:
             status['intention_queue'] = []
-        
+
         intention = {
             'id': f"{bee_name}-{int(datetime.datetime.now().timestamp())}",
             'bee': bee_name,
@@ -46,7 +45,7 @@ class RadioBridge:
             'status': 'PENDING', # PENDING, BROADCAST, REJECTED
             'timestamp': datetime.datetime.now().isoformat()
         }
-        
+
         status['intention_queue'].append(intention)
         self._write_status(status)
         print(f"[{datetime.datetime.now()}] RadioBridge: Intention submitted by {bee_name}")
@@ -58,7 +57,7 @@ class RadioBridge:
         status = self._read_status()
         if 'intentions' not in status:
             status['intentions'] = []
-        
+
         status['intentions'].insert(0, {
             'bee': bee_name,
             'message': message,
@@ -85,9 +84,9 @@ class RadioBridge:
         status = self._read_status()
         if 'needs_queue' not in status:
             status['needs_queue'] = []
-            
+
         need_id = f"need-{int(datetime.datetime.now().timestamp())}-{random.randint(100,999)}"
-        
+
         need = {
             'id': need_id,
             'bee': bee_name,
@@ -97,7 +96,7 @@ class RadioBridge:
             'status': 'OPEN',
             'timestamp': datetime.datetime.now().isoformat()
         }
-        
+
         status['needs_queue'].append(need)
         self._write_status(status)
         print(f"[{datetime.datetime.now()}] RadioBridge: Need submitted: {description} (${amount})")
@@ -117,11 +116,11 @@ class RadioBridge:
                     print(f"[{datetime.datetime.now()}] RadioBridge: Need {need_id} fulfilled!")
                     return True
         return False
-        
+
     def _read_status(self):
         if self.storage_path.exists():
             try:
-                with open(self.storage_path, 'r') as f:
+                with open(self.storage_path) as f:
                     return json.load(f)
             except Exception:
                 return {}
@@ -134,7 +133,7 @@ class RadioBridge:
              # Ensure parent dir exists
             if not self.storage_path.parent.exists():
                  return # Fail silently if path is invalid in this context
-            
+
             with open(self.storage_path, 'w') as f:
                 json.dump(data, f, indent=2)
         except Exception as e:

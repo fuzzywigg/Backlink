@@ -3,7 +3,7 @@ Tests for Pydantic schemas.
 """
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime
 from decimal import Decimal
 
 import pytest
@@ -54,13 +54,13 @@ class TestHoneycombSchemas:
                 task_id="   ",  # Whitespace only
                 bee_type="trend_scout",
             )
-        
+
         assert "task_id" in str(exc_info.value)
 
     def test_task_schema_timestamps(self):
         """Test automatic timestamp creation."""
         task = TaskSchema(task_id="task_123", bee_type="test")
-        
+
         assert task.created_at is not None
         assert task.updated_at is not None
         assert isinstance(task.created_at, datetime)
@@ -112,7 +112,7 @@ class TestHoneycombSchemas:
         )
 
         wisdom = WisdomSchema(entries=[entry1])
-        
+
         assert len(wisdom.entries) == 1
         assert wisdom.entries[0].entry_id == "wisdom_1"
 
@@ -242,7 +242,7 @@ class TestSchemaSerialization:
         )
 
         data = task.model_dump()
-        
+
         assert isinstance(data, dict)
         assert data["task_id"] == "task_123"
         assert data["bee_type"] == "test"
@@ -255,7 +255,7 @@ class TestSchemaSerialization:
         )
 
         json_str = task.model_dump_json()
-        
+
         # Should be valid JSON
         data = json.loads(json_str)
         assert data["task_id"] == "task_123"
@@ -270,7 +270,7 @@ class TestSchemaSerialization:
         }
 
         task = TaskSchema(**data)
-        
+
         assert task.task_id == "task_123"
         assert task.priority == TaskPriority.HIGH
 

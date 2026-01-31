@@ -104,7 +104,7 @@ class EngagementBee(EmployedBee):
 
         sender = mention.get("from", "unknown")
         content = mention.get("content", "")
-        platform = mention.get("platform", "twitter")
+        mention.get("platform", "twitter")
 
         self.log(f"Processing mention from {sender}: {content[:50]}...")
 
@@ -476,7 +476,7 @@ class EngagementBee(EmployedBee):
         """Run a giveaway or contest."""
 
         payload = task.get("payload", {})
-        giveaway_type = payload.get("type", "random")
+        payload.get("type", "random")
         prize = payload.get("prize", "mystery prize")
 
         self.log(f"Running giveaway: {prize}")

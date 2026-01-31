@@ -1,5 +1,6 @@
 import pytest
 
+
 def test_sponsor_bee_negotiation(sponsor_bee):
     # Safe deal (60% share)
     result = sponsor_bee.negotiate_deal("Coke", 1000, 600)

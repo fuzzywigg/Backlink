@@ -1,7 +1,7 @@
 import json
-import time
 import os
 from datetime import datetime
+
 
 class AutonomousRunner:
     def __init__(self, manifest_path="automation/manifest.json"):
@@ -11,7 +11,7 @@ class AutonomousRunner:
         self._load_manifest()
 
     def _load_manifest(self):
-        with open(self.manifest_path, 'r') as f:
+        with open(self.manifest_path) as f:
             self.manifest = json.load(f)
 
     def _save_manifest(self):
@@ -36,7 +36,7 @@ class AutonomousRunner:
             if task['status'] == 'pending':
                 task_id = task['id']
                 self.log(f"Starting Task: {task_id} - {task['description']}")
-                
+
                 # Check Stop Hook BEFORE starting
                 if self.check_stop_hook():
                     return False
@@ -46,16 +46,16 @@ class AutonomousRunner:
                     # For this harness, we are marking it 'in_progress' so the Agent knows what to pick up.
                     task['status'] = 'in_progress'
                     self._save_manifest()
-                    
+
                     self.log(f"Task {task_id} marked as IN_PROGRESS. Waiting for Agent execution...")
                     return True # We only enact one state change per 'tick' to allow the LLM to do the work.
-                    
+
                 except Exception as e:
                     self.log(f"❌ Error in Task {task_id}: {str(e)}")
                     task['status'] = 'failed'
                     self._save_manifest()
                     return False
-        
+
         self.log("✅ All tasks in manifest completed!")
         return False
 

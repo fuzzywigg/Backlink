@@ -5,9 +5,8 @@ Manages the linguistic style (Ontology) of the station using Stanford DSPy.
 Optimizes prompts to prevent repetition and match specific "Vibes".
 """
 
-from datetime import datetime
-import random
 import os
+from datetime import datetime
 
 try:
     import dspy
@@ -18,23 +17,23 @@ except ImportError:
 
 class PersonaAdapter(dspy.Signature):
     """Adapts a core message to a specific persona and pacing."""
-    
+
     core_message = dspy.InputField(desc="The neutral facts to convey")
     persona_desc = dspy.InputField(desc="Description of the target persona")
     constraints = dspy.InputField(desc="Forbidden words and stylistic constraints")
-    
+
     adapted_script = dspy.OutputField(desc="The rewritten script matching variable linguistic patterns")
 
 class OntologyManager:
     """
     Controls the 'Vibe' and linguistic constraints of the DJ Bee.
     """
-    
+
     def __init__(self, llm_client=None):
         self.llm_client = llm_client
         self.current_ontology = "standard_broadcast"
         self.dspy_initialized = False
-        
+
         # Initialize DSPy with Gemini if available
         if DSPY_AVAILABLE and self.llm_client:
             try:
@@ -77,11 +76,8 @@ class OntologyManager:
         """
         Selects an ontology based on time of day.
         """
-        if not timestamp:
-            hour = datetime.now().hour
-        else:
-            hour = timestamp.hour
-            
+        hour = datetime.now().hour if not timestamp else timestamp.hour
+
         # Time-based Logic
         if 0 <= hour < 5:
             new_ont = "late_night_lofi"
@@ -91,10 +87,10 @@ class OntologyManager:
             new_ont = "standard_broadcast"
         else:
             new_ont = "cyber_sovereign"
-            
-        self.current_ontology = new_ont    
+
+        self.current_ontology = new_ont
         return self.current_ontology
-        
+
     def adapt_message(self, message: str) -> str:
         """
         Uses DSPy to rewrite a message into the current ontology.
@@ -103,7 +99,7 @@ class OntologyManager:
         ontology = self.ontologies.get(self.current_ontology, self.ontologies["standard_broadcast"])
         desc = ontology['desc']
         constraints = f"Do not use: {', '.join(ontology['forbidden'])}. Pacing: {ontology['pacing']}"
-        
+
         if self.dspy_initialized:
             try:
                 result = self.predictor(
@@ -114,7 +110,7 @@ class OntologyManager:
                 return result.adapted_script
             except Exception as e:
                 print(f"DSPy adaptation failed: {e}")
-        
+
         # Fallback
         return f"[Persona: {self.current_ontology}]\n{message}\n(Style: {desc})"
 
@@ -123,17 +119,17 @@ class OntologyManager:
         Returns the system instruction for the current ontology.
         """
         ontology = self.ontologies.get(self.current_ontology, self.ontologies["standard_broadcast"])
-        
+
         return f"""
         [SYSTEM: ACTIVATE PERSONA '{self.current_ontology.replace('_', ' ').upper()}']
         DESCRIPTION: {ontology['desc']}
         PACING: {ontology['pacing']}
-        
+
         [CONSTRAINT: NEGATIVE PROMPTING]
         DO NOT USE THESE WORDS: {', '.join(ontology['forbidden'])}
-        
+
         GOAL: VARY YOUR SENTENCE STRUCTURE. DO NOT REPEAT YOURSELF.
         """
-    
+
     def get_current_ontology(self):
         return self.ontologies.get(self.current_ontology)

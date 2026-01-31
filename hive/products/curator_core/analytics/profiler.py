@@ -1,7 +1,7 @@
 
 import json
-import re
 import os
+import re
 from collections import Counter
 from datetime import datetime
 
@@ -11,7 +11,7 @@ REPORT_PATH = "../../../docs/reports/dj_analysis_profile.md"
 
 def load_events():
     if not os.path.exists(LOG_PATH): return []
-    with open(LOG_PATH, 'r') as f:
+    with open(LOG_PATH) as f:
         return json.load(f)
 
 def generate_profile():
@@ -22,12 +22,12 @@ def generate_profile():
 
     # 1. STATION BREAKDOWN
     stations = Counter(e['station'] for e in events)
-    
+
     # 2. ENTITY EXTRACTION
     handles = []
     urls = []
     phone_numbers = []
-    
+
     twitter_pattern = r'@[\w_]+'
     url_pattern = r'https?://\S+|www\.\S+'
     phone_pattern = r'\+?1?[-.]?\(?\d{3}\)?[-.]?\d{3}[-.]?\d{4}'
@@ -76,7 +76,7 @@ The heartbeat of the AI personalities.
 
     with open(REPORT_PATH, 'w', encoding='utf-8') as f:
         f.write(report)
-    
+
     print(f"✅ Report generated at: {REPORT_PATH}")
 
 if __name__ == "__main__":

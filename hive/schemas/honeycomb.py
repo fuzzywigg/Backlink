@@ -113,7 +113,7 @@ class WisdomSchema(BaseSchema):
 class HoneycombStateSchema(BaseSchema):
     """
     Schema for the main honeycomb state.json file.
-    
+
     This is the primary communication channel between bees.
     """
 

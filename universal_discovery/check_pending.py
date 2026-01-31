@@ -1,4 +1,5 @@
 import json
+
 try:
     with open('review_system/reviews.json') as f:
         data = json.load(f)

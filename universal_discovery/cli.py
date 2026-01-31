@@ -1,13 +1,12 @@
-import argparse
-import sys
 import os
-import urllib.parse
+import sys
 
 # Ensure we can import local modules
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(current_dir))
 
 from universal_discovery.engine import DiscoveryEngine
+
 
 def interactive_wizard():
     engine = DiscoveryEngine()
@@ -44,7 +43,7 @@ def interactive_wizard():
     # Step 4: User Input
     name = input("Name of Resource: ").strip()
     summary = input("Brief Summary: ").strip()
-    
+
     print("\n📝 Quick Analysis:")
     analysis = input("Why is this useful? (Your notes): ").strip()
 

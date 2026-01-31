@@ -1,11 +1,13 @@
-import pytest
-import sys
 import os
+import sys
+
+import pytest
 
 # Ensure src is in path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from src.constitutional_gateway import ConstitutionalGateway
+
 
 class TestConstitutionalGateway:
     @pytest.fixture

@@ -187,7 +187,6 @@ class QueenOrchestrator:
                 import sys
 
                 # Construct import path relative to hive
-                import sys
 
                 # Add hive directory to path so 'bees.xxx' imports work
                 if str(self.hive_path) not in sys.path:
@@ -272,7 +271,7 @@ class QueenOrchestrator:
             results.append({"bee_type": bee_type, "result": result})
 
         return results
-    
+
     # ─────────────────────────────────────────────────────────────
     # INTELLIGENT DISPATCH (Gemini 2.0 Router Pattern)
     # ─────────────────────────────────────────────────────────────
@@ -283,7 +282,7 @@ class QueenOrchestrator:
         """
         if not self.router:
             return {"error": "Router not available"}
-        
+
         return self.router.route_task(task_description)
 
     def orchestrate_complex_task(self, task_description: str) -> dict[str, Any]:
@@ -291,22 +290,22 @@ class QueenOrchestrator:
         Execute a complex task by planning and delegating.
         """
         self.log(f"Orchestrating complex task: {task_description}")
-        
+
         # 1. Plan
         plan = self.analyze_task_intent(task_description)
         if "error" in plan:
             self.log(f"Planning failed: {plan['error']}", level="error")
             return plan
-        
+
         # Support both new schema ('assignments') and old output if needed
         assignments = plan.get("assignments") or plan.get("plan") or []
         intent = plan.get("intent") or plan.get("plan_summary")
-        
+
         self.log(f"Plan generated: {intent}")
-        
+
         # 2. Execute
         results = []
-        
+
         # Sort by priority (order is 1-based index)
         # We handle simple sorting here.
         try:
@@ -320,20 +319,20 @@ class QueenOrchestrator:
             if bee_type:
                 # Provide strict 'instruction' and flexible 'task_args'
                 bee_task = {
-                    "instruction": step.get("instruction") or step.get("task"), 
+                    "instruction": step.get("instruction") or step.get("task"),
                     "args": step.get("task_args") or step.get("args") or {},
                     "context": "orchestrated_task"
                 }
-                
+
                 self.log(f"Delegating to {bee_type}: {bee_task['instruction']}")
                 result = self.spawn_bee(bee_type, bee_task)
-                
+
                 results.append({
                     "bee": bee_type,
                     "status": "success" if result.get("success") else "failed",
                     "output": result
                 })
-        
+
         return {"plan": plan, "execution_results": results}
 
     def run_schedule(self) -> dict[str, Any]:
@@ -392,7 +391,7 @@ class QueenOrchestrator:
         processed = []
         for task in pending[:5]:  # Process up to 5 tasks per cycle
             bee_type = task.get("bee_type")
-            
+
             # If explicit bee type is assigned, just spawn it
             if bee_type:
                 result = self.spawn_bee(bee_type, task)
@@ -530,23 +529,23 @@ class QueenOrchestrator:
     def _update_state(self, updates: dict[str, Any]) -> None:
         """Update state file."""
         state = self._read_state()
-        
+
         # Handle Constitutional Wrapper
         is_wrapped = "data" in state
         target = state["data"] if is_wrapped else state
-        
+
         merged_target = self._deep_merge(target, updates)
-        
+
         # Ensure meta exists
         if "_meta" not in merged_target:
             merged_target["_meta"] = {}
-            
+
         merged_target["_meta"]["last_updated"] = datetime.now(timezone.utc).isoformat()
         merged_target["_meta"]["last_updated_by"] = "queen"
-        
+
         if is_wrapped:
             state["data"] = merged_target
-            # Note: In full production, we should re-sign this. 
+            # Note: In full production, we should re-sign this.
             # For now, we preserve the structure but invalidate the sig.
         else:
             state = merged_target
@@ -617,7 +616,7 @@ def main():
         data = json.loads(args.data) if args.data else {}
         results = queen.trigger_event(args.event, data)
         print(json.dumps(results, indent=2))
-    
+
     elif args.command == "orchestrate":
         if not args.instruction:
             print("Error: --instruction required for orchestrate command")

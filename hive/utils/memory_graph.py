@@ -9,7 +9,7 @@ and semantic retrieval.
 """
 
 import logging
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 try:
     import networkx as nx
@@ -24,12 +24,12 @@ logger = logging.getLogger(__name__)
 class HiveKnowledgeGraph:
     """
     The central memory store for the Hive Swarm.
-    
+
     Acts as a wrapper around a persisted Graph (NetworkX/Cognee/Markdown) to allow Bees
     to store relationships (Triples) and retrieve context via traversal.
     """
 
-    def __init__(self, persistence_path: str = "hive_memory.graphml", markdown_dir: Optional[str] = None):
+    def __init__(self, persistence_path: str = "hive_memory.graphml", markdown_dir: str | None = None):
         self.persistence_path = persistence_path
         self.markdown_store = MarkdownKnowledgeGraph(markdown_dir) if markdown_dir else None
         self.graph = nx.DiGraph() if nx else None
@@ -47,15 +47,15 @@ class HiveKnowledgeGraph:
                 data = self.markdown_store.get_full_graph()
                 for entity_name, details in data["entities"].items():
                     self.graph.add_node(entity_name, type="entity", observations=details["observations"])
-                
+
                 for rel in data["relationships"]:
                     self.graph.add_edge(rel["source"], rel["target"], relation=rel["verb"], context=rel["context"])
-                
+
                 logger.info(f"Loaded {len(data['entities'])} entities from Markdown graph.")
                 return
             except Exception as e:
                 logger.error(f"Failed to load generic Markdown graph: {e}")
-            
+
         try:
             # Option B: Load from GraphML
             # self.graph = nx.read_graphml(self.persistence_path)
@@ -63,14 +63,14 @@ class HiveKnowledgeGraph:
         except Exception as e:
             logger.info(f"Initialized new Knowledge Graph (No existing file: {e})")
 
-    async def add_knowledge(self, 
-                            subject: str, 
-                            predicate: str, 
-                            object_: str, 
-                            metadata: Optional[Dict[str, Any]] = None) -> bool:
+    async def add_knowledge(self,
+                            subject: str,
+                            predicate: str,
+                            object_: str,
+                            metadata: dict[str, Any] | None = None) -> bool:
         """
         Adds a semantic triple to the memory graph.
-        
+
         Args:
             subject: The source node (e.g., "Stripe")
             predicate: The relationship (e.g., "handles")
@@ -90,35 +90,35 @@ class HiveKnowledgeGraph:
             logger.error(f"Failed to add knowledge: {e}")
             return False
 
-    async def retrieve_context(self, query_node: str, depth: int = 1) -> List[str]:
+    async def retrieve_context(self, query_node: str, depth: int = 1) -> list[str]:
         """
         Retrieves related context by traversing the graph from a starting node.
-        
+
         Args:
             query_node: The node to start searching from.
             depth: How many hops to traverse.
-            
+
         Returns:
             List of natural language strings describing the relationships.
         """
         if self.graph is None:
             return []
-            
+
         if query_node not in self.graph:
             return [f"No memory found for '{query_node}'"]
 
         results = []
         # Simple BFS traversal for context
         edges = list(self.graph.out_edges(query_node, data=True))
-        
+
         for u, v, data in edges:
             relation = data.get('relation', 'related_to')
             results.append(f"{u} {relation} {v}")
-            
+
             # If depth > 1, we would recursively fetch v's edges here
             if depth > 1:
                 sub_edges = self.graph.out_edges(v, data=True)
-                for su, sv, sdata in sub_edges:
+                for _su, sv, sdata in sub_edges:
                     sub_rel = sdata.get('relation', 'related_to')
                     results.append(f"  -> {sv} ({sub_rel})")
 

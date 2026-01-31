@@ -1,11 +1,11 @@
-import sys
 import os
-import json
+import sys
 
 # Add project root to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from src.constitutional_audit import ConstitutionalAuditEngine
+
 
 def main():
     print("Running Daily Audit...")

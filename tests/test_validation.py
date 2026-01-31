@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from hive.schemas import HoneycombStateSchema, IntelSchema, TaskSchema, WisdomSchema
+from hive.schemas import IntelSchema, TaskSchema, WisdomSchema
 from hive.utils.validation import ValidatedStateManager
 
 
@@ -60,10 +60,10 @@ class TestValidatedStateManager:
         }
 
         validated_manager.write_state(state_data, "test_bee")
-        
+
         # Read it back
         read_state = validated_manager.read_state()
-        
+
         assert read_state["current_track"]["title"] == "Test Track"
 
     def test_write_invalid_state_non_strict(self, validated_manager):
@@ -106,7 +106,7 @@ class TestValidatedStateManager:
         }
 
         intel = validated_manager.validate_intel(intel_data)
-        
+
         assert isinstance(intel, IntelSchema)
         assert intel.intel_id == "intel_123"
 
@@ -129,7 +129,7 @@ class TestValidatedStateManager:
         }
 
         task = validated_manager.validate_task(task_data)
-        
+
         assert isinstance(task, TaskSchema)
         assert task.task_id == "task_123"
 
@@ -146,7 +146,7 @@ class TestValidatedStateManager:
         }
 
         wisdom = validated_manager.validate_wisdom(wisdom_data)
-        
+
         assert isinstance(wisdom, WisdomSchema)
         assert len(wisdom.entries) == 1
 
@@ -161,7 +161,7 @@ class TestFeatureFlagIntegration:
 
         # Invalid state should be accepted when validation is off
         invalid_state = {"invalid": "structure"}
-        
+
         # Should not raise
         validated_manager.write_state(invalid_state, "test_bee")
 
@@ -173,13 +173,13 @@ class TestFeatureFlagIntegration:
         # Create truly invalid data that will fail Pydantic validation
         # Use required fields with wrong types
         from pydantic import ValidationError as PydanticValidationError
-        
+
         # Try to validate an invalid task directly
         invalid_task = {
             "task_id": "",  # Empty task_id should fail validation
             "bee_type": "test",
         }
-        
+
         # Should raise validation error in strict mode despite feature flag being off
         with pytest.raises(PydanticValidationError):
             strict_manager.validate_task(invalid_task)
@@ -195,10 +195,10 @@ class TestStateManagerMetadata:
         }
 
         validated_manager.write_state(state_data, "test_bee")
-        
+
         # Get the raw data directly from state manager
         raw_state = validated_manager.state_manager.read_state()
-        
+
         # Check for _meta in raw state (before schema conversion)
         assert "_meta" in raw_state
         assert "last_updated_by" in raw_state["_meta"]
@@ -216,7 +216,7 @@ class TestStateManagerMetadata:
 
         # Get raw state to check metadata
         raw_state = validated_manager.state_manager.read_state()
-        
+
         assert raw_state["_meta"]["last_updated_by"] == "bee_2"
 
 
@@ -226,19 +226,19 @@ class TestValidatedStateManagerFactory:
     def test_create_validated_state_manager(self, temp_hive_path, monkeypatch):
         """Test factory function creates manager."""
         monkeypatch.setenv("ENVIRONMENT", "dev")
-        
+
         from hive.utils.validation import create_validated_state_manager
 
         manager = create_validated_state_manager(hive_path=temp_hive_path)
-        
+
         assert isinstance(manager, ValidatedStateManager)
 
     def test_create_strict_manager(self, temp_hive_path, monkeypatch):
         """Test factory function creates strict manager."""
         monkeypatch.setenv("ENVIRONMENT", "dev")
-        
+
         from hive.utils.validation import create_validated_state_manager
 
         manager = create_validated_state_manager(hive_path=temp_hive_path, strict=True)
-        
+
         assert manager.strict is True

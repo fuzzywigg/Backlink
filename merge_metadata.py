@@ -1,6 +1,5 @@
-import json
 import csv
-import difflib
+import json
 
 LIBRARY_PATH = 'hive/honeycomb/aggregated_library.json'
 LIBRARY_PATH = 'hive/honeycomb/aggregated_library.json'
@@ -22,7 +21,7 @@ def infer_metadata(title, artist):
         'lyrical_theme': "-"
     }
     t = str(title).lower()
-    
+
     # 1. MOOD / ENERGY
     if any(x in t for x in ['remix', 'club', 'dance', 'mix', 'techno']):
         meta['mood'] = "Energetic"
@@ -36,25 +35,25 @@ def infer_metadata(title, artist):
         meta['mood'] = "Relaxing"
         meta['energy_level'] = "Low"
         meta['dj_tags'] = "Background|Focus"
-    
+
     # 2. ERA
     if "202" in t: meta['era'] = "2020s"
     elif "201" in t: meta['era'] = "2010s"
     elif "199" in t: meta['era'] = "1990s"
     elif "198" in t: meta['era'] = "1980s"
     elif "197" in t: meta['era'] = "1970s"
-    
+
     return meta
 
 def run():
     # 1. Load Library
-    with open(LIBRARY_PATH, 'r', encoding='utf-8') as f:
+    with open(LIBRARY_PATH, encoding='utf-8') as f:
         library = json.load(f)
-    
+
     # 2. Load CSV
     metadata_map = {}
     try:
-        with open(CSV_PATH, 'r', encoding='utf-8') as f:
+        with open(CSV_PATH, encoding='utf-8') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 key = normalize(row['song_title'])
@@ -66,10 +65,10 @@ def run():
     updated_count = 0
     for song in library:
         title_key = normalize(song.get('title', ''))
-        
+
         # Try exact match
         match = metadata_map.get(title_key)
-        
+
         # Fuzzy / Substring Match
         if not match:
             for csv_title, csv_data in metadata_map.items():
@@ -78,8 +77,8 @@ def run():
                     csv_artist = normalize(csv_data.get('artist', ''))
                     if lib_artist in csv_artist or csv_artist in lib_artist or 'unknown' in lib_artist:
                         match = csv_data
-                        break 
-        
+                        break
+
         # APPLY DATA
         if match:
             song['secondary_genre'] = match.get('secondary_genres')
@@ -91,11 +90,11 @@ def run():
             song['bpm'] = match.get('bpm_range')
             song['notable_features'] = match.get('notable_features')
             song['dj_tags'] = match.get('dj_tags')
-            
+
             if song.get('artist') == 'Unknown' and match.get('artist'):
                 song['artist'] = match['artist']
             updated_count += 1
-        
+
         # BACKFILL INFERENCE (If still missing data)
         if not song.get('mood') or song.get('mood') == "-":
             inferred = infer_metadata(song.get('title', ''), song.get('artist', ''))

@@ -8,19 +8,18 @@ Responsibilities:
 - Queue up trivia and fun facts
 """
 
-import os
 import json
 import logging
+import os
 from typing import Any
-from datetime import datetime
 
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
+from core_utils.ontology_manager import OntologyManager
 from hive.bees.base_bee import EmployedBee
 from hive.utils.trivia_fetcher import TriviaFetcher
-from core_utils.ontology_manager import OntologyManager
 
 # Configure Logging
 logger = logging.getLogger("ShowPrepBee")
@@ -28,7 +27,7 @@ logger = logging.getLogger("ShowPrepBee")
 class ShowPrepBee(EmployedBee):
     """
     Prepares show content and talking points.
-    
+
     Now integrated with OntologyManager (v3.2) to prevent linguistic repetition.
     Uses Gemini VS-Flash/Pro to generate fresh banter based on the active 'Vibe'.
     """
@@ -41,10 +40,10 @@ class ShowPrepBee(EmployedBee):
         super().__init__(hive_path)
         load_dotenv() # Load environment variables
         self.ontology_manager = OntologyManager()
-        
+
         # Initialize Gemini Client
         api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-        
+
         if not api_key:
              # Fallback to key file if environment not set
              try:
@@ -53,7 +52,7 @@ class ShowPrepBee(EmployedBee):
                      api_key = data.get("GEMINI_API_KEY") or data.get("GOOGLE_API_KEY")
              except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
                  logger.warning(f"Could not load API key from keys.json: {e}")
-        
+
         self.client = genai.Client(api_key=api_key) if api_key else None
         if not self.client:
             logger.warning("Gemini Client not initialized. Falling back to static text.")
@@ -66,7 +65,7 @@ class ShowPrepBee(EmployedBee):
 
         # Read current intel
         intel = self.read_intel()
-        
+
         # Determine time slot
         time_slot = "evening"
         if task and "time_slot" in task:
@@ -116,18 +115,18 @@ class ShowPrepBee(EmployedBee):
 
         prompt = f"""
         Generate 3 short, distinct DJ banter lines for a radio station.
-        
+
         CONTEXT:
         - Time Slot: {time_slot}
         - Current Vibe/Persona: {ontology.get('vibe')}
         - Style Instruction: {ontology.get('prompt_injection')}
-        
+
         CONSTRAINTS:
         - Do NOT use these banned words: {', '.join(ontology.get('banned_words', []))}
         - Keep it under 20 words per line.
         - Be cool, atmospheric, and immersive.
         - STRICTLY prevent repetition of words like "manifest", "blueprint", "organism".
-        
+
         OUTPUT FORMAT:
         JSON list of objects: [{{ "type": "intro|outro|transition", "text": "..." }}]
         """
@@ -140,7 +139,7 @@ class ShowPrepBee(EmployedBee):
                     response_mime_type="application/json"
                 )
             )
-            
+
             # clean potential markdown fences
             text = response.text.replace('```json', '').replace('```', '').strip()
             return json.loads(text)

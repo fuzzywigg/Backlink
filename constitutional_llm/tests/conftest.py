@@ -1,13 +1,15 @@
-import pytest
 import os
 import sys
+
+import pytest
 
 # Ensure src is in path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from src.constitutional_gateway import ConstitutionalGateway
+from src.bee_implementations import SocialPosterBee, SponsorHunterBee
 from src.constitutional_audit import ConstitutionalAuditEngine
-from src.bee_implementations import SponsorHunterBee, SocialPosterBee
+from src.constitutional_gateway import ConstitutionalGateway
+
 
 @pytest.fixture
 def gateway():

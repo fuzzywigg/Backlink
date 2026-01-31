@@ -1,7 +1,7 @@
 import json
 import os
-import time
 from datetime import datetime
+
 from web3 import Web3
 
 # --- CONFIGURATION ---
@@ -21,7 +21,7 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
     Constructs an unsigned transaction proposal and saves it to JSON.
     The AI does NOT sign it. The User signs it offline.
     """
-    
+
     # 1. Setup Connection
     rpc_url = RPCS.get(chain.lower())
     if not rpc_url:
@@ -40,12 +40,12 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
     # 3. Fetch Network State (Nonce & Gas)
     print(f"[{chain.upper()}] Fetching Nonce & Fee Data...")
     nonce = w3.eth.get_transaction_count(from_addr)
-    
+
     # EIP-1559 Fee estimation
     latest_block = w3.eth.get_block("latest")
     base_fee = latest_block["baseFeePerGas"]
     # Priority fee tip (can be adjustable, using safe low default)
-    max_priority_fee = w3.to_wei(1.5, 'gwei') 
+    max_priority_fee = w3.to_wei(1.5, 'gwei')
     # Buffer base fee by 20% for fluctuation
     max_fee_per_gas = int(base_fee * 1.2) + max_priority_fee
 
@@ -76,10 +76,10 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
     filename = f"tx_proposal_{chain}_{timestamp}.json"
     filepath = os.path.join(PROPOSAL_DIR, filename)
 
-    # Convert numeric types to string for JSON compatibility if needed, 
+    # Convert numeric types to string for JSON compatibility if needed,
     # but hex is safer for signing tools.
     # We save a "Human Readable" version and a "Machine Readable" version in the same object.
-    
+
     payload = {
         "metadata": {
             "created_at": timestamp,
@@ -89,7 +89,7 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
         },
         "transaction": tx
     }
-    
+
     # Ensure dir exists (redundant check)
     os.makedirs(PROPOSAL_DIR, exist_ok=True)
 
@@ -99,11 +99,11 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
     print("\n" + "="*60)
     print(f"✅ PROPOSAL GENERATED: {filepath}")
     print("="*60)
-    print(f"ACTION REQUIRED: Transfer this file to your AIR-GAPPED machine.")
+    print("ACTION REQUIRED: Transfer this file to your AIR-GAPPED machine.")
     print(f"1. Review the 'to' address: {to_addr}")
     print(f"2. Review the value: {amount_ether}")
-    print(f"3. Sign using your Hardware Wallet or Clean Environment.")
-    print(f"4. Broadcast the signed hex using a public node.")
+    print("3. Sign using your Hardware Wallet or Clean Environment.")
+    print("4. Broadcast the signed hex using a public node.")
     print("="*60 + "\n")
 
 if __name__ == "__main__":
@@ -113,5 +113,5 @@ if __name__ == "__main__":
     f = input("From Address: ").strip()
     t = input("To Address: ").strip()
     v = float(input("Amount: "))
-    
+
     generate_proposal(c, f, t, v)

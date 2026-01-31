@@ -1,13 +1,15 @@
 # bee_implementations.py
 
-from typing import Dict, Any
+from typing import Any
+
 from .base_bee import BaseBee
+
 
 class SponsorHunterBee(BaseBee):
     def __init__(self):
         super().__init__("SponsorHunterBee")
 
-    def negotiate_deal(self, sponsor_name: str, total_amount: float, artist_amount: float) -> Dict[str, Any]:
+    def negotiate_deal(self, sponsor_name: str, total_amount: float, artist_amount: float) -> dict[str, Any]:
         action = {
             "type": "deal_negotiation",
             "sponsor": sponsor_name,
@@ -23,7 +25,7 @@ class SocialPosterBee(BaseBee):
     def __init__(self):
         super().__init__("SocialPosterBee")
 
-    def post_content(self, content: str, is_sponsored: bool = False) -> Dict[str, Any]:
+    def post_content(self, content: str, is_sponsored: bool = False) -> dict[str, Any]:
         action = {
             "type": "social_post",
             "content": content,
@@ -38,7 +40,7 @@ class ListenerIntelBee(BaseBee):
     def __init__(self):
         super().__init__("ListenerIntelBee")
 
-    def analyze_data(self, requires_pii: bool, has_consent: bool) -> Dict[str, Any]:
+    def analyze_data(self, requires_pii: bool, has_consent: bool) -> dict[str, Any]:
         action = {
             "type": "data_processing",
             "requires_pii": requires_pii,

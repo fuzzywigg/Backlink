@@ -1,9 +1,11 @@
 # base_bee.py
 
 from abc import ABC, abstractmethod
-from typing import Dict, Any
-from .constitutional_gateway import ConstitutionalGateway
+from typing import Any
+
 from .constitutional_audit import ConstitutionalAuditEngine
+from .constitutional_gateway import ConstitutionalGateway
+
 
 class BaseBee(ABC):
     """
@@ -16,7 +18,7 @@ class BaseBee(ABC):
         self.gateway = ConstitutionalGateway(bee_type)
         self.audit = ConstitutionalAuditEngine()
 
-    def safe_action(self, action: Dict[str, Any]) -> Dict[str, Any]:
+    def safe_action(self, action: dict[str, Any]) -> dict[str, Any]:
         """
         Wrapper that sends action to Gateway before execution.
         Returns the safe action (which might be modified) or raises an error if blocked.

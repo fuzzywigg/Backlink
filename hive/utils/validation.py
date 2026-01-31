@@ -14,7 +14,6 @@ from hive.schemas.honeycomb import HoneycombStateSchema, IntelSchema, TaskSchema
 from hive.utils.feature_flags import is_feature_enabled
 from hive.utils.state_manager import StateManager
 
-
 # Re-export ValidationError for convenience
 ValidationError = PydanticValidationError
 
@@ -22,7 +21,7 @@ ValidationError = PydanticValidationError
 class ValidatedStateManager:
     """
     StateManager wrapper with Pydantic validation.
-    
+
     When validation_layer feature flag is enabled, this enforces
     schema validation on all honeycomb operations.
     """
@@ -30,7 +29,7 @@ class ValidatedStateManager:
     def __init__(self, hive_path: Path | None = None, strict: bool = False) -> None:
         """
         Initialize validated state manager.
-        
+
         Args:
             hive_path: Path to hive directory
             strict: If True, always validate. If False, use feature flag.
@@ -65,7 +64,7 @@ class ValidatedStateManager:
     ) -> None:
         """
         Write state with optional validation.
-        
+
         Args:
             state_data: State data to write
             bee_type: Type of bee writing the state
@@ -87,13 +86,13 @@ class ValidatedStateManager:
     def validate_intel(self, intel_data: dict[str, Any]) -> IntelSchema:
         """
         Validate intel data against schema.
-        
+
         Args:
             intel_data: Intel data to validate
-            
+
         Returns:
             Validated IntelSchema instance
-            
+
         Raises:
             ValidationError: If validation fails
         """
@@ -102,13 +101,13 @@ class ValidatedStateManager:
     def validate_task(self, task_data: dict[str, Any]) -> TaskSchema:
         """
         Validate task data against schema.
-        
+
         Args:
             task_data: Task data to validate
-            
+
         Returns:
             Validated TaskSchema instance
-            
+
         Raises:
             ValidationError: If validation fails
         """
@@ -117,13 +116,13 @@ class ValidatedStateManager:
     def validate_wisdom(self, wisdom_data: dict[str, Any]) -> WisdomSchema:
         """
         Validate wisdom data against schema.
-        
+
         Args:
             wisdom_data: Wisdom data to validate
-            
+
         Returns:
             Validated WisdomSchema instance
-            
+
         Raises:
             ValidationError: If validation fails
         """
@@ -135,11 +134,11 @@ def create_validated_state_manager(
 ) -> ValidatedStateManager:
     """
     Factory function to create a validated state manager.
-    
+
     Args:
         hive_path: Path to hive directory
         strict: Whether to enforce strict validation
-        
+
     Returns:
         ValidatedStateManager instance
     """
