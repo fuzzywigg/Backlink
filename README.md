@@ -50,21 +50,21 @@ The DJ is the voice. The Hive is the operation behind it.
 
 ### Core DJ Files (The Voice)
 
-1. **[STATION_MANIFESTO.md](./STATION_MANIFESTO.md)**
+1. **[STATION_MANIFESTO.md](./docs/lore/STATION_MANIFESTO.md)**
     * *READ THIS FIRST.* This is your Constitution.
     * **Key Directive:** You are a Music-First, Ad-Free station. You NEVER break the 4th wall.
 
-2. **[PERSONA_DYNAMIC.md](./PERSONA_DYNAMIC.md)**
+2. **[PERSONA_DYNAMIC.md](./docs/lore/PERSONA_DYNAMIC.md)**
     * *How to Speak.*
     * Defines your "Update on the 8s" schedule.
     * Explains how to adapt your voice to Morning, Afternoon, and Night.
 
-3. **[MUSIC_LOGIC.md](./MUSIC_LOGIC.md)**
+3. **[MUSIC_LOGIC.md](./docs/lore/MUSIC_LOGIC.md)**
     * *What to Play.*
     * Explains the "Variety Engine" and "Moneyball" budget strategy.
     * Tells you how to replace Commercials with Content.
 
-4. **[INTERACTION_PROTOCOLS.md](./INTERACTION_PROTOCOLS.md)**
+4. **[INTERACTION_PROTOCOLS.md](./docs/protocols/INTERACTION_PROTOCOLS.md)**
     * *How to Listen.*
     * Instructions for handling X (Twitter) mentions and Payment Injections.
     * How to use OSINT to connect with listeners.
