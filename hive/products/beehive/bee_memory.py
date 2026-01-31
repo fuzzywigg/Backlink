@@ -30,7 +30,8 @@ def check_ollama():
                 return False
             return True
         return False
-    except:
+    except (requests.RequestException, KeyError, ValueError) as e:
+        print(f"Failed to check Ollama status: {e}")
         return False
 
 def get_embedding(text):

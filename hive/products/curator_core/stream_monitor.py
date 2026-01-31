@@ -282,8 +282,10 @@ class StreamMonitor:
         data = []
         if os.path.exists(log_path):
             with open(log_path, 'r') as f:
-                try: data = json.load(f)
-                except: pass
+                try:
+                    data = json.load(f)
+                except (json.JSONDecodeError, ValueError) as e:
+                    print(f"Warning: Failed to load DJ events log: {e}")
         
         # Dedupe mostly to avoid spamming the log with the same segment every 30s
         if data:

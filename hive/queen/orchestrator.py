@@ -311,8 +311,9 @@ class QueenOrchestrator:
         # We handle simple sorting here.
         try:
             assignments.sort(key=lambda x: x.get("order", 99))
-        except:
-            pass # fallback if order missing
+        except (TypeError, KeyError, AttributeError) as e:
+            # Fallback if order is missing or malformed
+            print(f"Warning: Failed to sort assignments by order: {e}")
 
         for step in assignments:
             bee_type = step.get("bee_type") or step.get("bee")

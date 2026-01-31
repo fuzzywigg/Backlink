@@ -160,8 +160,9 @@ class Gemini3Client:
             if response_schema:
                 try:
                     return json.loads(response.text)
-                except:
-                    return {"text": response.text} # Fallback
+                except (json.JSONDecodeError, ValueError) as e:
+                    print(f"Warning: Failed to parse JSON response: {e}")
+                    return {"text": response.text}  # Fallback
             
             return {"text": response.text}
         
