@@ -48,6 +48,9 @@ dependencies = [
     "fastapi>=0.100.0",
     "uvicorn>=0.20.0",
     "google-cloud-firestore>=2.11.0",
+    "cognee>=0.1.0",
+    "networkx>=3.0.0",
+    "playwright>=1.40.0",
 ]
 
 [project.optional-dependencies]
