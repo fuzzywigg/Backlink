@@ -59,9 +59,7 @@ class ValidatedStateManager:
 
         return data
 
-    def write_state(
-        self, state_data: dict[str, Any], bee_type: str, validate: bool = True
-    ) -> None:
+    def write_state(self, state_data: dict[str, Any], bee_type: str, validate: bool = True) -> None:
         """
         Write state with optional validation.
 

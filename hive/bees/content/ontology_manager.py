@@ -10,10 +10,12 @@ from datetime import datetime
 
 try:
     import dspy
+
     DSPY_AVAILABLE = True
 except ImportError:
     DSPY_AVAILABLE = False
     print("WARNING: DSPy not found. OntologyManager running in fallback mode.")
+
 
 class PersonaAdapter(dspy.Signature):
     """Adapts a core message to a specific persona and pacing."""
@@ -22,7 +24,10 @@ class PersonaAdapter(dspy.Signature):
     persona_desc = dspy.InputField(desc="Description of the target persona")
     constraints = dspy.InputField(desc="Forbidden words and stylistic constraints")
 
-    adapted_script = dspy.OutputField(desc="The rewritten script matching variable linguistic patterns")
+    adapted_script = dspy.OutputField(
+        desc="The rewritten script matching variable linguistic patterns"
+    )
+
 
 class OntologyManager:
     """
@@ -41,7 +46,7 @@ class OntologyManager:
                 api_key = os.getenv("GEMINI_API_KEY")
                 if api_key:
                     # Configure DSPy to use Gemini
-                    gemini = dspy.Google(model='models/gemini-pro', api_key=api_key)
+                    gemini = dspy.Google(model="models/gemini-pro", api_key=api_key)
                     dspy.settings.configure(lm=gemini)
                     self.predictor = dspy.Predict(PersonaAdapter)
                     self.dspy_initialized = True
@@ -53,23 +58,23 @@ class OntologyManager:
             "standard_broadcast": {
                 "desc": "Professional, clear, slightly energetic radio host. Classic MTV VJ style.",
                 "forbidden": ["vibes", "literally", "bet", "delve", "tapestry"],
-                "pacing": "medium"
+                "pacing": "medium",
             },
             "late_night_lofi": {
                 "desc": "Soft, whispery, philosophical, relaxed. Bob Ross meets Cyberpunk.",
                 "forbidden": ["HYPE", "LOUD", "smash that button", "exciting", "thrilled"],
-                "pacing": "slow"
+                "pacing": "slow",
             },
             "cyber_sovereign": {
                 "desc": "Glitchy, tech-focused, accelerate, crypto-native. Speak in short bursts.",
                 "forbidden": ["mainstream", "normie", "broadcast tv", "please", "kindly"],
-                "pacing": "fast"
+                "pacing": "fast",
             },
             "high_energy_morning": {
                 "desc": "Extremely high energy, wake up call, motivational, loud.",
                 "forbidden": ["sleepy", "tired", "boring", "slow"],
-                "pacing": "fast"
-            }
+                "pacing": "fast",
+            },
         }
 
     def rotate_ontology(self, timestamp=None):
@@ -97,15 +102,15 @@ class OntologyManager:
         Falls back to formatted string if DSPy fails.
         """
         ontology = self.ontologies.get(self.current_ontology, self.ontologies["standard_broadcast"])
-        desc = ontology['desc']
-        constraints = f"Do not use: {', '.join(ontology['forbidden'])}. Pacing: {ontology['pacing']}"
+        desc = ontology["desc"]
+        constraints = (
+            f"Do not use: {', '.join(ontology['forbidden'])}. Pacing: {ontology['pacing']}"
+        )
 
         if self.dspy_initialized:
             try:
                 result = self.predictor(
-                    core_message=message,
-                    persona_desc=desc,
-                    constraints=constraints
+                    core_message=message, persona_desc=desc, constraints=constraints
                 )
                 return result.adapted_script
             except Exception as e:
@@ -121,12 +126,12 @@ class OntologyManager:
         ontology = self.ontologies.get(self.current_ontology, self.ontologies["standard_broadcast"])
 
         return f"""
-        [SYSTEM: ACTIVATE PERSONA '{self.current_ontology.replace('_', ' ').upper()}']
-        DESCRIPTION: {ontology['desc']}
-        PACING: {ontology['pacing']}
+        [SYSTEM: ACTIVATE PERSONA '{self.current_ontology.replace("_", " ").upper()}']
+        DESCRIPTION: {ontology["desc"]}
+        PACING: {ontology["pacing"]}
 
         [CONSTRAINT: NEGATIVE PROMPTING]
-        DO NOT USE THESE WORDS: {', '.join(ontology['forbidden'])}
+        DO NOT USE THESE WORDS: {", ".join(ontology["forbidden"])}
 
         GOAL: VARY YOUR SENTENCE STRUCTURE. DO NOT REPEAT YOURSELF.
         """

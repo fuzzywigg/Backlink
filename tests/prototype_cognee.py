@@ -24,14 +24,16 @@ def map_repository():
         ("hive/bees/system/radio_bee.py", "agent"),
         ("hive/bees/research/scout_interface.py", "agent"),
         ("config/target_apis.json", "config"),
-        ("docs/session_manifest_jan_2026.md", "documentation")
+        ("docs/session_manifest_jan_2026.md", "documentation"),
     ]
 
     for path, type_ in utils:
         graph.add_node(path, type_, {"status": "active"})
 
     # Edges (Dependencies)
-    graph.add_edge("hive/bees/system/radio_bee.py", "core_utils/model_registry_loader.py", "imports")
+    graph.add_edge(
+        "hive/bees/system/radio_bee.py", "core_utils/model_registry_loader.py", "imports"
+    )
     graph.add_edge("hive/bees/research/scout_interface.py", "config/target_apis.json", "reads")
 
     print("Graph mapping complete.")
@@ -45,6 +47,7 @@ def map_repository():
         print("✅ Graph Integrity Verified")
     else:
         print("❌ Graph Integrity Failed")
+
 
 if __name__ == "__main__":
     map_repository()

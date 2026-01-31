@@ -11,9 +11,11 @@ from hive.bees.base_bee import BaseBee
 
 try:
     from twilio.rest import Client
+
     TWILIO_AVAILABLE = True
 except ImportError:
     TWILIO_AVAILABLE = False
+
 
 class ListenerLineBee(BaseBee):
     """
@@ -39,7 +41,10 @@ class ListenerLineBee(BaseBee):
             if not TWILIO_AVAILABLE:
                 self.log("Twilio Library missing.", level="warning")
             else:
-                self.log("Twilio Credentials missing in .env (TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)", level="warning")
+                self.log(
+                    "Twilio Credentials missing in .env (TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)",
+                    level="warning",
+                )
 
     def work(self, task):
         instruction = task.get("instruction", "").lower()
@@ -59,9 +64,7 @@ class ListenerLineBee(BaseBee):
         """Send an outgoing SMS."""
         try:
             message = self.client.messages.create(
-                body=message_body,
-                from_=self.phone_number,
-                to=to_number
+                body=message_body, from_=self.phone_number, to=to_number
             )
             return {"success": True, "sid": message.sid, "status": message.status}
         except Exception as e:
@@ -73,7 +76,9 @@ class ListenerLineBee(BaseBee):
             calls = self.client.calls.list(limit=limit)
             return {
                 "success": True,
-                "calls": [{"from": c.from_, "status": c.status, "duration": c.duration} for c in calls]
+                "calls": [
+                    {"from": c.from_, "status": c.status, "duration": c.duration} for c in calls
+                ],
             }
         except Exception as e:
             return {"success": False, "error": str(e)}

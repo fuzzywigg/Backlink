@@ -15,13 +15,20 @@ status = "INTEGRATE"
 cmd = [
     sys.executable,
     "universal_discovery/save_record.py",
-    "--url", url,
-    "--name", name,
-    "--summary", summary,
-    "--analysis", analysis,
-    "--scores", json.dumps(scores),
-    "--context", context,
-    "--status", status
+    "--url",
+    url,
+    "--name",
+    name,
+    "--summary",
+    summary,
+    "--analysis",
+    analysis,
+    "--scores",
+    json.dumps(scores),
+    "--context",
+    context,
+    "--status",
+    status,
 ]
 
 # Run

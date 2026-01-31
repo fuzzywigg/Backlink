@@ -4,6 +4,7 @@ from datetime import datetime
 
 LIBRARY_PATH = "config/ontology_library.json"
 
+
 class OntologyManager:
     """
     Manages the rotation of linguistic ontologies (vocabularies)
@@ -35,11 +36,10 @@ class OntologyManager:
         18-24: Abstract Flow
         """
         if override_hour is not None:
-             hour = (override_hour + offset_hour) % 24
+            hour = (override_hour + offset_hour) % 24
         else:
-             now = datetime.now()
-             hour = (now.hour + offset_hour) % 24
-
+            now = datetime.now()
+            hour = (now.hour + offset_hour) % 24
 
         # Quadrant check
         if 0 <= hour < 6:
@@ -62,7 +62,7 @@ class OntologyManager:
         return {
             "id": "fallback",
             "vibe": "Neutral",
-            "prompt_injection": "Speak clearly and concisely."
+            "prompt_injection": "Speak clearly and concisely.",
         }
 
     def validate_text(self, text: str, history: list[str]) -> float:
@@ -79,12 +79,13 @@ class OntologyManager:
             for word in self.current_ontology["banned_words"]:
                 if word.lower() in text.lower():
                     print(f"[Ontology] Violation: Banned word '{word}' found.")
-                    return 0.5 # Penalty
+                    return 0.5  # Penalty
 
         # 2. Check Repetition against History
         # (Simple N-gram overlap or keyword check would go here)
 
         return 1.0
+
 
 if __name__ == "__main__":
     manager = OntologyManager()

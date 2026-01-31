@@ -12,9 +12,11 @@ from hive.bees.base_bee import BaseBee
 
 try:
     from transformers import pipeline
+
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
     TRANSFORMERS_AVAILABLE = False
+
 
 class ClassifierDefenseBee(BaseBee):
     """
@@ -33,9 +35,7 @@ class ClassifierDefenseBee(BaseBee):
                 # Use a publicly available toxicity/moderation classifier
                 # In production, you'd use Anthropic's Constitutional AI model
                 self.classifier = pipeline(
-                    "text-classification",
-                    model="unitary/toxic-bert",
-                    truncation=True
+                    "text-classification", model="unitary/toxic-bert", truncation=True
                 )
                 self.log("Constitutional Classifier: ONLINE (toxic-bert)", level="success")
             except Exception as e:
@@ -79,7 +79,7 @@ class ClassifierDefenseBee(BaseBee):
             "ml_label": None,
             "regex_hits": [],
             "risk_level": "LOW",
-            "recommendation": "ALLOW"
+            "recommendation": "ALLOW",
         }
 
         # 1. ML-based classification
@@ -109,7 +109,10 @@ class ClassifierDefenseBee(BaseBee):
 
         # 3. Final determination
         if result["recommendation"] == "BLOCK":
-            self.log(f"BLOCKED: Risk={result['risk_level']}, Hits={result['regex_hits']}", level="warning")
+            self.log(
+                f"BLOCKED: Risk={result['risk_level']}, Hits={result['regex_hits']}",
+                level="warning",
+            )
 
         return result
 

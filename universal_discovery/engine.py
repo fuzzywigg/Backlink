@@ -35,7 +35,7 @@ class DiscoveryEngine:
         # Placeholder for 2026 Sovereign Graph lookup
         return {
             "is_gap_filler": True,
-            "reason": "Matches topics found in recent task.md (Discovery/Tooling)."
+            "reason": "Matches topics found in recent task.md (Discovery/Tooling).",
         }
 
     def get_pending_reviews(self):
@@ -51,8 +51,9 @@ class DiscoveryEngine:
         except Exception:
             return []
 
-    def save_review(self, url, name, summary, analysis, rubric_scores, update=True, recommendation=None):
-
+    def save_review(
+        self, url, name, summary, analysis, rubric_scores, update=True, recommendation=None
+    ):
         # Auto-calc recommendation if not provided
         if not recommendation:
             score = self._calculate_score(rubric_scores)
@@ -67,7 +68,7 @@ class DiscoveryEngine:
             "weighted_score": self._calculate_score(rubric_scores),
             "analysis": analysis,
             "recommendation": recommendation,
-            "context": self.context_name
+            "context": self.context_name,
         }
 
         storage_path = self._get_storage_path()
@@ -96,7 +97,7 @@ class DiscoveryEngine:
             data.insert(0, entry)
 
         # Save
-        with open(storage_path, 'w') as f:
+        with open(storage_path, "w") as f:
             json.dump(data, f, indent=2)
 
         return entry

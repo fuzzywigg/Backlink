@@ -1,4 +1,3 @@
-
 import json
 import urllib.parse
 import urllib.request
@@ -25,12 +24,7 @@ class MetadataEnricher:
                 return None
 
             # 2. Encode
-            params = {
-                "term": clean_query,
-                "media": "music",
-                "entity": "song",
-                "limit": 1
-            }
+            params = {"term": clean_query, "media": "music", "entity": "song", "limit": 1}
             url = f"{self.base_url}?{urllib.parse.urlencode(params)}"
 
             # 3. Request (Standard Library to keep it lightweight)
@@ -53,16 +47,18 @@ class MetadataEnricher:
                     "genre": track.get("primaryGenreName", "Verified"),
                     "preview_url": track.get("previewUrl"),
                     "cover_art": track.get("artworkUrl100"),
-                    "itunes_id": track.get("trackId")
+                    "itunes_id": track.get("trackId"),
                 }
 
         except Exception as e:
             print(f"⚠️ [ENRICHER] Search Exception: {e}")
             return None
 
+
 if __name__ == "__main__":
     # Test
     e = MetadataEnricher()
     print("Testing 'Not Like Us'...")
     from pprint import pprint
+
     pprint(e.search_track("Not Like Us Kendrick"))

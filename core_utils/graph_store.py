@@ -11,12 +11,8 @@ class GraphNode:
         self.edges: list[dict] = []
 
     def to_dict(self):
-        return {
-            "id": self.id,
-            "type": self.type,
-            "content": self.content,
-            "edges": self.edges
-        }
+        return {"id": self.id, "type": self.type, "content": self.content, "edges": self.edges}
+
 
 class GraphStore:
     """
@@ -53,10 +49,7 @@ class GraphStore:
             if edge["target"] == target_id and edge["relation"] == relation:
                 return
 
-        self.nodes[source_id].edges.append({
-            "target": target_id,
-            "relation": relation
-        })
+        self.nodes[source_id].edges.append({"target": target_id, "relation": relation})
         self._save()
 
     def get_related(self, node_id: str, relation: str = None) -> list[str]:
@@ -74,7 +67,7 @@ class GraphStore:
         """Persists graph to disk."""
         data = {k: v.to_dict() for k, v in self.nodes.items()}
         os.makedirs(os.path.dirname(self.storage_path), exist_ok=True)
-        with open(self.storage_path, 'w') as f:
+        with open(self.storage_path, "w") as f:
             json.dump(data, f, indent=2)
 
     def _load(self):
@@ -89,6 +82,7 @@ class GraphStore:
                         self.nodes[k] = node
             except Exception as e:
                 print(f"[GraphStore] Load error: {e}")
+
 
 if __name__ == "__main__":
     # Test

@@ -61,7 +61,9 @@ class DJMemory:
                 logger.error(f"Could not load DJ memory: {e}")
                 self._cache = self._initialize_memory_structure()
         else:
-            logger.info(f"No existing DJ memory found, initializing new memory at {self.memory_path}")
+            logger.info(
+                f"No existing DJ memory found, initializing new memory at {self.memory_path}"
+            )
             self._cache = self._initialize_memory_structure()
 
     def _initialize_memory_structure(self) -> dict[str, Any]:
@@ -72,10 +74,7 @@ class DJMemory:
             "phrases_used": {},  # Anti-repetition tracking
             "session_context": {},  # Current session data
             "preferences": {},  # Station preferences
-            "metadata": {
-                "created_at": datetime.now(timezone.utc).isoformat(),
-                "version": "1.0.0"
-            }
+            "metadata": {"created_at": datetime.now(timezone.utc).isoformat(), "version": "1.0.0"},
         }
 
     def _save_memory(self, force: bool = False) -> None:
@@ -89,7 +88,7 @@ class DJMemory:
 
         try:
             self.memory_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(self.memory_path, 'w') as f:
+            with open(self.memory_path, "w") as f:
                 json.dump(self._cache, f, indent=2)
             self._dirty = False
             logger.debug(f"Saved DJ memory to {self.memory_path}")
@@ -101,11 +100,7 @@ class DJMemory:
     # Song History Methods
 
     def track_song_played(
-        self,
-        song_title: str,
-        artist: str,
-        genre: str | None = None,
-        mood: str | None = None
+        self, song_title: str, artist: str, genre: str | None = None, mood: str | None = None
     ) -> None:
         """
         Record a song that was played.
@@ -131,7 +126,7 @@ class DJMemory:
             "artist": artist.strip(),
             "genre": genre.strip() if genre else None,
             "mood": mood.strip() if mood else None,
-            "played_at": timestamp
+            "played_at": timestamp,
         }
 
         self._cache["song_history"].insert(0, song_entry)
@@ -157,12 +152,7 @@ class DJMemory:
         """
         return self._cache["song_history"][:limit]
 
-    def was_song_played_recently(
-        self,
-        song_title: str,
-        artist: str,
-        hours: int = 4
-    ) -> bool:
+    def was_song_played_recently(self, song_title: str, artist: str, hours: int = 4) -> bool:
         """
         Check if a song was played within the specified time window.
 
@@ -178,8 +168,10 @@ class DJMemory:
 
         for song in self._cache["song_history"]:
             played_at = datetime.fromisoformat(song["played_at"])
-            if played_at > cutoff and (song["title"].lower() == song_title.lower() and
-                song["artist"].lower() == artist.lower()):
+            if played_at > cutoff and (
+                song["title"].lower() == song_title.lower()
+                and song["artist"].lower() == artist.lower()
+            ):
                 return True
 
         return False
@@ -211,7 +203,7 @@ class DJMemory:
         listener_id: str,
         name: str | None = None,
         location: str | None = None,
-        preferences: dict[str, Any] | None = None
+        preferences: dict[str, Any] | None = None,
     ) -> None:
         """
         Store or update listener profile.
@@ -234,7 +226,7 @@ class DJMemory:
             self._cache["listeners"][listener_id] = {
                 "id": listener_id,
                 "first_seen": datetime.now(timezone.utc).isoformat(),
-                "interactions": 0
+                "interactions": 0,
             }
             logger.debug(f"Created new listener profile: {listener_id}")
 
@@ -252,7 +244,9 @@ class DJMemory:
 
         self._dirty = True
         self._save_memory()
-        logger.debug(f"Updated listener profile: {listener_id} (interactions: {listener['interactions']})")
+        logger.debug(
+            f"Updated listener profile: {listener_id} (interactions: {listener['interactions']})"
+        )
 
     def get_listener_profile(self, listener_id: str) -> dict[str, Any] | None:
         """
@@ -280,8 +274,7 @@ class DJMemory:
 
         # Sort by interaction count and recency
         listeners.sort(
-            key=lambda x: (x.get("interactions", 0), x.get("last_seen", "")),
-            reverse=True
+            key=lambda x: (x.get("interactions", 0), x.get("last_seen", "")), reverse=True
         )
 
         if limit:
@@ -305,10 +298,9 @@ class DJMemory:
         if phrase_key not in self._cache["phrases_used"]:
             self._cache["phrases_used"][phrase_key] = []
 
-        self._cache["phrases_used"][phrase_key].append({
-            "timestamp": timestamp,
-            "category": category
-        })
+        self._cache["phrases_used"][phrase_key].append(
+            {"timestamp": timestamp, "category": category}
+        )
 
         # Keep only last 20 uses per phrase
         if len(self._cache["phrases_used"][phrase_key]) > 20:
@@ -317,11 +309,7 @@ class DJMemory:
         self._dirty = True
         self._save_memory()
 
-    def was_phrase_used_recently(
-        self,
-        phrase: str,
-        hours: int = 1
-    ) -> bool:
+    def was_phrase_used_recently(self, phrase: str, hours: int = 1) -> bool:
         """
         Check if a phrase was used recently.
 
@@ -346,11 +334,7 @@ class DJMemory:
 
         return False
 
-    def get_phrase_usage_count(
-        self,
-        phrase: str,
-        hours: int | None = None
-    ) -> int:
+    def get_phrase_usage_count(self, phrase: str, hours: int | None = None) -> int:
         """
         Get how many times a phrase was used.
 
@@ -391,7 +375,7 @@ class DJMemory:
         """
         self._cache["session_context"][key] = {
             "value": value,
-            "updated_at": datetime.now(timezone.utc).isoformat()
+            "updated_at": datetime.now(timezone.utc).isoformat(),
         }
         self._dirty = True
         self._save_memory()
@@ -431,7 +415,9 @@ class DJMemory:
             "known_listeners": len(self._cache["listeners"]),
             "phrases_tracked": len(self._cache["phrases_used"]),
             "session_context_items": len(self._cache["session_context"]),
-            "memory_size_kb": self.memory_path.stat().st_size / 1024 if self.memory_path.exists() else 0
+            "memory_size_kb": self.memory_path.stat().st_size / 1024
+            if self.memory_path.exists()
+            else 0,
         }
 
     def reset_memory(self, confirm: bool = False) -> bool:

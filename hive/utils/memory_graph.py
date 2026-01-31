@@ -21,6 +21,7 @@ from hive.utils.markdown_graph_storage import MarkdownKnowledgeGraph
 
 logger = logging.getLogger(__name__)
 
+
 class HiveKnowledgeGraph:
     """
     The central memory store for the Hive Swarm.
@@ -29,7 +30,9 @@ class HiveKnowledgeGraph:
     to store relationships (Triples) and retrieve context via traversal.
     """
 
-    def __init__(self, persistence_path: str = "hive_memory.graphml", markdown_dir: str | None = None):
+    def __init__(
+        self, persistence_path: str = "hive_memory.graphml", markdown_dir: str | None = None
+    ):
         self.persistence_path = persistence_path
         self.markdown_store = MarkdownKnowledgeGraph(markdown_dir) if markdown_dir else None
         self.graph = nx.DiGraph() if nx else None
@@ -46,10 +49,14 @@ class HiveKnowledgeGraph:
             try:
                 data = self.markdown_store.get_full_graph()
                 for entity_name, details in data["entities"].items():
-                    self.graph.add_node(entity_name, type="entity", observations=details["observations"])
+                    self.graph.add_node(
+                        entity_name, type="entity", observations=details["observations"]
+                    )
 
                 for rel in data["relationships"]:
-                    self.graph.add_edge(rel["source"], rel["target"], relation=rel["verb"], context=rel["context"])
+                    self.graph.add_edge(
+                        rel["source"], rel["target"], relation=rel["verb"], context=rel["context"]
+                    )
 
                 logger.info(f"Loaded {len(data['entities'])} entities from Markdown graph.")
                 return
@@ -63,11 +70,9 @@ class HiveKnowledgeGraph:
         except Exception as e:
             logger.info(f"Initialized new Knowledge Graph (No existing file: {e})")
 
-    async def add_knowledge(self,
-                            subject: str,
-                            predicate: str,
-                            object_: str,
-                            metadata: dict[str, Any] | None = None) -> bool:
+    async def add_knowledge(
+        self, subject: str, predicate: str, object_: str, metadata: dict[str, Any] | None = None
+    ) -> bool:
         """
         Adds a semantic triple to the memory graph.
 
@@ -112,14 +117,14 @@ class HiveKnowledgeGraph:
         edges = list(self.graph.out_edges(query_node, data=True))
 
         for u, v, data in edges:
-            relation = data.get('relation', 'related_to')
+            relation = data.get("relation", "related_to")
             results.append(f"{u} {relation} {v}")
 
             # If depth > 1, we would recursively fetch v's edges here
             if depth > 1:
                 sub_edges = self.graph.out_edges(v, data=True)
                 for _su, sv, sdata in sub_edges:
-                    sub_rel = sdata.get('relation', 'related_to')
+                    sub_rel = sdata.get("relation", "related_to")
                     results.append(f"  -> {sv} ({sub_rel})")
 
         return results
@@ -132,6 +137,7 @@ class HiveKnowledgeGraph:
                 pass
             except Exception as e:
                 logger.error(f"Failed to save graph snapshot: {e}")
+
 
 # Singleton instance
 memory = HiveKnowledgeGraph()

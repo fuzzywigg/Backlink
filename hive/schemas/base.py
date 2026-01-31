@@ -47,11 +47,7 @@ class TimestampedSchema(BaseSchema):
 class MetadataSchema(BaseSchema):
     """Generic metadata schema for extensibility."""
 
-    last_updated: datetime | None = Field(
-        None, description="Last update timestamp (ISO format)"
-    )
+    last_updated: datetime | None = Field(None, description="Last update timestamp (ISO format)")
     last_updated_by: str | None = Field(None, description="Identifier of last updater")
     version: str = Field(default="1.0", description="Schema version")
-    extra: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata fields"
-    )
+    extra: dict[str, Any] = Field(default_factory=dict, description="Additional metadata fields")

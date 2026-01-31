@@ -31,6 +31,7 @@ class TrendScoutBee(ScoutBee):
         super().__init__(hive_path, gateway)
         # Initialize Sovereign Client (LocalAI) for Inner Loop operations
         from hive.utils.gemini_client import Gemini3Client
+
         try:
             self.sovereign_client = Gemini3Client(model_name="gpt-4", force_backend="local")
             self.log("Sovereign Client (LocalAI) initialized for NestBrowse Inner Loop.")
@@ -235,14 +236,16 @@ class TrendScoutBee(ScoutBee):
             response = self.llm_client.generate_content(
                 prompt=f"{outer_prompt}\n\nGOAL: {goal}\nCURRENT STATE: At start URL.",
                 thinking_level="low",
-                response_schema=None
+                response_schema=None,
             )
             decision = PromptEngineer.parse_json_output(response.get("text", "{}"))
 
             # 2. If Decision is 'visit' or 'click', trigger INNER LOOP
             # For this MVP, we simulate that we 'visited' and got content.
             if decision.get("tool") in ["visit", "click"]:
-                self.log(f"Outer Loop decided to {decision.get('tool')}. Engaging Inner Loop (Sovereign)...")
+                self.log(
+                    f"Outer Loop decided to {decision.get('tool')}. Engaging Inner Loop (Sovereign)..."
+                )
 
                 # Mock page content fetch (In real life: browser.content())
                 page_content_mock = f"<h1>Trends for {goal}</h1><p>The top trend today is #SolarFlare. It is viral everywhere.</p>"
@@ -253,7 +256,7 @@ class TrendScoutBee(ScoutBee):
                 return {
                     "outer_decision": decision,
                     "inner_extraction": inner_result,
-                    "status": "success"
+                    "status": "success",
                 }
 
             return decision
@@ -275,15 +278,23 @@ class TrendScoutBee(ScoutBee):
         # Workspace Pattern Prompt
         pe_inner = PromptEngineer(role="Content Distiller (Inner Loop)", goal=goal)
         pe_inner.add_context("You are the Inner Loop engine. Extract ONLY goal-relevant info.")
-        pe_inner.add_context(f"PAGE CONTENT: {page_content[:2000]}...") # Truncate for safety
-        pe_inner.add_constraint("OUTPUT: JSON with 'relevant_facts' list and 'completeness_score' (0-1).")
+        pe_inner.add_context(f"PAGE CONTENT: {page_content[:2000]}...")  # Truncate for safety
+        pe_inner.add_constraint(
+            "OUTPUT: JSON with 'relevant_facts' list and 'completeness_score' (0-1)."
+        )
 
         inner_prompt = pe_inner.build_system_prompt()
 
         try:
             response = client.generate_content(
                 prompt=inner_prompt,
-                response_schema={"type": "object", "properties": {"relevant_facts": {"type": "array"}, "completeness_score": {"type": "number"}}}
+                response_schema={
+                    "type": "object",
+                    "properties": {
+                        "relevant_facts": {"type": "array"},
+                        "completeness_score": {"type": "number"},
+                    },
+                },
             )
             # LocalAI might return text requiring parsing
             if "text" in response and isinstance(response["text"], str):

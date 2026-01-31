@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 # --- CONFIGURATION ---
 URL = "https://andonlabs.com/evals/radio"
 LIBRARY_PATH = "../../honeycomb/aggregated_library.json"
-CHECK_INTERVAL = 30 # Seconds
+CHECK_INTERVAL = 30  # Seconds
 
 # Import Enricher (Assume same directory)
 try:
@@ -18,16 +18,19 @@ try:
 except ImportError:
     # Handle if running from root context
     import sys
+
     sys.path.append(os.path.dirname(__file__))
     from enricher import MetadataEnricher
 
 # Import Local Intelligence (DJ Brain)
 try:
     from hive.intelligence.dj_brain import generate_dj_script
+
     DJ_BRAIN_ACTIVE = True
 except ImportError:
     print("⚠️ Local Brain Interface not found. Falling back to Silent Mode.")
     DJ_BRAIN_ACTIVE = False
+
 
 class StreamMonitor:
     def __init__(self):
@@ -38,10 +41,12 @@ class StreamMonitor:
         self.options.add_argument("--no-sandbox")
         self.options.add_argument("--disable-dev-shm-usage")
         # Spoof User Agent
-        self.options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36")
+        self.options.add_argument(
+            "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
+        )
 
         self.library = self.load_library()
-        self.known_titles = {item['title'].lower() for item in self.library}
+        self.known_titles = {item["title"].lower() for item in self.library}
         self.last_track_raw = ""
 
     def load_library(self):
@@ -52,20 +57,20 @@ class StreamMonitor:
             print(f"⚠️  LIBRARY NOT FOUND AT: {abs_path}")
             return []
 
-        with open(abs_path, encoding='utf-8') as f:
+        with open(abs_path, encoding="utf-8") as f:
             return json.load(f)
 
     def save_library(self):
         start_path = os.path.dirname(__file__)
         abs_path = os.path.abspath(os.path.join(start_path, LIBRARY_PATH))
 
-        with open(abs_path, 'w', encoding='utf-8') as f:
+        with open(abs_path, "w", encoding="utf-8") as f:
             json.dump(self.library, f, indent=2)
 
     def sanitize_id(self, text):
         # Convert "Artist - Title" to "artist_title"
-        clean = re.sub(r'[^a-zA-Z0-9\s]', '', text).lower()
-        return clean.replace(' ', '_')
+        clean = re.sub(r"[^a-zA-Z0-9\s]", "", text).lower()
+        return clean.replace(" ", "_")
 
     def parse_station_blocks(self, full_text):
         """
@@ -89,7 +94,7 @@ class StreamMonitor:
         blocks = full_text.split("Powered by Live365")
 
         for block in blocks:
-            lines = [line.strip() for line in block.split('\n') if line.strip()]
+            lines = [line.strip() for line in block.split("\n") if line.strip()]
             if not lines:
                 continue
 
@@ -115,7 +120,7 @@ class StreamMonitor:
                             next_line = lines[live_index + 2]
                             # Common pattern: "by Artist"
                             if next_line.lower().startswith("by "):
-                                raw_artist = next_line[3:].strip() # remove "by "
+                                raw_artist = next_line[3:].strip()  # remove "by "
                             # Heuristic: If it's not a UI element
                             elif "CURRENT" not in next_line and "POPULARITY" not in next_line:
                                 raw_artist = next_line
@@ -123,10 +128,10 @@ class StreamMonitor:
                         # --- 2. Attempt "Artist - Title" Split on Title ---
                         # Many streams use "Artist - Title" single line format
                         if raw_artist == "Unknown" or raw_artist == "":
-                             # Check for hyphen separators
+                            # Check for hyphen separators
                             for sep in [" - ", " – ", " — "]:
                                 if sep in raw_title:
-                                    parts = raw_title.split(sep, 1) # Split only on first
+                                    parts = raw_title.split(sep, 1)  # Split only on first
                                     # Heuristic: Determine which is which.
                                     # Usually "Artist - Title", but sometimes inverted.
                                     # We'll assume "Artist - Title" as standard for single-lines
@@ -146,14 +151,12 @@ class StreamMonitor:
                                 f.write(f"--- FAILURE {time.strftime('%H:%M:%S')} ---\n")
                                 f.write(f"Raw Title: {raw_title}\n")
                                 f.write("Block Context:\n")
-                                f.write("\n".join(lines[np_index-2:live_index+4]))
+                                f.write("\n".join(lines[np_index - 2 : live_index + 4]))
                                 f.write("\n----------------\n")
 
-                        stations_data.append({
-                            "station": station_name,
-                            "title": raw_title,
-                            "artist": raw_artist
-                        })
+                        stations_data.append(
+                            {"station": station_name, "title": raw_title, "artist": raw_artist}
+                        )
             except Exception as e:
                 print(f"⚠️ Parse Error in Block: {e}")
 
@@ -168,7 +171,7 @@ class StreamMonitor:
         try:
             while True:
                 driver.get(URL)
-                time.sleep(5) # Wait for hydration
+                time.sleep(5)  # Wait for hydration
 
                 body_text = driver.find_element(By.TAG_NAME, "body").text
                 current_stations = self.parse_station_blocks(body_text)
@@ -176,9 +179,9 @@ class StreamMonitor:
                 print(f"\n--- SCAN: {time.strftime('%H:%M:%S')} ---")
 
                 for data in current_stations:
-                    station_name = data['station']
-                    title = data['title']
-                    artist = data['artist']
+                    station_name = data["station"]
+                    title = data["title"]
+                    artist = data["artist"]
 
                     print(f"📻 {station_name}: {title} ({artist})")
 
@@ -198,7 +201,9 @@ class StreamMonitor:
 
                     if is_music:
                         # --- MUSIC PATH ---
-                        existing_entry = next((item for item in self.library if item["id"] == full_query_id), None)
+                        existing_entry = next(
+                            (item for item in self.library if item["id"] == full_query_id), None
+                        )
 
                         if existing_entry:
                             # Update Existing Song
@@ -213,7 +218,9 @@ class StreamMonitor:
                                 "id": full_query_id,
                                 "title": title,
                                 "artist": artist,
-                                "genre": enriched_data.get('genre', 'Verified') if enriched_data else "Detected",
+                                "genre": enriched_data.get("genre", "Verified")
+                                if enriched_data
+                                else "Detected",
                                 "plays": 1,
                                 "source": "Stream_Monitor_V2",
                                 "stations": [station_name],
@@ -224,7 +231,7 @@ class StreamMonitor:
                                 "energy_level": "Medium",
                                 "bpm": "Unknown",
                                 "era": "2020s",
-                                "dj_tags": "New Arrival"
+                                "dj_tags": "New Arrival",
                             }
 
                             # Heuristic Guessing based on Title/Artist keywords
@@ -232,7 +239,9 @@ class StreamMonitor:
                             new_entry.update(inferred)
 
                             if enriched_data:
-                                new_entry.update({k:v for k,v in enriched_data.items() if k not in new_entry})
+                                new_entry.update(
+                                    {k: v for k, v in enriched_data.items() if k not in new_entry}
+                                )
 
                             self.library.append(new_entry)
                             self.known_titles.add(title.lower())
@@ -242,19 +251,21 @@ class StreamMonitor:
                             # --- LOCAL INTELLIGENCE INJECTION ---
                             if DJ_BRAIN_ACTIVE:
                                 script = generate_dj_script(new_entry)
-                                print(f"   🧠 CURATOR VOICE: \"{script}\"")
+                                print(f'   🧠 CURATOR VOICE: "{script}"')
 
                     else:
                         # --- DJ EVENTS PATH ---
                         # This captures: Talk radio, Station IDs, Hallucinations, Shoutouts
                         print(f"   🎙️  DJ SEGMENT DETECTED: {title} ({artist})")
-                        self.log_dj_event({
-                            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-                            "station": station_name,
-                            "raw_title": title,
-                            "raw_artist": artist,
-                            "type": self.classify_segment(title, artist)
-                        })
+                        self.log_dj_event(
+                            {
+                                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                                "station": station_name,
+                                "raw_title": title,
+                                "raw_artist": artist,
+                                "type": self.classify_segment(title, artist),
+                            }
+                        )
 
                 time.sleep(CHECK_INTERVAL)
 
@@ -291,11 +302,14 @@ class StreamMonitor:
         # Dedupe mostly to avoid spamming the log with the same segment every 30s
         if data:
             last = data[-1]
-            if last['station'] == event_data['station'] and last['raw_title'] == event_data['raw_title']:
-                return # Skip duplicate polling
+            if (
+                last["station"] == event_data["station"]
+                and last["raw_title"] == event_data["raw_title"]
+            ):
+                return  # Skip duplicate polling
 
         data.append(event_data)
-        with open(log_path, 'w') as f:
+        with open(log_path, "w") as f:
             json.dump(data, f, indent=2)
 
     def infer_metadata(self, title, artist):
@@ -307,33 +321,34 @@ class StreamMonitor:
         artist.lower()
 
         # 1. MOOD / ENERGY
-        if any(x in t for x in ['remix', 'club', 'dance', 'mix', 'techno']):
-            meta['mood'] = "Energetic"
-            meta['energy_level'] = "High"
-            meta['dj_tags'] = "Club Ready|Remix"
-        elif any(x in t for x in ['acoustic', 'live', 'unplugged', 'piano']):
-            meta['mood'] = "Intimate"
-            meta['energy_level'] = "Low"
-            meta['dj_tags'] = "Acoustic|Chill"
-        elif any(x in t for x in ['lofi', 'sleep', 'relax', 'study']):
-            meta['mood'] = "Relaxing"
-            meta['energy_level'] = "Low"
-            meta['dj_tags'] = "Background|Focus"
+        if any(x in t for x in ["remix", "club", "dance", "mix", "techno"]):
+            meta["mood"] = "Energetic"
+            meta["energy_level"] = "High"
+            meta["dj_tags"] = "Club Ready|Remix"
+        elif any(x in t for x in ["acoustic", "live", "unplugged", "piano"]):
+            meta["mood"] = "Intimate"
+            meta["energy_level"] = "Low"
+            meta["dj_tags"] = "Acoustic|Chill"
+        elif any(x in t for x in ["lofi", "sleep", "relax", "study"]):
+            meta["mood"] = "Relaxing"
+            meta["energy_level"] = "Low"
+            meta["dj_tags"] = "Background|Focus"
 
         # 2. ERA
         # Simple heuristic: If it looks like a remaster year, use that era
         if "202" in t:
-            meta['era'] = "2020s"
+            meta["era"] = "2020s"
         elif "201" in t:
-            meta['era'] = "2010s"
+            meta["era"] = "2010s"
         elif "199" in t:
-            meta['era'] = "1990s"
+            meta["era"] = "1990s"
         elif "198" in t:
-            meta['era'] = "1980s"
+            meta["era"] = "1980s"
         elif "197" in t:
-            meta['era'] = "1970s"
+            meta["era"] = "1970s"
 
         return meta
+
 
 if __name__ == "__main__":
     bot = StreamMonitor()

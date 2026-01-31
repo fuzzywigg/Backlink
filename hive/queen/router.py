@@ -32,16 +32,16 @@ class TaskRouter:
             "properties": {
                 "intent": {
                     "type": "string",
-                    "description": "A concise summary of what the user wants to achieve."
+                    "description": "A concise summary of what the user wants to achieve.",
                 },
                 "complexity": {
                     "type": "string",
                     "enum": ["simple", "complex"],
-                    "description": "Simple tasks need 1 bee. Complex tasks need coordination."
+                    "description": "Simple tasks need 1 bee. Complex tasks need coordination.",
                 },
                 "reasoning": {
                     "type": "string",
-                    "description": "Explanation of why these specific bees were chosen."
+                    "description": "Explanation of why these specific bees were chosen.",
                 },
                 "assignments": {
                     "type": "array",
@@ -50,27 +50,36 @@ class TaskRouter:
                         "properties": {
                             "bee_type": {
                                 "type": "string",
-                                "enum": ["scout", "dj", "show_prep", "weather", "stream_monitor", "treasury", "security", "kv_store"],
-                                "description": "The specific type of bee agent to handle this sub-task."
+                                "enum": [
+                                    "scout",
+                                    "dj",
+                                    "show_prep",
+                                    "weather",
+                                    "stream_monitor",
+                                    "treasury",
+                                    "security",
+                                    "kv_store",
+                                ],
+                                "description": "The specific type of bee agent to handle this sub-task.",
                             },
                             "instruction": {
                                 "type": "string",
-                                "description": "Specific, actionable instruction for this bee."
+                                "description": "Specific, actionable instruction for this bee.",
                             },
                             "task_args": {
                                 "type": "object",
-                                "description": "Key-value pairs of arguments to pass to the bee's work() method."
+                                "description": "Key-value pairs of arguments to pass to the bee's work() method.",
                             },
                             "order": {
                                 "type": "integer",
-                                "description": "Execution order (1-based index). Bees with same order run in parallel."
-                            }
+                                "description": "Execution order (1-based index). Bees with same order run in parallel.",
+                            },
                         },
-                        "required": ["bee_type", "instruction", "order"]
-                    }
-                }
+                        "required": ["bee_type", "instruction", "order"],
+                    },
+                },
             },
-            "required": ["intent", "complexity", "assignments"]
+            "required": ["intent", "complexity", "assignments"],
         }
 
         # 2. Construct the Prompt
@@ -109,7 +118,7 @@ class TaskRouter:
                 generation_config={
                     "response_mime_type": "application/json"
                     # "response_schema": plan_schema # Disabled to allow dynamic task_args
-                }
+                },
             )
 
             return json.loads(response.text)
@@ -120,14 +129,15 @@ class TaskRouter:
                 "intent": "Error in routing",
                 "complexity": "simple",
                 "assignments": [],
-                "error": str(e)
+                "error": str(e),
             }
+
 
 if __name__ == "__main__":
     # Self-test
     print("Initializing Router...")
     # Mocking correct environment for the test
-    os.environ['GOOGLE_API_KEY'] = os.environ.get('GOOGLE_API_KEY', '')
+    os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY", "")
 
     router = TaskRouter()
 

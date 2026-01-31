@@ -59,9 +59,9 @@ class RadioBee(BaseBee):
 
         # Update Dashboard
         radio.update_now_playing(
-            artist=track.get('artist', 'Unknown'),
-            track=track.get('title', 'Unknown'),
-            intent=track.get('intent', 'General')
+            artist=track.get("artist", "Unknown"),
+            track=track.get("title", "Unknown"),
+            intent=track.get("intent", "General"),
         )
 
         # Log intention
@@ -102,6 +102,7 @@ class RadioBee(BaseBee):
         self.announce(f"System State: {model} loaded. Vibe: {vibe['id'].upper()}")
 
         self.spin_track()
+
 
 if __name__ == "__main__":
     # Test run

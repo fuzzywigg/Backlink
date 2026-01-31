@@ -3,6 +3,7 @@ import json
 INPUT_FILE = "hive/honeycomb/golden_history.json"
 OUTPUT_FILE = "hive/honeycomb/aggregated_library.json"
 
+
 def aggregate():
     print(f"📊 AGGREGATOR: Processing {INPUT_FILE}...")
 
@@ -29,7 +30,7 @@ def aggregate():
                 "plays": 0,
                 "source": "Curator_V1.2_Aggregation",
                 "first_played": record.get("curated_at"),
-                "last_played": record.get("curated_at") # Update this if we had timestamps
+                "last_played": record.get("curated_at"),  # Update this if we had timestamps
             }
 
         # Increment Play Count
@@ -47,6 +48,7 @@ def aggregate():
         json.dump(final_list, f, indent=2)
 
     print(f"✅ AGGREGATION COMPLETE: {OUTPUT_FILE}")
+
 
 if __name__ == "__main__":
     aggregate()

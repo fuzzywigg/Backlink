@@ -10,8 +10,9 @@ DEFAULT_SCHEMA = {
     "genre": "string",
     "bpm": "integer",
     "key": "string",
-    "mood": "string"
+    "mood": "string",
 }
+
 
 class TheCurator:
     def __init__(self, input_file, output_file):
@@ -28,7 +29,7 @@ class TheCurator:
             if self.input_file.endswith(".csv"):
                 df = pd.read_csv(self.input_file)
             elif self.input_file.endswith(".json"):
-                 df = pd.read_json(self.input_file)
+                df = pd.read_json(self.input_file)
             else:
                 print("❌ Unsupported format. Use CSV or JSON.")
                 return
@@ -78,9 +79,9 @@ class TheCurator:
                 "id": id_str,
                 "title": title,
                 "artist": artist,
-                "genre": str(row_lower.get("genre", "Alternative")), # Default genre
+                "genre": str(row_lower.get("genre", "Alternative")),  # Default genre
                 "source": "Backlink Radio History",
-                "curated_at": "2026-01-18"
+                "curated_at": "2026-01-18",
             }
         except Exception as e:
             print(f"Row Error: {e}")
@@ -88,12 +89,13 @@ class TheCurator:
 
     def save_output(self, data):
         try:
-            with open(self.output_file, 'w') as f:
+            with open(self.output_file, "w") as f:
                 json.dump(data, f, indent=2)
             print(f"✅ GOLDEN DATASET SAVED to {self.output_file}")
             print("   (This intellectual property is now a sovereign asset.)")
         except Exception as e:
             print(f"❌ Save Failed: {e}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="The Curator: Data Cleaning Agent")

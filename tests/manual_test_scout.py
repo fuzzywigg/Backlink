@@ -14,11 +14,14 @@ class MockSovereignClient:
     def generate_content(self, prompt, response_schema=None):
         print("    [MOCK SOVEREIGN] Processing Page Content...")
         return {
-            "text": json.dumps({
-                "relevant_facts": ["#SolarFlare is trending", "NASA confirmed it"],
-                "completeness_score": 0.95
-            })
+            "text": json.dumps(
+                {
+                    "relevant_facts": ["#SolarFlare is trending", "NASA confirmed it"],
+                    "completeness_score": 0.95,
+                }
+            )
         }
+
 
 class MockGeminiClient:
     def generate_content(self, prompt, thinking_level="low", response_schema=None, tools=None):
@@ -28,11 +31,13 @@ class MockGeminiClient:
         if "Visual Scout (Outer Loop)" in prompt:
             print("    [MOCK GEMINI] Detected Outer Loop Request")
             return {
-                "text": json.dumps({
-                    "tool": "visit",
-                    "args": {"url": "http://example.com/trends"},
-                    "reasoning": "Need to visit site to see trends."
-                })
+                "text": json.dumps(
+                    {
+                        "tool": "visit",
+                        "args": {"url": "http://example.com/trends"},
+                        "reasoning": "Need to visit site to see trends.",
+                    }
+                )
             }
 
         if tools and "google_maps_grounding" in str(tools):
@@ -65,11 +70,12 @@ def test_scout_venues():
     # The prompt asked to REPLACE content, so I need to provide the full content or chunks.
     # I will rewrite the whole file to include both tests.
 
+
 async def test_visual_scout():
     print("\n--- Testing TrendScoutBee: NestBrowse Visual Scout ---")
     bee = TrendScoutBee()
     bee.llm_client = MockGeminiClient()
-    bee.sovereign_client = MockSovereignClient() # Inject mock sovereign
+    bee.sovereign_client = MockSovereignClient()  # Inject mock sovereign
 
     url = "http://example.com/trends"
     goal = "Find viral hashtags"
@@ -81,9 +87,10 @@ async def test_visual_scout():
     print(json.dumps(result, indent=2))
 
     if result.get("status") == "success" and result.get("inner_extraction"):
-         print("SUCCESS: NestBrowse Loop completed (Outer Decision -> Inner Extraction).")
+        print("SUCCESS: NestBrowse Loop completed (Outer Decision -> Inner Extraction).")
     else:
-         print("FAILURE: NestBrowse Loop did not complete as expected.")
+        print("FAILURE: NestBrowse Loop did not complete as expected.")
+
 
 if __name__ == "__main__":
     # Run sync test

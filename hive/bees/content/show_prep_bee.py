@@ -24,6 +24,7 @@ from hive.utils.trivia_fetcher import TriviaFetcher
 # Configure Logging
 logger = logging.getLogger("ShowPrepBee")
 
+
 class ShowPrepBee(EmployedBee):
     """
     Prepares show content and talking points.
@@ -38,20 +39,20 @@ class ShowPrepBee(EmployedBee):
 
     def __init__(self, hive_path: str | None = None):
         super().__init__(hive_path)
-        load_dotenv() # Load environment variables
+        load_dotenv()  # Load environment variables
         self.ontology_manager = OntologyManager()
 
         # Initialize Gemini Client
         api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
 
         if not api_key:
-             # Fallback to key file if environment not set
-             try:
-                 with open("hive/keys.json") as f:
-                     data = json.load(f)
-                     api_key = data.get("GEMINI_API_KEY") or data.get("GOOGLE_API_KEY")
-             except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-                 logger.warning(f"Could not load API key from keys.json: {e}")
+            # Fallback to key file if environment not set
+            try:
+                with open("hive/keys.json") as f:
+                    data = json.load(f)
+                    api_key = data.get("GEMINI_API_KEY") or data.get("GOOGLE_API_KEY")
+            except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+                logger.warning(f"Could not load API key from keys.json: {e}")
 
         self.client = genai.Client(api_key=api_key) if api_key else None
         if not self.client:
@@ -118,11 +119,11 @@ class ShowPrepBee(EmployedBee):
 
         CONTEXT:
         - Time Slot: {time_slot}
-        - Current Vibe/Persona: {ontology.get('vibe')}
-        - Style Instruction: {ontology.get('prompt_injection')}
+        - Current Vibe/Persona: {ontology.get("vibe")}
+        - Style Instruction: {ontology.get("prompt_injection")}
 
         CONSTRAINTS:
-        - Do NOT use these banned words: {', '.join(ontology.get('banned_words', []))}
+        - Do NOT use these banned words: {", ".join(ontology.get("banned_words", []))}
         - Keep it under 20 words per line.
         - Be cool, atmospheric, and immersive.
         - STRICTLY prevent repetition of words like "manifest", "blueprint", "organism".
@@ -135,13 +136,11 @@ class ShowPrepBee(EmployedBee):
             response = self.client.models.generate_content(
                 model="gemini-2.0-flash-exp",
                 contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
-                )
+                config=types.GenerateContentConfig(response_mime_type="application/json"),
             )
 
             # clean potential markdown fences
-            text = response.text.replace('```json', '').replace('```', '').strip()
+            text = response.text.replace("```json", "").replace("```", "").strip()
             return json.loads(text)
 
         except Exception as e:

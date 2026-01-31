@@ -19,15 +19,17 @@ from pathlib import Path
 from hive.utils.cache_manager import BacklinkCacheManager
 
 GOVERNANCE_AI_MODEL = os.getenv("GOVERNANCE_AI_MODEL", "gemini-pro-3")
-GOVERNANCE_AI_ENDPOINT = os.getenv("GOVERNANCE_AI_ENDPOINT", "https://generativelanguage.googleapis.com")
+GOVERNANCE_AI_ENDPOINT = os.getenv(
+    "GOVERNANCE_AI_ENDPOINT", "https://generativelanguage.googleapis.com"
+)
 
 # If set to 'local', we point to the LocalAI container by default
 if GOVERNANCE_AI_MODEL == "local":
     GOVERNANCE_AI_ENDPOINT = "http://localhost:8080/v1"
 
+
 class SecurityError(Exception):
     pass
-
 
 
 # Governance Logger Setup

@@ -12,7 +12,7 @@ from google.genai import types
 load_dotenv()
 
 # Configure Logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("StreamMonitor")
 
 STREAM_URL = "https://das-edge12-live365-dal02.cdnstream.com/a13541"
@@ -25,6 +25,7 @@ if not API_KEY:
     # Attempt to load from hive/keys.json as fallback (simulating KeyManager logic)
     try:
         import json
+
         keys_path = os.path.join("hive", "keys.json")
         if os.path.exists(keys_path):
             with open(keys_path) as f:
@@ -40,6 +41,7 @@ if not API_KEY:
 
 
 client = genai.Client(api_key=API_KEY)
+
 
 def monitor_stream():
     """
@@ -62,7 +64,7 @@ def monitor_stream():
             # safer to just measure time, but for blocking read we need a byte size.
             # Let's assume 128kbps for chunk sizing to get roughly 30s.
             # 128 * 1024 / 8 * 30 = 491520 bytes.
-            chunk_size = 512 * 1024 # 512KB chunks, roughly 30s
+            chunk_size = 512 * 1024  # 512KB chunks, roughly 30s
 
             buffer = bytearray()
 
@@ -72,12 +74,13 @@ def monitor_stream():
 
                 if len(buffer) >= chunk_size:
                     process_chunk(buffer)
-                    buffer = bytearray() # Reset buffer
+                    buffer = bytearray()  # Reset buffer
 
     except KeyboardInterrupt:
         logger.info("Stopping stream monitor...")
     except Exception as e:
         logger.error(f"Stream error: {e}")
+
 
 def process_chunk(audio_data):
     """
@@ -101,6 +104,7 @@ def process_chunk(audio_data):
     except Exception as e:
         logger.error(f"Analysis failed: {e}")
 
+
 def analyze_audio(file_path):
     """
     Uploads file to Gemini and requests transcription.
@@ -123,8 +127,8 @@ def analyze_audio(file_path):
             uploaded_file = client.files.get(name=uploaded_file.name)
 
         if uploaded_file.state == "FAILED":
-             logger.error("Audio processing failed.")
-             return
+            logger.error("Audio processing failed.")
+            return
 
         prompt = """
         Listen to this audio segment.
@@ -145,13 +149,13 @@ def analyze_audio(file_path):
         response = client.models.generate_content(
             model="gemini-2.0-flash-exp",
             contents=[uploaded_file, prompt],
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json"
-            )
+            config=types.GenerateContentConfig(response_mime_type="application/json"),
         )
 
         result = response.text
-        print(f"\n--- STREAM LOG [{datetime.now().strftime('%H:%M:%S')}] ---\n{result}\n--------------------------------------------\n")
+        print(
+            f"\n--- STREAM LOG [{datetime.now().strftime('%H:%M:%S')}] ---\n{result}\n--------------------------------------------\n"
+        )
 
         # Append to transcript log
         log_file = os.path.join(OUTPUT_DIR, "transcript_log.txt")
@@ -164,6 +168,7 @@ def analyze_audio(file_path):
 
     except Exception as e:
         logger.error(f"Gemini API Error: {e}")
+
 
 if __name__ == "__main__":
     if not os.path.exists(OUTPUT_DIR):

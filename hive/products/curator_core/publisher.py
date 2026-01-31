@@ -10,8 +10,10 @@ PUBLIC_DB = Path("public/library.json")
 DEPLOY_INTERVAL_SECONDS = 900  # 15 Minutes
 # ---------------------
 
+
 def log(msg):
     print(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] {msg}")
+
 
 def deploy():
     log("🔄 Change detected. Preparing deployment...")
@@ -35,6 +37,7 @@ def deploy():
         log(f"⚠️ Deployment Failed: {e}")
     except FileNotFoundError:
         log("⚠️ Firebase CLI not found. Install with: npm install -g firebase-tools")
+
 
 def run_publisher():
     log("📡 Sovereign Publisher Online.")
@@ -67,7 +70,8 @@ def run_publisher():
             break
         except Exception as e:
             log(f"⚠️ Error: {e}")
-            time.sleep(60) # Backoff on error
+            time.sleep(60)  # Backoff on error
+
 
 if __name__ == "__main__":
     run_publisher()

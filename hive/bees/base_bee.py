@@ -83,6 +83,7 @@ class BaseBee(ABC):
 
         # Initialize Wisdom Manager (System 3)
         from hive.utils.wisdom_manager import WisdomManager
+
         self.wisdom_manager = WisdomManager(self.hive_path)
 
     @abstractmethod
@@ -426,6 +427,7 @@ class EmployedBee(BaseBee):
     """
     A bee that has a specific role or employment (e.g. DJ, Researcher).
     """
+
     BEE_TYPE = "employed"
     CATEGORY = "content"
 
@@ -434,6 +436,7 @@ class ScoutBee(BaseBee):
     """
     A bee that looks for things (trends, sponsors).
     """
+
     BEE_TYPE = "scout"
     CATEGORY = "research"
 
@@ -442,5 +445,6 @@ class OnlookerBee(BaseBee):
     """
     A bee that observes (monitoring, logging).
     """
+
     BEE_TYPE = "onlooker"
     CATEGORY = "research"

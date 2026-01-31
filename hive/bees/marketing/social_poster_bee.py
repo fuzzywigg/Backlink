@@ -245,7 +245,9 @@ class SocialPosterBee(EmployedBee):
         if not self.llm_client:
             return ""
 
-        pe = PromptEngineer(role="Visual Director", goal="Create an image prompt for a social media post.")
+        pe = PromptEngineer(
+            role="Visual Director", goal="Create an image prompt for a social media post."
+        )
         pe.add_context(f"Topic: {topic}")
         pe.add_context(f"Tweet Text: {tweet_text}")
         pe.add_constraint("STYLE: Cyberpunk, Neon-Noir, Glitch Art, 'The Hive'.")
@@ -641,7 +643,6 @@ class SocialPosterBee(EmployedBee):
 
         # Simple check: if current hour is in schedule (approx)
         if current_hour in TWEET_SCHEDULE:
-
             # Gather stats from honeycomb
             intel = self.read_intel()
             listener_count = intel.get("listeners", {}).get("total_count", 0)

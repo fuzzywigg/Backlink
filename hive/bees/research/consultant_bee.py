@@ -11,6 +11,7 @@ from hive.bees.base_bee import EmployedBee
 # Configure Logging
 logger = logging.getLogger("ConsultantBee")
 
+
 class ConsultantBee(EmployedBee):
     """
     Simulates "Checking with other LLMs" (Grok, ChatGPT, etc.) via Gemini persona simulation.
@@ -58,7 +59,7 @@ class ConsultantBee(EmployedBee):
         return {
             "status": "success",
             "candidates_generated": len(selected_candidates),
-            "candidates": selected_candidates
+            "candidates": selected_candidates,
         }
 
     def _load_grok_library(self) -> list[dict]:
@@ -75,14 +76,16 @@ class ConsultantBee(EmployedBee):
             return []
 
         try:
-            with open(path, encoding='utf-8') as f:
+            with open(path, encoding="utf-8") as f:
                 data = json.load(f)
                 return data.get("liked_songs", [])
         except Exception as e:
             self.log(f"Failed to read Grok library: {e}", level="error")
             return []
 
-    def _consult_llm(self, library: list[dict], ontology: dict, trends: list[dict], limit: int) -> list[dict]:
+    def _consult_llm(
+        self, library: list[dict], ontology: dict, trends: list[dict], limit: int
+    ) -> list[dict]:
         """
         Asks Gemini to act as a Music Curator picking candidates.
         """
@@ -96,7 +99,7 @@ class ConsultantBee(EmployedBee):
         prompt = f"""
         You are the Head of Music Strategy for a radio station.
 
-        CURRENT VIBE: {ontology.get('vibe')}
+        CURRENT VIBE: {ontology.get("vibe")}
 
         TASK:
         Select {limit} songs that fit this vibe.
@@ -114,8 +117,18 @@ class ConsultantBee(EmployedBee):
             # Use generate_content with implicit schema via prompt or backend support
             response = self.llm_client.generate_content(
                 prompt=prompt,
-                response_schema={"type": "ARRAY", "items": {"type": "OBJECT", "properties": {"title": {"type": "STRING"}, "artist": {"type": "STRING"}, "reason": {"type": "STRING"}}}},
-                thinking_level="low"
+                response_schema={
+                    "type": "ARRAY",
+                    "items": {
+                        "type": "OBJECT",
+                        "properties": {
+                            "title": {"type": "STRING"},
+                            "artist": {"type": "STRING"},
+                            "reason": {"type": "STRING"},
+                        },
+                    },
+                },
+                thinking_level="low",
             )
 
             # Handle potential direct list return from Gemini3Client helper
@@ -125,7 +138,7 @@ class ConsultantBee(EmployedBee):
             # Handle formatted dict
             if isinstance(response, dict):
                 if "text" in response:
-                    text = response["text"].replace('```json', '').replace('```', '').strip()
+                    text = response["text"].replace("```json", "").replace("```", "").strip()
                     try:
                         return json.loads(text)
                     except (json.JSONDecodeError, ValueError) as e:
@@ -155,13 +168,15 @@ class ConsultantBee(EmployedBee):
 
         # Add new candidates
         for track in tracks:
-            intel["music_library"]["candidates"].append({
-                "title": track.get("title"),
-                "artist": track.get("artist"),
-                "source": "Consultant_Suggestion",
-                "suggested_at": datetime.now(timezone.utc).isoformat(),
-                "reason": track.get("reason", "Vibe Match")
-            })
+            intel["music_library"]["candidates"].append(
+                {
+                    "title": track.get("title"),
+                    "artist": track.get("artist"),
+                    "source": "Consultant_Suggestion",
+                    "suggested_at": datetime.now(timezone.utc).isoformat(),
+                    "reason": track.get("reason", "Vibe Match"),
+                }
+            )
 
         # Use BaseBee's update_intel
         self.update_intel({"music_library": intel["music_library"]})
@@ -185,12 +200,12 @@ class ConsultantBee(EmployedBee):
         for track in tracks:
             if track["title"].lower() not in current_titles:
                 new_track = {
-                    "id": f"grok_{random.randint(1000,9999)}",
+                    "id": f"grok_{random.randint(1000, 9999)}",
                     "title": track.get("title"),
                     "artist": track.get("artist"),
                     "source": "Grok_Import",
                     "acquired_at": datetime.now(timezone.utc).isoformat(),
-                    "vibe_match": track.get("reason", "Consultant Selection")
+                    "vibe_match": track.get("reason", "Consultant Selection"),
                 }
                 intel["music_library"]["owned"].append(new_track)
                 added_count += 1
@@ -213,14 +228,16 @@ class ConsultantBee(EmployedBee):
             # Convert Hive tracks to UI format
             ui_tracks = []
             for t in tracks:
-                ui_tracks.append({
-                    "title": t.get("title", "Unknown"),
-                    "artist": t.get("artist", "Unknown"),
-                    "genre": "Backlink Mix",
-                    "plays": 0
-                })
+                ui_tracks.append(
+                    {
+                        "title": t.get("title", "Unknown"),
+                        "artist": t.get("artist", "Unknown"),
+                        "genre": "Backlink Mix",
+                        "plays": 0,
+                    }
+                )
 
-            content = html_path.read_text(encoding='utf-8')
+            content = html_path.read_text(encoding="utf-8")
 
             # Robust replacement? Still heuristic based on markers
             start_marker = "const songs = ["
@@ -239,16 +256,18 @@ class ConsultantBee(EmployedBee):
             new_json = json.dumps(ui_tracks, indent=4)
 
             new_content = (
-                content[:start_idx + len(start_marker)] +
-                "\n" + new_json[1:-1] + # trimmed brackets
-                content[end_idx:]
+                content[: start_idx + len(start_marker)]
+                + "\n"
+                + new_json[1:-1]  # trimmed brackets
+                + content[end_idx:]
             )
 
-            html_path.write_text(new_content, encoding='utf-8')
+            html_path.write_text(new_content, encoding="utf-8")
             self.log("Updated public/songs.html with latest library.")
 
         except Exception as e:
             self.log(f"Failed to update public site: {e}", level="error")
+
 
 if __name__ == "__main__":
     bee = ConsultantBee()

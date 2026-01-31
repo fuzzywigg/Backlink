@@ -110,19 +110,27 @@ class WisdomManager:
                 # GRAPH SYNC (System 3)
                 try:
                     import asyncio
+
                     # Basic Extraction for Graph
                     subject = "Hive"
-                    predicate = "must_avoid" if "avoid" in lesson["content"].lower() else "must_follow"
+                    predicate = (
+                        "must_avoid" if "avoid" in lesson["content"].lower() else "must_follow"
+                    )
                     object_ = lesson["context"] or lesson["content"][:50]
 
                     # Run async method implementation sync for now
                     if self.graph:
-                         asyncio.run(self.graph.add_knowledge(
-                             subject=subject,
-                             predicate=predicate,
-                             object_=object_,
-                             metadata={"full_text": lesson["content"], "source": lesson["source"]}
-                         ))
+                        asyncio.run(
+                            self.graph.add_knowledge(
+                                subject=subject,
+                                predicate=predicate,
+                                object_=object_,
+                                metadata={
+                                    "full_text": lesson["content"],
+                                    "source": lesson["source"],
+                                },
+                            )
+                        )
                 except Exception as graph_err:
                     logging.warning(f"Graph Sync Failed: {graph_err}")
 

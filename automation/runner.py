@@ -15,14 +15,14 @@ class AutonomousRunner:
             self.manifest = json.load(f)
 
     def _save_manifest(self):
-        with open(self.manifest_path, 'w') as f:
+        with open(self.manifest_path, "w") as f:
             json.dump(self.manifest, f, indent=2)
 
     def log(self, message):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         entry = f"[{timestamp}] {message}"
         print(entry)
-        with open(self.log_file, 'a') as f:
+        with open(self.log_file, "a") as f:
             f.write(entry + "\n")
 
     def check_stop_hook(self):
@@ -33,8 +33,8 @@ class AutonomousRunner:
 
     def execute_next(self):
         for task in self.manifest:
-            if task['status'] == 'pending':
-                task_id = task['id']
+            if task["status"] == "pending":
+                task_id = task["id"]
                 self.log(f"Starting Task: {task_id} - {task['description']}")
 
                 # Check Stop Hook BEFORE starting
@@ -44,20 +44,23 @@ class AutonomousRunner:
                 try:
                     # In a real autonomy loop, this would trigger the actual Agent Logic.
                     # For this harness, we are marking it 'in_progress' so the Agent knows what to pick up.
-                    task['status'] = 'in_progress'
+                    task["status"] = "in_progress"
                     self._save_manifest()
 
-                    self.log(f"Task {task_id} marked as IN_PROGRESS. Waiting for Agent execution...")
-                    return True # We only enact one state change per 'tick' to allow the LLM to do the work.
+                    self.log(
+                        f"Task {task_id} marked as IN_PROGRESS. Waiting for Agent execution..."
+                    )
+                    return True  # We only enact one state change per 'tick' to allow the LLM to do the work.
 
                 except Exception as e:
                     self.log(f"❌ Error in Task {task_id}: {str(e)}")
-                    task['status'] = 'failed'
+                    task["status"] = "failed"
                     self._save_manifest()
                     return False
 
         self.log("✅ All tasks in manifest completed!")
         return False
+
 
 if __name__ == "__main__":
     runner = AutonomousRunner()

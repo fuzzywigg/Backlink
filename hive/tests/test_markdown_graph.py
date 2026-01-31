@@ -8,7 +8,6 @@ from hive.utils.markdown_graph_storage import MarkdownKnowledgeGraph
 
 
 class TestMarkdownKnowledgeGraph:
-
     @pytest.fixture
     def temp_graph_dir(self):
         # Create temp dir

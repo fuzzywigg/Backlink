@@ -23,7 +23,7 @@ class SecurityBee(BaseBee):
             "unidbg": [b"unidbg", b"com.github.unidbg"],
             "frida": [b"frida-agent", b"frida-gadget"],
             "tracking_hosts": [b"ad.xiaomi.com", b"tracking", b"analytics"],
-            "suspicious_permissions": ["READ_SMS", "RECORD_AUDIO", "ACCESS_FINE_LOCATION"]
+            "suspicious_permissions": ["READ_SMS", "RECORD_AUDIO", "ACCESS_FINE_LOCATION"],
         }
 
     def work(self, task):
@@ -50,11 +50,7 @@ class SecurityBee(BaseBee):
         """
         Recursively scan a directory for signatures.
         """
-        results = {
-            "files_scanned": 0,
-            "threats_found": [],
-            "suspicious_files": []
-        }
+        results = {"files_scanned": 0, "threats_found": [], "suspicious_files": []}
 
         for root, _dirs, files in os.walk(directory):
             for file in files:
@@ -62,7 +58,12 @@ class SecurityBee(BaseBee):
                 results["files_scanned"] += 1
 
                 # Heuristic checks
-                if file.endswith(".so") or file.endswith(".dll") or file.endswith(".apk") or file.endswith(".xml"):
+                if (
+                    file.endswith(".so")
+                    or file.endswith(".dll")
+                    or file.endswith(".apk")
+                    or file.endswith(".xml")
+                ):
                     scan_res = self.scan_file(filepath)
                     if scan_res["threats"]:
                         results["threats_found"].extend(scan_res["threats"])
@@ -83,7 +84,7 @@ class SecurityBee(BaseBee):
                 for sig_name, patterns in self.signatures.items():
                     # Skip permission checks here, those are for manifest
                     if sig_name == "suspicious_permissions":
-                         continue
+                        continue
 
                     for pattern in patterns:
                         if pattern in content:
@@ -127,8 +128,8 @@ class SecurityBee(BaseBee):
         unidbg_sigs = [
             b"com.github.unidbg",
             b"unidbg-android",
-            b"libc.so", # Often hooked/emulated
-            b"/data/local/tmp"
+            b"libc.so",  # Often hooked/emulated
+            b"/data/local/tmp",
         ]
 
         detected = []
@@ -138,7 +139,7 @@ class SecurityBee(BaseBee):
 
             for sig in unidbg_sigs:
                 if sig in content:
-                    detected.append(sig.decode('utf-8', errors='ignore'))
+                    detected.append(sig.decode("utf-8", errors="ignore"))
 
             if detected:
                 return {"success": True, "unidbg_detected": True, "signatures": detected}

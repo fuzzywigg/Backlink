@@ -27,13 +27,17 @@ class TreasuryBee(BaseBee):
 
         # Fallback for dev environment if not set
         if not self.wallet_key:
-             # Check if we can load it from .env manually (mvp hack)
-             # In production, KeyManager should handle this transparently
-             import os
-             self.wallet_key = os.getenv("HIVE_WALLET_PRIVATE_KEY")
+            # Check if we can load it from .env manually (mvp hack)
+            # In production, KeyManager should handle this transparently
+            import os
+
+            self.wallet_key = os.getenv("HIVE_WALLET_PRIVATE_KEY")
 
         if not self.wallet_key:
-             self.log("WARNING: No Wallet Key found. Treasury operating in Read-Only mode.", level="warning")
+            self.log(
+                "WARNING: No Wallet Key found. Treasury operating in Read-Only mode.",
+                level="warning",
+            )
 
     def work(self, task):
         """
@@ -56,7 +60,7 @@ class TreasuryBee(BaseBee):
             elif "budget" in instruction:
                 return self.approve_budget(args)
             else:
-                 return {"success": False, "reason": f"Unknown treasury instruction: {instruction}"}
+                return {"success": False, "reason": f"Unknown treasury instruction: {instruction}"}
         except Exception as e:
             self.log(f"Treasury Error: {e}", level="error")
             return {"success": False, "error": str(e)}
@@ -67,16 +71,16 @@ class TreasuryBee(BaseBee):
         Supports Polygon PoS, zkEVM, and Mainnet.
         """
         if not self.wallet_key:
-             # Stub for MVP if no key
+            # Stub for MVP if no key
             balances = {
-                "USDC": 619.20, # From user context (USDC Bridge task)
+                "USDC": 619.20,  # From user context (USDC Bridge task)
                 "POL": 15.5,
-                "ETH": 0.042
+                "ETH": 0.042,
             }
             return {
                 "success": True,
                 "balances": balances,
-                "msg": "Balance check simulated (Read-Only)."
+                "msg": "Balance check simulated (Read-Only).",
             }
 
         try:
@@ -89,38 +93,26 @@ class TreasuryBee(BaseBee):
             # Check Polygon PoS (Target for daily ops)
             w3_poly = Web3(Web3.HTTPProvider("https://polygon-rpc.com"))
             balance_wei_poly = w3_poly.eth.get_balance(address)
-            balance_pol = float(w3_poly.from_wei(balance_wei_poly, 'ether'))
+            balance_pol = float(w3_poly.from_wei(balance_wei_poly, "ether"))
 
             # Check Ethereum Mainnet (Savings)
             w3_eth = Web3(Web3.HTTPProvider("https://eth.llamarpc.com"))
             balance_wei_eth = w3_eth.eth.get_balance(address)
-            balance_eth = float(w3_eth.from_wei(balance_wei_eth, 'ether'))
+            balance_eth = float(w3_eth.from_wei(balance_wei_eth, "ether"))
 
             # TODO: Add specific Token Contract checks (USDC, etc.)
 
-            balances = {
-                "POL": balance_pol,
-                "ETH": balance_eth,
-                "wallet": address
-            }
+            balances = {"POL": balance_pol, "ETH": balance_eth, "wallet": address}
 
-            self.write_state({
-                "treasury": {
-                    "balances": balances,
-                    "last_check": time.time(),
-                    "wallet": address
-                }
-            })
+            self.write_state(
+                {"treasury": {"balances": balances, "last_check": time.time(), "wallet": address}}
+            )
 
-            return {
-                "success": True,
-                "balances": balances,
-                "msg": "Live balance check complete."
-            }
+            return {"success": True, "balances": balances, "msg": "Live balance check complete."}
 
         except Exception as e:
-             self.log(f"Balance Check Failed: {e}", level="error")
-             return {"success": False, "error": str(e)}
+            self.log(f"Balance Check Failed: {e}", level="error")
+            return {"success": False, "error": str(e)}
 
     def process_payment_request(self, args):
         """
@@ -130,12 +122,12 @@ class TreasuryBee(BaseBee):
         amount = float(args.get("amount", 0))
         recipient = args.get("recipient", "0x000")
         reason = args.get("reason", "Service Payment")
-        chain_id = args.get("chain_id", 137) # Default to Polygon PoS
+        chain_id = args.get("chain_id", 137)  # Default to Polygon PoS
 
         self.log(f"Request to pay {amount} USDC to {recipient} for '{reason}'")
 
         # 1. Budget Check
-        if amount > 50.0: # Hardcoded safety limit
+        if amount > 50.0:  # Hardcoded safety limit
             self.log("Payment REJECTED: Exceeds auto-approval limit of $50", level="warning")
             return {"success": False, "reason": "Budget Exceeded (> 50 USDC)"}
 
@@ -149,9 +141,9 @@ class TreasuryBee(BaseBee):
 
             # Setup RPC based on chain (Sovereign RPCs)
             rpc_urls = {
-                137: "https://polygon-rpc.com", # Polygon PoS
-                1101: "https://zkevm-rpc.com",   # Polygon zkEVM
-                1: "https://eth.llamarpc.com",   # Mainnet
+                137: "https://polygon-rpc.com",  # Polygon PoS
+                1101: "https://zkevm-rpc.com",  # Polygon zkEVM
+                1: "https://eth.llamarpc.com",  # Mainnet
             }
 
             current_rpc = rpc_urls.get(chain_id, "https://polygon-rpc.com")
@@ -170,12 +162,12 @@ class TreasuryBee(BaseBee):
 
             # Prepare Tx
             {
-                'nonce': nonce,
-                'to': recipient,
-                'value': w3.to_wei(amount, 'ether'), # Warning: Assumes Native Token amounts
-                'gas': 21000,
-                'gasPrice': w3.eth.gas_price,
-                'chainId': chain_id
+                "nonce": nonce,
+                "to": recipient,
+                "value": w3.to_wei(amount, "ether"),  # Warning: Assumes Native Token amounts
+                "gas": 21000,
+                "gasPrice": w3.eth.gas_price,
+                "chainId": chain_id,
             }
 
             # IRON DOME PROTOCOL ENFORCED (V3)
@@ -197,10 +189,12 @@ class TreasuryBee(BaseBee):
             # Save proposal to disk
             import json
             from datetime import datetime
+
             timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
             filename = f"hive/security/iron_dome/proposals/payment_proposal_{timestamp}.json"
 
             import os
+
             os.makedirs(os.path.dirname(filename), exist_ok=True)
 
             with open(filename, "w") as f:
@@ -212,7 +206,7 @@ class TreasuryBee(BaseBee):
                 "success": True,
                 "status": "PROPOSAL_GENERATED",
                 "file": filename,
-                "instruction": "Transfer file to Air-Gapped machine to sign."
+                "instruction": "Transfer file to Air-Gapped machine to sign.",
             }
 
         except Exception as e:
@@ -230,5 +224,5 @@ class TreasuryBee(BaseBee):
         return {
             "success": True,
             "approved": approved,
-            "reason": "Within auto-approval limit" if approved else "Requires human sign-off"
+            "reason": "Within auto-approval limit" if approved else "Requires human sign-off",
         }

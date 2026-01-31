@@ -6,7 +6,6 @@ from hive.utils.memory_graph import HiveKnowledgeGraph
 
 
 class TestHiveKnowledgeGraph:
-
     @pytest.mark.asyncio
     async def test_init(self):
         """Test that graph initializes correctly."""
@@ -43,6 +42,7 @@ class TestHiveKnowledgeGraph:
         # But actually, requirements.txt has networkx, so let's assume availability or skip.
         try:
             import networkx as nx
+
             g.graph = nx.DiGraph()
             g.graph.add_edge("Stripe", "Payments", relation="handles")
 
@@ -60,7 +60,7 @@ class TestHiveKnowledgeGraph:
     async def test_graceful_failure_without_graph(self):
         """Test that methods fail safely if graph backend is missing."""
         g = HiveKnowledgeGraph()
-        g.graph = None # Simulate missing dependency
+        g.graph = None  # Simulate missing dependency
 
         added = await g.add_knowledge("A", "b", "C")
         assert added is False

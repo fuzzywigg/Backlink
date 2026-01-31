@@ -109,7 +109,7 @@ class RadioTuner:
         self.is_playing = True
 
         if self.mode == "sdr":
-            return f"tuned-sdr::{frequency_or_url}" # Placeholder for rtl_fm execution
+            return f"tuned-sdr::{frequency_or_url}"  # Placeholder for rtl_fm execution
         else:
             return f"tuned-stream::{frequency_or_url}"
 
@@ -118,4 +118,3 @@ class RadioTuner:
         self.logger.info("Stopping radio.")
         self.is_playing = False
         return "radio-stopped"
-

@@ -370,7 +370,7 @@ class DjBee(EmployedBee):
                 "artist": candidate.get("artist"),
                 "source": "Smart_Acquisition",
                 "acquired_at": datetime.now().isoformat(),
-                "vibe_match": candidate.get("reason", "Autopilot Selection")
+                "vibe_match": candidate.get("reason", "Autopilot Selection"),
             }
 
             if "owned" not in library:
@@ -398,7 +398,7 @@ class DjBee(EmployedBee):
 
             intel["music_library"] = library
 
-            with open("hive/honeycomb/intel.json", 'w') as f:
+            with open("hive/honeycomb/intel.json", "w") as f:
                 json.dump(intel, f, indent=2)
         except Exception as e:
             self.log(f"Failed to save library state: {e}", level="error")

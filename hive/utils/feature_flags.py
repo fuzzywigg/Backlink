@@ -35,9 +35,7 @@ class FeatureFlag(BaseModel):
     dependencies: list[str] = Field(
         default_factory=list, description="Required features that must be enabled"
     )
-    metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata"
-    )
+    metadata: dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
 
 
 class FeatureFlagManager:
@@ -177,8 +175,7 @@ class FeatureFlagManager:
         """Save current flag configuration to disk."""
         data = {
             "features": {
-                name: flag.model_dump(exclude={"name"})
-                for name, flag in self.flags.items()
+                name: flag.model_dump(exclude={"name"}) for name, flag in self.flags.items()
             }
         }
 

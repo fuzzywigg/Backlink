@@ -17,6 +17,7 @@ except ImportError:
 
 logger = logging.getLogger("gemini_client")
 
+
 class Gemini3Client:
     """
     Wrapper for Gemini 3 API with support for Thinking Level and Thought Signatures.
@@ -62,13 +63,10 @@ class Gemini3Client:
         # LocalAI doesn't strictly need a real key, but OpenAI client might check for one
         api_key = os.environ.get("LOCALAI_API_KEY", "sk-xxx-local")
 
-        self.client = OpenAI(
-            base_url=self.local_endpoint,
-            api_key=api_key
-        )
+        self.client = OpenAI(base_url=self.local_endpoint, api_key=api_key)
         # Use a model name expected by LocalAI or just pass 'gpt-3.5-turbo' as generic alias
         # Often LocalAI requires the specific model filename or alias loaded
-        self.model_name = "gpt-4" # Generic fallback or use mapped name
+        self.model_name = "gpt-4"  # Generic fallback or use mapped name
 
     def _init_google_backend(self):
         """Initialize Google GenAI client."""
@@ -99,10 +97,17 @@ class Gemini3Client:
             return self._generate_local(prompt, system_instruction, response_schema)
         else:
             return self._generate_google(
-                prompt, system_instruction, thinking_level, response_schema, use_thought_signature, tools
+                prompt,
+                system_instruction,
+                thinking_level,
+                response_schema,
+                use_thought_signature,
+                tools,
             )
 
-    def _generate_local(self, prompt: str, system_instruction: str, response_schema: dict | None) -> dict:
+    def _generate_local(
+        self, prompt: str, system_instruction: str, response_schema: dict | None
+    ) -> dict:
         """Execute via LocalAI (OpenAI compatible)."""
         messages = []
         if system_instruction:
@@ -116,9 +121,7 @@ class Gemini3Client:
                 response_format = {"type": "json_object"}
 
             completion = self.client.chat.completions.create(
-                model=self.model_name,
-                messages=messages,
-                response_format=response_format
+                model=self.model_name, messages=messages, response_format=response_format
             )
 
             content = completion.choices[0].message.content
@@ -133,10 +136,18 @@ class Gemini3Client:
         except Exception as e:
             return {"error": str(e)}
 
-    def _generate_google(self, prompt, system_instruction, thinking_level, response_schema, use_thought_signature, tools):
+    def _generate_google(
+        self,
+        prompt,
+        system_instruction,
+        thinking_level,
+        response_schema,
+        use_thought_signature,
+        tools,
+    ):
         """Execute via Google GenAI."""
         if not self.client:
-             return {"error": "Google Client not initialized"}
+            return {"error": "Google Client not initialized"}
 
         config = types.GenerateContentConfig(
             thinking_config=types.ThinkingConfig(thinking_level=thinking_level)
@@ -150,7 +161,7 @@ class Gemini3Client:
             config.response_schema = response_schema
 
         if system_instruction:
-             config.system_instruction = system_instruction
+            config.system_instruction = system_instruction
 
         try:
             response = self.client.models.generate_content(
@@ -179,10 +190,11 @@ class Gemini3Client:
         Note: LocalAI might not support Bidi RPCs yet.
         """
         if self.backend == "local":
-             # Wait for LocalAI Websocket support
-             raise NotImplementedError("Live Connect not supported on LocalAI yet")
+            # Wait for LocalAI Websocket support
+            raise NotImplementedError("Live Connect not supported on LocalAI yet")
 
         import websockets
+
         target_model = model or self.model_name
         host = "generativelanguage.googleapis.com"
         path = f"/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key={self.client.api_key}"

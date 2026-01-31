@@ -14,7 +14,7 @@ FALLBACK_REGISTRY = {
                 "name": "GPT-4o",
                 "context": 128000,
                 "cost": {"input": 5.0, "output": 15.0},
-                "capabilities": ["reasoning", "vision", "tool_call"]
+                "capabilities": ["reasoning", "vision", "tool_call"],
             }
         }
     },
@@ -25,7 +25,7 @@ FALLBACK_REGISTRY = {
                 "name": "Claude 3.5 Sonnet",
                 "context": 200000,
                 "cost": {"input": 3.0, "output": 15.0},
-                "capabilities": ["reasoning", "vision", "tool_call"]
+                "capabilities": ["reasoning", "vision", "tool_call"],
             }
         }
     },
@@ -36,15 +36,16 @@ FALLBACK_REGISTRY = {
                 "name": "Gemini 1.5 Pro",
                 "context": 2000000,
                 "cost": {"input": 3.5, "output": 10.5},
-                "capabilities": ["reasoning", "vision", "audio", "video", "tool_call"]
+                "capabilities": ["reasoning", "vision", "audio", "video", "tool_call"],
             }
         }
-    }
+    },
 }
 
 CACHE_FILE = "models_cache.json"
 CACHE_DURATION_HOURS = 24
 MODELS_DEV_URL = "https://models.dev/api.json"
+
 
 class ModelRegistryLoader:
     """
@@ -84,7 +85,7 @@ class ModelRegistryLoader:
             data = response.json()
 
             # Save to cache
-            with open(self.cache_path, 'w') as f:
+            with open(self.cache_path, "w") as f:
                 json.dump(data, f, indent=2)
 
             return data
@@ -99,9 +100,7 @@ class ModelRegistryLoader:
                 return provider["models"][model_id]
         return None
 
-    def recommend_model(self,
-                       mode: str = "performance",
-                       capabilities: list[str] = None) -> str:
+    def recommend_model(self, mode: str = "performance", capabilities: list[str] = None) -> str:
         """
         Recommends a model ID based on mode and capabilities.
         Modes: 'performance', 'cost', 'speed'
@@ -115,6 +114,7 @@ class ModelRegistryLoader:
             "cost": "gpt-4o-mini",  # Assuming it exists in registry
         }
         return mode_map.get(mode, "gpt-4o")
+
 
 if __name__ == "__main__":
     # Test run

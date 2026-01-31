@@ -17,7 +17,7 @@ def interactive_wizard():
     print("Action:\n[1] New Discovery\n[2] Switch Context\n[3] Exit")
     choice = input("Select [1-3]: ").strip()
 
-    if choice == '2':
+    if choice == "2":
         print("\nAvailable Contexts:")
         for ctx in engine.config["contexts"]:
             print(f"- {ctx}")
@@ -28,7 +28,7 @@ def interactive_wizard():
             print("❌ Invalid context")
         return interactive_wizard()
 
-    if choice == '3':
+    if choice == "3":
         sys.exit(0)
 
     # Step 2: The Input
@@ -52,23 +52,24 @@ def interactive_wizard():
     print("\n📊 Scoring (0-10):")
     scores = {}
     if engine.context_name == "backlink_hive_scout":
-        scores['strategic'] = int(input("Strategic Fit (0-10): ") or 0)
-        scores['sovereign'] = int(input("Sovereign Compat (0-10): ") or 0)
-        scores['agentic'] = int(input("Agentic Accessibility (0-10): ") or 0)
-        scores['technical'] = int(input("Technical Merit (0-10): ") or 0)
+        scores["strategic"] = int(input("Strategic Fit (0-10): ") or 0)
+        scores["sovereign"] = int(input("Sovereign Compat (0-10): ") or 0)
+        scores["agentic"] = int(input("Agentic Accessibility (0-10): ") or 0)
+        scores["technical"] = int(input("Technical Merit (0-10): ") or 0)
     elif engine.context_name == "task_master":
-        scores['Focus'] = int(input("Focus (0-10): ") or 0)
-        scores['Depth'] = int(input("Depth (0-10): ") or 0)
-        scores['Clarity'] = int(input("Clarity (0-10): ") or 0)
-        scores['Utility'] = int(input("Utility (0-10): ") or 0)
+        scores["Focus"] = int(input("Focus (0-10): ") or 0)
+        scores["Depth"] = int(input("Depth (0-10): ") or 0)
+        scores["Clarity"] = int(input("Clarity (0-10): ") or 0)
+        scores["Utility"] = int(input("Utility (0-10): ") or 0)
     else:
-        scores['Utility'] = int(input("Utility (0-10): ") or 5)
-        scores['Quality'] = int(input("Quality (0-10): ") or 5)
+        scores["Utility"] = int(input("Utility (0-10): ") or 5)
+        scores["Quality"] = int(input("Quality (0-10): ") or 5)
 
     # Save
     entry = engine.save_review(url, name, summary, analysis, scores)
     print(f"\n✅ Saved to {engine.context['path']}")
     print(f"🏆 Score: {entry['weighted_score']}")
+
 
 if __name__ == "__main__":
     try:

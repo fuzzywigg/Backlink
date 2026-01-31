@@ -34,6 +34,7 @@ async def lifespan(app: FastAPI):
 
     # Track startup time for uptime calculation
     import time
+
     app.state.start_time = time.time()
 
     # Initialize Queen

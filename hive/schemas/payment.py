@@ -45,16 +45,10 @@ class PaymentIntentSchema(TimestampedSchema):
     intent_id: str = Field(..., description="Unique payment intent identifier")
     amount: Decimal = Field(..., gt=0, description="Payment amount")
     currency: str = Field(default="usd", description="Currency code (ISO 4217)")
-    status: PaymentStatus = Field(
-        default=PaymentStatus.PENDING, description="Current status"
-    )
+    status: PaymentStatus = Field(default=PaymentStatus.PENDING, description="Current status")
     provider: PaymentProvider
-    provider_intent_id: str | None = Field(
-        None, description="Provider-specific intent ID"
-    )
-    metadata: dict[str, str] = Field(
-        default_factory=dict, description="Additional metadata"
-    )
+    provider_intent_id: str | None = Field(None, description="Provider-specific intent ID")
+    metadata: dict[str, str] = Field(default_factory=dict, description="Additional metadata")
 
     @field_validator("currency")
     @classmethod

@@ -46,16 +46,10 @@ class TaskSchema(TimestampedSchema):
 
     task_id: str = Field(..., description="Unique task identifier")
     bee_type: str = Field(..., description="Type of bee that should handle this task")
-    priority: TaskPriority = Field(
-        default=TaskPriority.MEDIUM, description="Task priority"
-    )
+    priority: TaskPriority = Field(default=TaskPriority.MEDIUM, description="Task priority")
     status: TaskStatus = Field(default=TaskStatus.PENDING, description="Current status")
-    payload: dict[str, Any] = Field(
-        default_factory=dict, description="Task-specific data"
-    )
-    result: dict[str, Any] | None = Field(
-        None, description="Result of task execution"
-    )
+    payload: dict[str, Any] = Field(default_factory=dict, description="Task-specific data")
+    result: dict[str, Any] | None = Field(None, description="Result of task execution")
     error: str | None = Field(None, description="Error message if task failed")
     assigned_to: str | None = Field(None, description="Bee instance handling this task")
     started_at: datetime | None = Field(None, description="When task execution started")
@@ -77,9 +71,7 @@ class IntelSchema(TimestampedSchema):
     source: str = Field(..., description="Source of intelligence (bee type or external)")
     category: str = Field(..., description="Category of intelligence")
     data: dict[str, Any] = Field(..., description="Intelligence data")
-    confidence: float = Field(
-        default=1.0, ge=0.0, le=1.0, description="Confidence score (0-1)"
-    )
+    confidence: float = Field(default=1.0, ge=0.0, le=1.0, description="Confidence score (0-1)")
     tags: list[str] = Field(default_factory=list, description="Searchable tags")
     expires_at: datetime | None = Field(
         None, description="Expiration timestamp for time-sensitive intel"
@@ -102,9 +94,7 @@ class WisdomEntrySchema(TimestampedSchema):
 class WisdomSchema(BaseSchema):
     """Schema for the wisdom honeycomb file."""
 
-    entries: list[WisdomEntrySchema] = Field(
-        default_factory=list, description="Wisdom entries"
-    )
+    entries: list[WisdomEntrySchema] = Field(default_factory=list, description="Wisdom entries")
     meta: MetadataSchema = Field(
         default_factory=MetadataSchema, description="File metadata", alias="_meta"
     )
@@ -118,31 +108,19 @@ class HoneycombStateSchema(BaseSchema):
     """
 
     # Core broadcast state
-    current_track: dict[str, Any] | None = Field(
-        None, description="Currently playing track"
-    )
-    queue: list[dict[str, Any]] = Field(
-        default_factory=list, description="Upcoming tracks"
-    )
-    listeners: dict[str, Any] = Field(
-        default_factory=dict, description="Current listener data"
-    )
+    current_track: dict[str, Any] | None = Field(None, description="Currently playing track")
+    queue: list[dict[str, Any]] = Field(default_factory=list, description="Upcoming tracks")
+    listeners: dict[str, Any] = Field(default_factory=dict, description="Current listener data")
 
     # Recent bee activity
     recent_intel: list[dict[str, Any]] = Field(
         default_factory=list, description="Recent intelligence"
     )
-    active_events: list[dict[str, Any]] = Field(
-        default_factory=list, description="Active events"
-    )
+    active_events: list[dict[str, Any]] = Field(default_factory=list, description="Active events")
 
     # System status
-    stream_status: dict[str, Any] = Field(
-        default_factory=dict, description="Stream health metrics"
-    )
-    treasury_status: dict[str, Any] = Field(
-        default_factory=dict, description="Financial status"
-    )
+    stream_status: dict[str, Any] = Field(default_factory=dict, description="Stream health metrics")
+    treasury_status: dict[str, Any] = Field(default_factory=dict, description="Financial status")
 
     # Metadata
     meta: MetadataSchema = Field(

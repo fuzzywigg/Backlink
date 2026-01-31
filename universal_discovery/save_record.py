@@ -26,6 +26,7 @@ def save_record(url, name, summary, analysis, scores_json, context_name, status_
     print("SUCCESS")
     print(json.dumps(entry, indent=2))
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", required=True)
@@ -33,9 +34,15 @@ if __name__ == "__main__":
     parser.add_argument("--summary", required=True)
     parser.add_argument("--analysis", required=True)
     parser.add_argument("--scores", required=True, help="JSON string of scores")
-    parser.add_argument("--context", help="Context to save in (default, backlink_hive_scout, task_master)")
-    parser.add_argument("--status", help="Explicit status (INTEGRATE, MONITOR, IGNORE, REJECTED, QUEUED, GLOBAL)")
+    parser.add_argument(
+        "--context", help="Context to save in (default, backlink_hive_scout, task_master)"
+    )
+    parser.add_argument(
+        "--status", help="Explicit status (INTEGRATE, MONITOR, IGNORE, REJECTED, QUEUED, GLOBAL)"
+    )
 
     args = parser.parse_args()
 
-    save_record(args.url, args.name, args.summary, args.analysis, args.scores, args.context, args.status)
+    save_record(
+        args.url, args.name, args.summary, args.analysis, args.scores, args.context, args.status
+    )

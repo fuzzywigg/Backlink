@@ -11,10 +11,11 @@ RPCS = {
     "polygon": "https://polygon-rpc.com",
     "arbitrum": "https://arb1.arbitrum.io/rpc",
     "optimism": "https://mainnet.optimism.io",
-    "base": "https://mainnet.base.org"
+    "base": "https://mainnet.base.org",
 }
 
 PROPOSAL_DIR = "hive/security/iron_dome/proposals"
+
 
 def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
     """
@@ -45,7 +46,7 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
     latest_block = w3.eth.get_block("latest")
     base_fee = latest_block["baseFeePerGas"]
     # Priority fee tip (can be adjustable, using safe low default)
-    max_priority_fee = w3.to_wei(1.5, 'gwei')
+    max_priority_fee = w3.to_wei(1.5, "gwei")
     # Buffer base fee by 20% for fluctuation
     max_fee_per_gas = int(base_fee * 1.2) + max_priority_fee
 
@@ -55,11 +56,11 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
         "nonce": nonce,
         "from": from_addr,
         "to": to_addr,
-        "value": w3.to_wei(amount_ether, 'ether'),
-        "gas": 21000, # Basic transfer, will update if data is present
+        "value": w3.to_wei(amount_ether, "ether"),
+        "gas": 21000,  # Basic transfer, will update if data is present
         "maxFeePerGas": max_fee_per_gas,
         "maxPriorityFeePerGas": max_priority_fee,
-        "type": 2 # EIP-1559
+        "type": 2,  # EIP-1559
     }
 
     if data:
@@ -67,7 +68,7 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
         # Estimate gas for data tx
         try:
             gas_est = w3.eth.estimate_gas(tx)
-            tx["gas"] = int(gas_est * 1.1) # 10% buffer
+            tx["gas"] = int(gas_est * 1.1)  # 10% buffer
         except Exception as e:
             print(f"WARNING: Gas estimation failed ({e}). Using default.")
 
@@ -85,9 +86,9 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
             "created_at": timestamp,
             "chain": chain,
             "description": f"Send {amount_ether} {chain.upper()} to {to_addr}",
-            "status": "UNSIGNED_PROPOSAL"
+            "status": "UNSIGNED_PROPOSAL",
         },
-        "transaction": tx
+        "transaction": tx,
     }
 
     # Ensure dir exists (redundant check)
@@ -96,15 +97,16 @@ def generate_proposal(chain, from_addr, to_addr, amount_ether, data=b""):
     with open(filepath, "w") as f:
         json.dump(payload, f, indent=2)
 
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(f"✅ PROPOSAL GENERATED: {filepath}")
-    print("="*60)
+    print("=" * 60)
     print("ACTION REQUIRED: Transfer this file to your AIR-GAPPED machine.")
     print(f"1. Review the 'to' address: {to_addr}")
     print(f"2. Review the value: {amount_ether}")
     print("3. Sign using your Hardware Wallet or Clean Environment.")
     print("4. Broadcast the signed hex using a public node.")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
+
 
 if __name__ == "__main__":
     # Test Interaction

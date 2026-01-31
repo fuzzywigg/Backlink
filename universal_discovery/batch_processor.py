@@ -89,9 +89,10 @@ def run():
             analysis=analysis,
             rubric_scores=scores,
             update=True,
-            recommendation=status
+            recommendation=status,
         )
         print(f" -> {status}")
+
 
 if __name__ == "__main__":
     run()

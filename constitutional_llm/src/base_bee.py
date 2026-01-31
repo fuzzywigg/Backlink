@@ -30,12 +30,12 @@ class BaseBee(ABC):
         self.audit.log_action(self.bee_type, action, decision)
 
         # 3. Execute or Halt
-        if decision['status'] == 'BLOCK':
+        if decision["status"] == "BLOCK":
             # In a real agent, we might catch this and retry with different params.
             # Here we raise to stop execution.
             raise ValueError(f"Constitutional Violation (BLOCKED): {decision.get('reason')}")
 
-        return decision['action'] # Returns modified or original action
+        return decision["action"]  # Returns modified or original action
 
     @abstractmethod
     def run(self):

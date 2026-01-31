@@ -321,17 +321,19 @@ class QueenOrchestrator:
                 bee_task = {
                     "instruction": step.get("instruction") or step.get("task"),
                     "args": step.get("task_args") or step.get("args") or {},
-                    "context": "orchestrated_task"
+                    "context": "orchestrated_task",
                 }
 
                 self.log(f"Delegating to {bee_type}: {bee_task['instruction']}")
                 result = self.spawn_bee(bee_type, bee_task)
 
-                results.append({
-                    "bee": bee_type,
-                    "status": "success" if result.get("success") else "failed",
-                    "output": result
-                })
+                results.append(
+                    {
+                        "bee": bee_type,
+                        "status": "success" if result.get("success") else "failed",
+                        "output": result,
+                    }
+                )
 
         return {"plan": plan, "execution_results": results}
 
@@ -418,7 +420,9 @@ class QueenOrchestrator:
             "queen_status": "alive",
             "registered_bees": list(self.bee_registry.keys()),
             "hive_health": self._check_hive_health(),
-            "intelligence_layer": "online" if self.llm_client and self.llm_client.enabled else "offline"
+            "intelligence_layer": "online"
+            if self.llm_client and self.llm_client.enabled
+            else "offline",
         }
 
         # Update state
@@ -580,7 +584,9 @@ def main():
 
     parser = argparse.ArgumentParser(description="Backlink Broadcast - Queen Orchestrator")
     parser.add_argument(
-        "command", choices=["run", "once", "spawn", "status", "trigger", "orchestrate"], help="Command to execute"
+        "command",
+        choices=["run", "once", "spawn", "status", "trigger", "orchestrate"],
+        help="Command to execute",
     )
     parser.add_argument("--bee", "-b", help="Bee type to spawn")
     parser.add_argument("--event", "-e", help="Event type to trigger")

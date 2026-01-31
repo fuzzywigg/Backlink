@@ -6,6 +6,7 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
+
 class MarkdownKnowledgeGraph:
     """
     A utility to manage a Knowledge Graph stored as flat Markdown files.
@@ -23,7 +24,7 @@ class MarkdownKnowledgeGraph:
             self.directory.mkdir(parents=True, exist_ok=True)
 
         # Pattern: - verb [[target]] context
-        self.entity_pattern = re.compile(r'- (.*?) \[\[(.*?)\]\](?: (.*))?')
+        self.entity_pattern = re.compile(r"- (.*?) \[\[(.*?)\]\](?: (.*))?")
 
     def create_entity(self, name: str) -> bool:
         """Create a new entity markdown file."""
@@ -33,7 +34,7 @@ class MarkdownKnowledgeGraph:
             return False
 
         try:
-            with open(file_path, 'w', encoding='utf-8') as f:
+            with open(file_path, "w", encoding="utf-8") as f:
                 f.write(f"# {name}\n\n")
             return True
         except Exception as e:
@@ -49,7 +50,7 @@ class MarkdownKnowledgeGraph:
             return False
 
         try:
-            with open(file_path, encoding='utf-8') as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             if "## Relationships" in content:
@@ -66,7 +67,7 @@ class MarkdownKnowledgeGraph:
                     new_content += "\n" if new_content.endswith("\n") else "\n\n"
                 new_content += f"{observation}\n\n"
 
-            with open(file_path, "w", encoding='utf-8') as f:
+            with open(file_path, "w", encoding="utf-8") as f:
                 f.write(new_content)
             return True
         except Exception as e:
@@ -84,7 +85,7 @@ class MarkdownKnowledgeGraph:
             return False
 
         try:
-            with open(file_path, encoding='utf-8') as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             # Format: - verb [[Target]] context
@@ -102,7 +103,7 @@ class MarkdownKnowledgeGraph:
                 # Append to existing section
                 content = parts[0] + "## Relationships" + parts[1].rstrip() + "\n" + rel_line
 
-            with open(file_path, 'w', encoding='utf-8') as f:
+            with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content)
             return True
         except Exception as e:
@@ -117,7 +118,7 @@ class MarkdownKnowledgeGraph:
             entity_name = file_path.stem
 
             try:
-                with open(file_path, encoding='utf-8') as f:
+                with open(file_path, encoding="utf-8") as f:
                     content = f.read()
             except Exception as e:
                 logger.error(f"Error reading {file_path}: {e}")
@@ -149,7 +150,7 @@ class MarkdownKnowledgeGraph:
                             "source": entity_name,
                             "verb": verb,
                             "target": target,
-                            "context": ctx or ""
+                            "context": ctx or "",
                         }
                         relationships.append(rel)
                         graph["relationships"].append(rel)
@@ -161,7 +162,7 @@ class MarkdownKnowledgeGraph:
             graph["entities"][entity_name] = {
                 "name": entity_name,
                 "observations": observations,
-                "relationships": relationships
+                "relationships": relationships,
             }
 
         return graph
@@ -185,13 +186,13 @@ class MarkdownKnowledgeGraph:
     def _remove_relationships_to(self, file_path: Path, target_entity: str):
         """Helper to remove lines containing [[target_entity]]"""
         try:
-            with open(file_path, encoding='utf-8') as f:
+            with open(file_path, encoding="utf-8") as f:
                 lines = f.readlines()
 
             new_lines = [line for line in lines if f"[[{target_entity}]]" not in line]
 
             if len(new_lines) != len(lines):
-                 with open(file_path, 'w', encoding='utf-8') as f:
+                with open(file_path, "w", encoding="utf-8") as f:
                     f.writelines(new_lines)
         except Exception as e:
             logger.error(f"Failed to clean relationships in {file_path}: {e}")

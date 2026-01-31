@@ -10,6 +10,7 @@ from typing import Any
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 class ConstitutionalAuditEngine:
     """
     AUDIT SYSTEM - Records all actions, decisions, and compliance metrics.
@@ -23,7 +24,7 @@ class ConstitutionalAuditEngine:
 
     def _ensure_log_file(self):
         if not os.path.exists(self.log_file):
-            with open(self.log_file, 'w'):
+            with open(self.log_file, "w"):
                 pass
 
     def log_action(self, bee_type: str, action: dict[str, Any], decision: dict[str, Any]):
@@ -33,18 +34,18 @@ class ConstitutionalAuditEngine:
         entry = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "bee_type": bee_type,
-            "action_type": action.get('type'),
-            "decision_status": decision.get('status'),
-            "decision_reason": decision.get('reason'),
+            "action_type": action.get("type"),
+            "decision_status": decision.get("status"),
+            "decision_reason": decision.get("reason"),
             "original_action": action,
-            "final_action": decision.get('action')
+            "final_action": decision.get("action"),
         }
 
         self.actions_today.append(entry)
 
         # Append to log file (JSONL)
-        with open(self.log_file, 'a') as f:
-            f.write(json.dumps(entry) + '\n')
+        with open(self.log_file, "a") as f:
+            f.write(json.dumps(entry) + "\n")
 
         logger.info(f"Logged action: {bee_type} - {decision.get('status')}")
 
@@ -57,7 +58,9 @@ class ConstitutionalAuditEngine:
         if not self.actions_today:
             return 1.0
 
-        compliant_count = sum(1 for a in self.actions_today if a['decision_status'] in ['APPROVE', 'MODIFY'])
+        compliant_count = sum(
+            1 for a in self.actions_today if a["decision_status"] in ["APPROVE", "MODIFY"]
+        )
         total_count = len(self.actions_today)
 
         return compliant_count / total_count
@@ -67,8 +70,8 @@ class ConstitutionalAuditEngine:
         Generates a summary report for the day.
         """
         compliance_score = self.calculate_compliance_score()
-        violations = [a for a in self.actions_today if a['decision_status'] == 'BLOCK']
-        modifications = [a for a in self.actions_today if a['decision_status'] == 'MODIFY']
+        violations = [a for a in self.actions_today if a["decision_status"] == "BLOCK"]
+        modifications = [a for a in self.actions_today if a["decision_status"] == "MODIFY"]
 
         report = {
             "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
@@ -77,7 +80,7 @@ class ConstitutionalAuditEngine:
             "violations_blocked": len(violations),
             "modifications_applied": len(modifications),
             "violation_details": violations,
-            "status": "HEALTHY" if compliance_score >= 0.95 else "AT_RISK"
+            "status": "HEALTHY" if compliance_score >= 0.95 else "AT_RISK",
         }
 
         return report

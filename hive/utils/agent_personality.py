@@ -55,11 +55,11 @@ class AgentPersonality:
                 logger.warning(self.load_error)
                 return
 
-            with open(self.agent_md_path, encoding='utf-8') as f:
+            with open(self.agent_md_path, encoding="utf-8") as f:
                 self.content = f.read()
 
             # Extract version
-            version_match = re.search(r'\*\*VERSION:\*\*\s*(\d+\.\d+)', self.content)
+            version_match = re.search(r"\*\*VERSION:\*\*\s*(\d+\.\d+)", self.content)
             if version_match:
                 self.version = version_match.group(1)
 
@@ -79,7 +79,7 @@ class AgentPersonality:
     def _parse_sections(self) -> None:
         """Parse major sections from Agent.md."""
         # Split content into major sections
-        sections_pattern = r'^## (.+)$'
+        sections_pattern = r"^## (.+)$"
 
         section_starts = []
         for match in re.finditer(sections_pattern, self.content, re.MULTILINE):
@@ -134,7 +134,7 @@ class AgentPersonality:
         if time_of_day:
             # Extract specific time-based section
             time_key = time_of_day.upper()
-            pattern = rf'###\s*{time_key}.*?(?=###|$)'
+            pattern = rf"###\s*{time_key}.*?(?=###|$)"
             match = re.search(pattern, voice_section, re.DOTALL | re.IGNORECASE)
             if match:
                 return match.group(0)
@@ -160,7 +160,7 @@ class AgentPersonality:
         voice_section = self.get_section("VOICE & PERSONA") or ""
 
         # Extract anti-repetition subsection
-        pattern = r'###.*CRITICAL.*Anti-Repetition.*?(?=###|##|$)'
+        pattern = r"###.*CRITICAL.*Anti-Repetition.*?(?=###|##|$)"
         match = re.search(pattern, voice_section, re.DOTALL | re.IGNORECASE)
 
         if match:
@@ -199,7 +199,7 @@ class AgentPersonality:
         self,
         time_of_day: str | None = None,
         include_music_logic: bool = True,
-        include_interactions: bool = True
+        include_interactions: bool = True,
     ) -> str:
         """
         Get consolidated context for a broadcast session.
@@ -274,7 +274,7 @@ class AgentPersonality:
             "- XX:08 = Local lock (listener location)",
             "- XX:38 = Station ID",
             "",
-            "**GOLDEN RULE:** When in doubt, play the music."
+            "**GOLDEN RULE:** When in doubt, play the music.",
         ]
 
         return "\n".join(summary)
@@ -315,7 +315,7 @@ class AgentPersonality:
             "file_exists": self.agent_md_path.exists(),
             "content_length": len(self.content),
             "sections_count": len(self.sections),
-            "sections": list(self.sections.keys())
+            "sections": list(self.sections.keys()),
         }
 
     def reload(self) -> bool:

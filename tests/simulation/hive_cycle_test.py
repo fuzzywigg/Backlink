@@ -47,8 +47,8 @@ def run_simulation():
     results = plan_result.get("execution_results", [])
     for res in results:
         print(f" > Bee: {res['bee']} | Status: {res['status']}")
-        if res['bee'] == 'weather':
-             print(f"   Output: {res['output'].get('description', 'No description')}")
+        if res["bee"] == "weather":
+            print(f"   Output: {res['output'].get('description', 'No description')}")
 
     # 3. Test Treasury Logic
     pay_instruction = "Transfer 20 USDC to 0x123456789 for server costs."
@@ -59,7 +59,7 @@ def run_simulation():
 
     for res in pay_exec:
         print(f" > Bee: {res['bee']} | Status: {res['status']}")
-        if res['bee'] == 'treasury':
+        if res["bee"] == "treasury":
             print(f"   Transaction: {res['output'].get('tx_hash', 'FAILED')}")
 
     # 4. Test Budget Rejection
@@ -69,12 +69,13 @@ def run_simulation():
     fail_result = queen.orchestrate_complex_task(fail_instruction)
     fail_exec = fail_result.get("execution_results", [])
     for res in fail_exec:
-        if res['bee'] == 'treasury':
+        if res["bee"] == "treasury":
             print(f"   Outcome: {res['output'].get('reason')}")
 
     print("\n==============================================")
     print("       SIMULATION COMPLETE                    ")
     print("==============================================")
+
 
 if __name__ == "__main__":
     run_simulation()

@@ -5,18 +5,17 @@ from hive.utils.gemini_client import Gemini3Client
 
 
 class TestSovereignSwitch:
-
-    @patch.dict(os.environ, {"GOVERNANCE_AI_MODEL": "local", "GOVERNANCE_AI_ENDPOINT": "http://localhost:8080/v1"})
+    @patch.dict(
+        os.environ,
+        {"GOVERNANCE_AI_MODEL": "local", "GOVERNANCE_AI_ENDPOINT": "http://localhost:8080/v1"},
+    )
     @patch("hive.utils.gemini_client.OpenAI")
     def test_local_backend_initialization(self, mock_openai):
         """Test that LocalAI backend is initialized when env var is set."""
         client = Gemini3Client()
 
         assert client.backend == "local"
-        mock_openai.assert_called_with(
-            base_url="http://localhost:8080/v1",
-            api_key="sk-xxx-local"
-        )
+        mock_openai.assert_called_with(base_url="http://localhost:8080/v1", api_key="sk-xxx-local")
 
     @patch.dict(os.environ, {"GOVERNANCE_AI_MODEL": "local"})
     @patch("hive.utils.gemini_client.OpenAI")

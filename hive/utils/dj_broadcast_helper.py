@@ -28,11 +28,7 @@ class DJBroadcastHelper:
     Combines Agent.md personality with DJ memory for context-aware broadcasting.
     """
 
-    def __init__(
-        self,
-        hive_path: Path | None = None,
-        agent_md_path: Path | str | None = None
-    ):
+    def __init__(self, hive_path: Path | None = None, agent_md_path: Path | str | None = None):
         """
         Initialize DJ broadcast helper.
 
@@ -44,11 +40,7 @@ class DJBroadcastHelper:
         self.memory = DJMemory(hive_path)
         self.current_session: dict[str, Any] = {}
 
-    def start_session(
-        self,
-        time_of_day: str | None = None,
-        location: str | None = None
-    ) -> str:
+    def start_session(self, time_of_day: str | None = None, location: str | None = None) -> str:
         """
         Start a new broadcast session.
 
@@ -67,7 +59,7 @@ class DJBroadcastHelper:
         self.current_session = {
             "time_of_day": time_of_day,
             "location": location,
-            "started_at": datetime.now().isoformat()
+            "started_at": datetime.now().isoformat(),
         }
 
         self.memory.set_session_context("current_session", self.current_session)
@@ -92,9 +84,7 @@ class DJBroadcastHelper:
         """Generate context for broadcast session."""
         # Get personality context
         personality_context = self.personality.get_context_for_broadcast(
-            time_of_day=time_of_day,
-            include_music_logic=True,
-            include_interactions=True
+            time_of_day=time_of_day, include_music_logic=True, include_interactions=True
         )
 
         # Add memory context
@@ -110,8 +100,7 @@ class DJBroadcastHelper:
         if recent_songs:
             for i, song in enumerate(recent_songs, 1):
                 memory_context.append(
-                    f"{i}. \"{song['title']}\" by {song['artist']} "
-                    f"({song.get('genre', 'Unknown')})"
+                    f'{i}. "{song["title"]}" by {song["artist"]} ({song.get("genre", "Unknown")})'
                 )
         else:
             memory_context.append("- No recent songs")
@@ -121,30 +110,21 @@ class DJBroadcastHelper:
 
         if recent_listeners:
             for listener in recent_listeners:
-                location = listener.get('location', 'Unknown location')
-                name = listener.get('name', listener['id'])
+                location = listener.get("location", "Unknown location")
+                name = listener.get("name", listener["id"])
                 memory_context.append(
-                    f"- {name} from {location} "
-                    f"({listener['interactions']} interactions)"
+                    f"- {name} from {location} ({listener['interactions']} interactions)"
                 )
         else:
             memory_context.append("- No recent listeners")
 
         # Combine contexts
-        full_context = "\n".join([
-            personality_context,
-            "",
-            "\n".join(memory_context)
-        ])
+        full_context = "\n".join([personality_context, "", "\n".join(memory_context)])
 
         return full_context
 
     def track_song_played(
-        self,
-        song_title: str,
-        artist: str,
-        genre: str | None = None,
-        mood: str | None = None
+        self, song_title: str, artist: str, genre: str | None = None, mood: str | None = None
     ) -> None:
         """
         Track a song that was played.
@@ -158,10 +138,7 @@ class DJBroadcastHelper:
         self.memory.track_song_played(song_title, artist, genre, mood)
 
     def can_play_song(
-        self,
-        song_title: str,
-        artist: str,
-        hours_since_last_play: int = 4
+        self, song_title: str, artist: str, hours_since_last_play: int = 4
     ) -> tuple[bool, str]:
         """
         Check if a song was played recently (for awareness, not blocking).
@@ -179,9 +156,7 @@ class DJBroadcastHelper:
             Tuple of (was_played_recently: bool, context: str)
         """
         was_recent = self.memory.was_song_played_recently(
-            song_title,
-            artist,
-            hours=hours_since_last_play
+            song_title, artist, hours=hours_since_last_play
         )
 
         if was_recent:
@@ -211,8 +186,8 @@ class DJBroadcastHelper:
 
         # Check recent genre pattern
         recent_genres = [
-            song.get('genre', '').lower()
-            for song in recent_songs[:limit-1]  # Check last N-1 songs
+            song.get("genre", "").lower()
+            for song in recent_songs[: limit - 1]  # Check last N-1 songs
         ]
 
         if all(g == proposed_genre.lower() for g in recent_genres if g):
@@ -225,7 +200,7 @@ class DJBroadcastHelper:
         listener_id: str,
         name: str | None = None,
         location: str | None = None,
-        preferences: dict[str, Any] | None = None
+        preferences: dict[str, Any] | None = None,
     ) -> None:
         """
         Remember listener information.
@@ -255,22 +230,24 @@ class DJBroadcastHelper:
 
         context_parts = []
 
-        if profile.get('name'):
+        if profile.get("name"):
             context_parts.append(f"Name: {profile['name']}")
 
-        if profile.get('location'):
+        if profile.get("location"):
             context_parts.append(f"Location: {profile['location']}")
 
-        if profile.get('interactions'):
-            visits = "visits" if profile['interactions'] > 1 else "visit"
-            context_parts.append(f"This is their {profile['interactions']}{self._ordinal(profile['interactions'])} {visits}")
+        if profile.get("interactions"):
+            visits = "visits" if profile["interactions"] > 1 else "visit"
+            context_parts.append(
+                f"This is their {profile['interactions']}{self._ordinal(profile['interactions'])} {visits}"
+            )
 
         return " | ".join(context_parts) if context_parts else None
 
     @staticmethod
     def _ordinal(n: int) -> str:
         """Convert number to ordinal suffix."""
-        suffix = 'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')
+        suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
         return suffix
 
     def check_phrase_repetition(self, phrase: str, hours: int = 1) -> tuple[bool, int]:
@@ -353,15 +330,15 @@ class DJBroadcastHelper:
             "personality_loaded": self.personality.loaded,
             "memory_stats": memory_summary,
             "recent_songs": len(self.memory.get_recent_songs()),
-            "known_listeners": memory_summary["known_listeners"]
+            "known_listeners": memory_summary["known_listeners"],
         }
 
 
 # Convenience functions for quick access
 
+
 def create_dj_helper(
-    hive_path: Path | None = None,
-    agent_md_path: Path | str | None = None
+    hive_path: Path | None = None, agent_md_path: Path | str | None = None
 ) -> DJBroadcastHelper:
     """
     Create a DJ broadcast helper instance.

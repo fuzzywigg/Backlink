@@ -38,10 +38,7 @@ class TestSongHistory:
     def test_track_song_played(self, dj_memory):
         """Test tracking a played song."""
         dj_memory.track_song_played(
-            song_title="Test Song",
-            artist="Test Artist",
-            genre="Rock",
-            mood="Energetic"
+            song_title="Test Song", artist="Test Artist", genre="Rock", mood="Energetic"
         )
 
         recent = dj_memory.get_recent_songs(limit=1)
@@ -54,10 +51,7 @@ class TestSongHistory:
         """Test retrieving recent songs."""
         # Add multiple songs
         for i in range(5):
-            dj_memory.track_song_played(
-                song_title=f"Song {i}",
-                artist=f"Artist {i}"
-            )
+            dj_memory.track_song_played(song_title=f"Song {i}", artist=f"Artist {i}")
 
         recent = dj_memory.get_recent_songs(limit=3)
         assert len(recent) == 3
@@ -66,24 +60,13 @@ class TestSongHistory:
 
     def test_was_song_played_recently(self, dj_memory):
         """Test checking if song was played recently."""
-        dj_memory.track_song_played(
-            song_title="Recent Song",
-            artist="Recent Artist"
-        )
+        dj_memory.track_song_played(song_title="Recent Song", artist="Recent Artist")
 
         # Should be found
-        assert dj_memory.was_song_played_recently(
-            "Recent Song",
-            "Recent Artist",
-            hours=1
-        )
+        assert dj_memory.was_song_played_recently("Recent Song", "Recent Artist", hours=1)
 
         # Should not be found (different song)
-        assert not dj_memory.was_song_played_recently(
-            "Other Song",
-            "Other Artist",
-            hours=1
-        )
+        assert not dj_memory.was_song_played_recently("Other Song", "Other Artist", hours=1)
 
     def test_genre_distribution(self, dj_memory):
         """Test genre distribution calculation."""
@@ -114,9 +97,7 @@ class TestListenerProfiles:
     def test_remember_listener(self, dj_memory):
         """Test storing listener profile."""
         dj_memory.remember_listener(
-            listener_id="listener_123",
-            name="John Doe",
-            location="Seattle, WA"
+            listener_id="listener_123", name="John Doe", location="Seattle, WA"
         )
 
         profile = dj_memory.get_listener_profile("listener_123")
@@ -128,16 +109,10 @@ class TestListenerProfiles:
     def test_update_listener(self, dj_memory):
         """Test updating existing listener."""
         # Initial save
-        dj_memory.remember_listener(
-            listener_id="listener_456",
-            name="Jane"
-        )
+        dj_memory.remember_listener(listener_id="listener_456", name="Jane")
 
         # Update with new info
-        dj_memory.remember_listener(
-            listener_id="listener_456",
-            location="Portland"
-        )
+        dj_memory.remember_listener(listener_id="listener_456", location="Portland")
 
         profile = dj_memory.get_listener_profile("listener_456")
         assert profile["name"] == "Jane"
@@ -172,15 +147,9 @@ class TestAntiRepetition:
 
     def test_track_phrase_usage(self, dj_memory):
         """Test tracking phrase usage."""
-        dj_memory.track_phrase_usage(
-            "Redrawing the map",
-            category="transition"
-        )
+        dj_memory.track_phrase_usage("Redrawing the map", category="transition")
 
-        assert dj_memory.was_phrase_used_recently(
-            "Redrawing the map",
-            hours=1
-        )
+        assert dj_memory.was_phrase_used_recently("Redrawing the map", hours=1)
 
     def test_phrase_case_insensitive(self, dj_memory):
         """Test phrase tracking is case-insensitive."""

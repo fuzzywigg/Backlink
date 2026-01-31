@@ -122,7 +122,7 @@ Instead of repeating, use synonyms:
 """
 
     # Create temporary file
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as temp_file:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as temp_file:
         temp_file.write(content)
         temp_path = temp_file.name
 
@@ -246,9 +246,7 @@ class TestContextGeneration:
         personality = AgentPersonality(mock_agent_md)
 
         context = personality.get_context_for_broadcast(
-            time_of_day="morning",
-            include_music_logic=True,
-            include_interactions=True
+            time_of_day="morning", include_music_logic=True, include_interactions=True
         )
 
         assert "PRIME DIRECTIVES" in context
@@ -262,8 +260,7 @@ class TestContextGeneration:
         personality = AgentPersonality(mock_agent_md)
 
         context = personality.get_context_for_broadcast(
-            include_music_logic=False,
-            include_interactions=False
+            include_music_logic=False, include_interactions=False
         )
 
         # Should still have essentials

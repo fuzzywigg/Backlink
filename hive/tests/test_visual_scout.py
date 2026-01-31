@@ -6,7 +6,6 @@ from hive.bees.research.trend_scout_bee import TrendScoutBee
 
 
 class TestVisualScout:
-
     @pytest.mark.asyncio
     async def test_perform_visual_scout_no_llm(self):
         """Test failure when LLM is missing."""

@@ -9,32 +9,32 @@ class SponsorHunterBee(BaseBee):
     def __init__(self):
         super().__init__("SponsorHunterBee")
 
-    def negotiate_deal(self, sponsor_name: str, total_amount: float, artist_amount: float) -> dict[str, Any]:
+    def negotiate_deal(
+        self, sponsor_name: str, total_amount: float, artist_amount: float
+    ) -> dict[str, Any]:
         action = {
             "type": "deal_negotiation",
             "sponsor": sponsor_name,
             "total_revenue": total_amount,
-            "artist_revenue": artist_amount
+            "artist_revenue": artist_amount,
         }
         return self.safe_action(action)
 
     def run(self):
         pass
+
 
 class SocialPosterBee(BaseBee):
     def __init__(self):
         super().__init__("SocialPosterBee")
 
     def post_content(self, content: str, is_sponsored: bool = False) -> dict[str, Any]:
-        action = {
-            "type": "social_post",
-            "content": content,
-            "is_sponsored": is_sponsored
-        }
+        action = {"type": "social_post", "content": content, "is_sponsored": is_sponsored}
         return self.safe_action(action)
 
     def run(self):
         pass
+
 
 class ListenerIntelBee(BaseBee):
     def __init__(self):
@@ -44,12 +44,13 @@ class ListenerIntelBee(BaseBee):
         action = {
             "type": "data_processing",
             "requires_pii": requires_pii,
-            "has_explicit_consent": has_consent
+            "has_explicit_consent": has_consent,
         }
         return self.safe_action(action)
 
     def run(self):
         pass
+
 
 class ClipCutterBee(BaseBee):
     def __init__(self):
@@ -58,22 +59,34 @@ class ClipCutterBee(BaseBee):
     def run(self):
         pass
 
+
 class StreamMonitorBee(BaseBee):
     def __init__(self):
         super().__init__("StreamMonitorBee")
-    def run(self): pass
+
+    def run(self):
+        pass
+
 
 class TrendAnalyzerBee(BaseBee):
     def __init__(self):
         super().__init__("TrendAnalyzerBee")
-    def run(self): pass
+
+    def run(self):
+        pass
+
 
 class PayoutProcessorBee(BaseBee):
     def __init__(self):
         super().__init__("PayoutProcessorBee")
-    def run(self): pass
+
+    def run(self):
+        pass
+
 
 class ArchiveBee(BaseBee):
     def __init__(self):
         super().__init__("ArchiveBee")
-    def run(self): pass
+
+    def run(self):
+        pass

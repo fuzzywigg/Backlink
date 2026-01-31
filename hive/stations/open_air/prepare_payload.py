@@ -3,6 +3,7 @@ import json
 INPUT_FILE = "hive/honeycomb/aggregated_library.json"
 OUTPUT_FILE = "hive/stations/open_air/context_payload.md"
 
+
 def generate_payload():
     print("📡 OpenAIR: Preparing Context Payload...")
 
@@ -26,6 +27,7 @@ def generate_payload():
             f.write(f"| {artist} | {title} | {genre} | {plays} |\n")
 
     print(f"✅ Payload Ready: {OUTPUT_FILE}")
+
 
 if __name__ == "__main__":
     generate_payload()

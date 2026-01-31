@@ -38,12 +38,13 @@ def parse_log_line(line):
         # and split by the timestamp pattern.
         return None, None
 
+
 def parse_full_file(filepath):
     """
     Reads the entire file and splits it by the timestamp pattern `[HH:MM:SS]`.
     Returns a list of (timestamp, json_data) tuples.
     """
-    with open(filepath, encoding='utf-8') as f:
+    with open(filepath, encoding="utf-8") as f:
         content = f.read()
 
     # Split by the timestamp pattern, but keep the delimiter
@@ -61,7 +62,7 @@ def parse_full_file(filepath):
 
         if match.start() > 0:
             # We have content from the previous match
-            segment = content[last_pos:match.start()].strip()
+            segment = content[last_pos : match.start()].strip()
             # The timestamp for this segment was stored in the previous iteration
             if timestamps:
                 parts.append((timestamps[-1], segment))
@@ -88,6 +89,7 @@ def parse_full_file(filepath):
 
     return parsed_entries
 
+
 def process_data(entries):
     songs = []
     continuity_events = []
@@ -111,12 +113,14 @@ def process_data(entries):
                     artist = "Unknown"
                     title = song_info
 
-                songs.append({
-                    "timestamp": ts,
-                    "artist": artist.strip(),
-                    "title": title.strip(),
-                    "raw_info": song_info
-                })
+                songs.append(
+                    {
+                        "timestamp": ts,
+                        "artist": artist.strip(),
+                        "title": title.strip(),
+                        "raw_info": song_info,
+                    }
+                )
 
             # --- Continuity Logic ---
             # We want to capture the flow: Time -- Speech -- Song
@@ -125,18 +129,19 @@ def process_data(entries):
                 "type": seg_type,
                 "transcript": transcript,
                 "song_info": song_info,
-                "notes": notes
+                "notes": notes,
             }
             continuity_events.append(event)
 
     return songs, continuity_events
+
 
 def write_outputs(songs, continuity):
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
 
     # 1. Write Songs CSV
-    with open(SONGS_CSV, 'w', newline='', encoding='utf-8') as f:
+    with open(SONGS_CSV, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["timestamp", "artist", "title", "raw_info"])
         writer.writeheader()
         writer.writerows(songs)
@@ -145,40 +150,39 @@ def write_outputs(songs, continuity):
     # 2. Write Continuity Log
     ontology_mgr = OntologyManager()
 
-    with open(CONTINUITY_LOG, 'w', encoding='utf-8') as f:
+    with open(CONTINUITY_LOG, "w", encoding="utf-8") as f:
         f.write("BACKLINK BROADCAST CONTINUITY LOG\n")
         f.write("=================================\n\n")
 
-
         for event in continuity:
-            ts = event['timestamp']
+            ts = event["timestamp"]
 
             # Formatting the block
             f.write(f"[{ts}]\n")
 
-            if event['transcript']:
+            if event["transcript"]:
                 # Validate Text
                 try:
                     # Set ontology context based on timestamp hour
-                    hour = int(ts.split(':')[0])
+                    hour = int(ts.split(":")[0])
                     ontology_mgr.get_current_ontology(override_hour=hour)
                 except Exception:
                     pass
 
-                score = ontology_mgr.validate_text(event['transcript'], history=[])
+                score = ontology_mgr.validate_text(event["transcript"], history=[])
                 warning_flag = ""
                 if score < 1.0:
                     warning_flag = " [⚠️ ONTO-VIOLATION]"
 
-                f.write(f"  🎙️ DJ: \"{event['transcript']}\"{warning_flag}\n")
+                f.write(f'  🎙️ DJ: "{event["transcript"]}"{warning_flag}\n')
 
-            if event['song_info']:
+            if event["song_info"]:
                 f.write(f"  🎵 SONG: {event['song_info']}\n")
 
-            if event['notes']:
+            if event["notes"]:
                 f.write(f"  📝 NOTE: {event['notes']}\n")
 
-            f.write("\n" + "-"*40 + "\n\n")
+            f.write("\n" + "-" * 40 + "\n\n")
 
     print(f"Written continuity log to {CONTINUITY_LOG}")
 
