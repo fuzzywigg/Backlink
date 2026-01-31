@@ -191,6 +191,9 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
 "tests/*" = ["ARG001", "S101"]
+"tests/simulation/*" = ["E402"]  # sys.path modification needed
+"universal_discovery/*" = ["E402"]  # standalone scripts with sys.path modification
+"process_transcripts.py" = ["E402"]  # sys.path modification needed
 
 [tool.ruff.lint.isort]
 known-first-party = ["hive", "constitutional_llm"]

@@ -37,11 +37,16 @@ def infer_metadata(title, artist):
         meta['dj_tags'] = "Background|Focus"
 
     # 2. ERA
-    if "202" in t: meta['era'] = "2020s"
-    elif "201" in t: meta['era'] = "2010s"
-    elif "199" in t: meta['era'] = "1990s"
-    elif "198" in t: meta['era'] = "1980s"
-    elif "197" in t: meta['era'] = "1970s"
+    if "202" in t:
+        meta['era'] = "2020s"
+    elif "201" in t:
+        meta['era'] = "2010s"
+    elif "199" in t:
+        meta['era'] = "1990s"
+    elif "198" in t:
+        meta['era'] = "1980s"
+    elif "197" in t:
+        meta['era'] = "1970s"
 
     return meta
 

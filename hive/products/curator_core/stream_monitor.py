@@ -89,8 +89,9 @@ class StreamMonitor:
         blocks = full_text.split("Powered by Live365")
 
         for block in blocks:
-            lines = [l.strip() for l in block.split('\n') if l.strip()]
-            if not lines: continue
+            lines = [line.strip() for line in block.split('\n') if line.strip()]
+            if not lines:
+                continue
 
             # Look for NOW PLAYING
             if "NOW PLAYING" not in lines:
@@ -201,7 +202,8 @@ class StreamMonitor:
 
                         if existing_entry:
                             # Update Existing Song
-                            if "stations" not in existing_entry: existing_entry["stations"] = []
+                            if "stations" not in existing_entry:
+                                existing_entry["stations"] = []
                             if station_name not in existing_entry["stations"]:
                                 existing_entry["stations"].append(station_name)
                                 self.save_library()
@@ -266,10 +268,14 @@ class StreamMonitor:
     def classify_segment(self, title, artist):
         # Heuristic classification for analysis
         text = f"{title} {artist}".lower()
-        if "@" in text: return "SOCIAL_SHOUTOUT"
-        if "call" in text or "dial" in text: return "CALL_TO_ACTION"
-        if "http" in text or ".com" in text: return "URL_DROP"
-        if "weather" in text or "traffic" in text: return "UTILITY"
+        if "@" in text:
+            return "SOCIAL_SHOUTOUT"
+        if "call" in text or "dial" in text:
+            return "CALL_TO_ACTION"
+        if "http" in text or ".com" in text:
+            return "URL_DROP"
+        if "weather" in text or "traffic" in text:
+            return "UTILITY"
         return "MONOLOGUE"
 
     def log_dj_event(self, event_data):
@@ -316,11 +322,16 @@ class StreamMonitor:
 
         # 2. ERA
         # Simple heuristic: If it looks like a remaster year, use that era
-        if "202" in t: meta['era'] = "2020s"
-        elif "201" in t: meta['era'] = "2010s"
-        elif "199" in t: meta['era'] = "1990s"
-        elif "198" in t: meta['era'] = "1980s"
-        elif "197" in t: meta['era'] = "1970s"
+        if "202" in t:
+            meta['era'] = "2020s"
+        elif "201" in t:
+            meta['era'] = "2010s"
+        elif "199" in t:
+            meta['era'] = "1990s"
+        elif "198" in t:
+            meta['era'] = "1980s"
+        elif "197" in t:
+            meta['era'] = "1970s"
 
         return meta
 

@@ -110,6 +110,7 @@ class DiscoveryEngine:
     def _calculate_score(self, scores):
         # Simple average for generic, weighted for sovereign
         # This belongs in the Rubric class ideally, but keeping it simple here.
-        if not scores: return 0
+        if not scores:
+            return 0
         vals = list(scores.values())
         return sum(vals) / len(vals) * 10

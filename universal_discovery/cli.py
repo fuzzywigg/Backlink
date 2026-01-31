@@ -33,7 +33,8 @@ def interactive_wizard():
 
     # Step 2: The Input
     url = input("\n🔎 What did you find? (Paste URL): ").strip()
-    if not url: return
+    if not url:
+        return
 
     # Step 3: The Gap Analysis (ELI5)
     print("\n🧠 Thinking... (Checking Latent Context)")

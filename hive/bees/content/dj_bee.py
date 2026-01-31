@@ -270,17 +270,15 @@ class DjBee(EmployedBee):
         time_used += 5
 
         # 2. OPTIONAL: Add-ons if time permits
-        if available_seconds >= 15:
+        if available_seconds >= 15 and self._has_new_nodes():
             # New node announcement
-            if self._has_new_nodes():
-                segments.append(self.announce_new_nodes())
-                time_used += 10
+            segments.append(self.announce_new_nodes())
+            time_used += 10
 
-        if available_seconds >= 30:
+        if available_seconds >= 30 and self.is_update_time():
             # Update on the 8s content (if at :08 or :38)
-            if self.is_update_time():
-                segments.append(self.get_update_on_8s())
-                time_used += 15
+            segments.append(self.get_update_on_8s())
+            time_used += 15
 
         # Generate speech, verify timing
         # In this simulation, we just join segments.

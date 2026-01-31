@@ -109,14 +109,12 @@ class ModelRegistryLoader:
         # Placeholder logic - this will evolve to use the real 'cost' fields from models.dev
         # For now, it maps intent to our known best-in-class
 
-        if mode == "performance":
-            return "claude-3-5-sonnet-latest"
-        elif mode == "context":
-            return "gemini-1.5-pro"
-        elif mode == "cost":
-            return "gpt-4o-mini" # Assuming it exists in registry
-
-        return "gpt-4o"
+        mode_map = {
+            "performance": "claude-3-5-sonnet-latest",
+            "context": "gemini-1.5-pro",
+            "cost": "gpt-4o-mini",  # Assuming it exists in registry
+        }
+        return mode_map.get(mode, "gpt-4o")
 
 if __name__ == "__main__":
     # Test run

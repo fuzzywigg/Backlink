@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from playwright.sync_api import sync_playwright
+
 
 class ScoutInterface(ABC):
     """
@@ -26,8 +28,6 @@ class ScoutInterface(ABC):
     def click(self, selector: str) -> bool:
         """Interacts with an element."""
         pass
-
-from playwright.sync_api import sync_playwright
 
 
 class SovereignScout(ScoutInterface):

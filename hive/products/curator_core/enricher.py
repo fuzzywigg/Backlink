@@ -21,7 +21,8 @@ class MetadataEnricher:
         try:
             # 1. Clean Query
             clean_query = query.replace("Unknown", "").strip()
-            if not clean_query: return None
+            if not clean_query:
+                return None
 
             # 2. Encode
             params = {

@@ -10,7 +10,8 @@ LOG_PATH = "dj_events.json"
 REPORT_PATH = "../../../docs/reports/dj_analysis_profile.md"
 
 def load_events():
-    if not os.path.exists(LOG_PATH): return []
+    if not os.path.exists(LOG_PATH):
+        return []
     with open(LOG_PATH) as f:
         return json.load(f)
 

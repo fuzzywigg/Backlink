@@ -122,14 +122,14 @@ Instead of repeating, use synonyms:
 """
 
     # Create temporary file
-    temp_file = tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False)
-    temp_file.write(content)
-    temp_file.close()
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as temp_file:
+        temp_file.write(content)
+        temp_path = temp_file.name
 
-    yield Path(temp_file.name)
+    yield Path(temp_path)
 
     # Cleanup
-    Path(temp_file.name).unlink()
+    Path(temp_path).unlink()
 
 
 class TestAgentPersonalityLoader:

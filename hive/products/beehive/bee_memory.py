@@ -33,7 +33,8 @@ def check_ollama():
         return False
 
 def get_embedding(text):
-    if not text or len(text) < 10: return None
+    if not text or len(text) < 10:
+        return None
     try:
         response = requests.post(OLLAMA_API, json={
             "model": MODEL,
@@ -76,12 +77,14 @@ def ingest():
                         # Naive chunking (paragraphs)
                         chunks = content.split("\n\n")
                         for i, chunk in enumerate(chunks):
-                            if len(chunk) < 50: continue # Skip noise
+                            if len(chunk) < 50:
+                                continue  # Skip noise
 
                             # Indexing Logic:
                             # 1. First chunk is usually the summary/header -> High Priority
                             # 2. Limit to 3 chunks per file for MVP speed (unless critical)
-                            if i > 5: break
+                            if i > 5:
+                                break
 
                             print(f"      Embed: {f} [{i}]")
                             vec = get_embedding(chunk)

@@ -79,7 +79,8 @@ def parse_full_file(filepath):
     for ts, raw_json in parts:
         try:
             # Clean up potential messiness
-            if not raw_json: continue
+            if not raw_json:
+                continue
             data = json.loads(raw_json)
             parsed_entries.append((ts, data))
         except json.JSONDecodeError:
