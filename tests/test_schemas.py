@@ -230,7 +230,7 @@ class TestBeeSchemas:
         assert result.status == BeeStatus.FAILED
 
 
-class TestSchemaSerializationandson:
+class TestSchemaSerialization:
     """Test schema serialization and JSON compatibility."""
 
     def test_task_to_dict(self):

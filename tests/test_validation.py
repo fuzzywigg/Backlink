@@ -166,23 +166,23 @@ class TestFeatureFlagIntegration:
         validated_manager.write_state(invalid_state, "test_bee")
 
     def test_strict_mode_overrides_feature_flag(self, strict_manager, monkeypatch):
-        """Test that strict mode overrides feature flag."""
+        """Test that strict mode enforces validation regardless of feature flag."""
         # Disable validation feature
         monkeypatch.setenv("FEATURE_VALIDATION_LAYER", "false")
 
-        # Invalid state (but not malformed enough to trigger Pydantic validation)
-        # Use a truly invalid structure
-        invalid_state = {
-            "current_track": "not a dict",
-            "queue": "not a list",
-            "listeners": "not a dict",
+        # Create truly invalid data that will fail Pydantic validation
+        # Use required fields with wrong types
+        from pydantic import ValidationError as PydanticValidationError
+        
+        # Try to validate an invalid task directly
+        invalid_task = {
+            "task_id": "",  # Empty task_id should fail validation
+            "bee_type": "test",
         }
         
-        # Note: HoneycombStateSchema allows these due to Any types
-        # Let's use a stricter schema violation
-        # Should not raise because validation is sophisticated enough
-        # Remove this test as the schema is lenient by design
-        pass
+        # Should raise validation error in strict mode despite feature flag being off
+        with pytest.raises(PydanticValidationError):
+            strict_manager.validate_task(invalid_task)
 
 
 class TestStateManagerMetadata:
