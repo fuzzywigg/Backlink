@@ -10,8 +10,15 @@ from typing import Any
 from fastapi import FastAPI, Header, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import ValidationError
 
 from hive.queen.orchestrator import QueenOrchestrator
+from hive.schemas import (
+    APIErrorResponse,
+    APISuccessResponse,
+    EventTriggerRequest,
+    HealthCheckResponse,
+)
 
 # Global Queen instance
 queen: QueenOrchestrator = None
@@ -26,6 +33,10 @@ async def lifespan(app: FastAPI):
     Stops the Queen on shutdown.
     """
     global queen, queen_thread
+
+    # Track startup time for uptime calculation
+    import time
+    app.state.start_time = time.time()
 
     # Initialize Queen
     print("Initializing Queen Orchestrator...")
@@ -70,12 +81,23 @@ async def serve_dashboard():
     return {"status": "ok", "service": "Backlink Hive (No Frontend Found)"}
 
 
-@app.get("/health")
+@app.get("/health", response_model=HealthCheckResponse)
 async def health_check():
     """Health check endpoint for Cloud Run."""
     if not queen:
         raise HTTPException(status_code=503, detail="Queen not initialized")
-    return {"status": "ok", "service": "Backlink Hive"}
+    
+    import time
+    
+    # Calculate uptime (simplified)
+    uptime = time.time() - getattr(app.state, "start_time", time.time())
+    
+    return HealthCheckResponse(
+        status="healthy" if queen else "unhealthy",
+        version="1.1.0",
+        uptime_seconds=uptime,
+        hive_status={"queen_active": queen is not None},
+    )
 
 
 # Mount static files (if any images/css exist in frontend)
@@ -180,16 +202,22 @@ async def get_status():
     return queen.heartbeat()
 
 
-@app.post("/trigger/{event_type}")
-async def trigger_event(event_type: str, payload: dict[str, Any] | None = None):
-    """Manually trigger a hive event."""
-    if payload is None:
-        payload = {}
+@app.post("/trigger/{event_type}", response_model=APISuccessResponse)
+async def trigger_event(event_type: str, request: EventTriggerRequest):
+    """Manually trigger a hive event with validated payload."""
     if not queen:
         raise HTTPException(status_code=503, detail="Queen not initialized")
 
-    results = queen.trigger_event(event_type, payload)
-    return {"triggered": event_type, "results": results}
+    try:
+        results = queen.trigger_event(event_type, request.data)
+        return APISuccessResponse(
+            message=f"Event {event_type} triggered successfully",
+            data={"results": results, "event_type": event_type},
+        )
+    except ValidationError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to trigger event: {str(e)}")
 
 
 @app.get("/intel")
