@@ -2,21 +2,25 @@
 
 ## Overview
 
-This document describes the new DJ memory and personality integration systems that implement the **Critical** and **Important** priorities from AGENT_RECOMMENDATIONS.md.
+This document describes the DJ memory and personality integration system that provides context and awareness to support autonomous DJ operations.
+
+**Philosophy:** The system provides memory, context, and suggestions to inform DJ decisions—not enforce rigid rules. The DJ is trusted to use professional judgment, just like any experienced broadcaster.
 
 ## New Modules
 
 ### 1. DJ Memory Manager (`hive/utils/dj_memory.py`)
 
-Unified memory interface for the AI DJ to maintain context and continuity.
+Tracks context and history to help the DJ make informed decisions.
 
 **Features:**
 - Song playback history tracking (last 100 plays)
 - Listener profile management
-- Anti-repetition phrase tracking
+- Language pattern tracking for awareness
 - Session context storage
 - Genre distribution analytics
 - Time-window based queries
+
+**Purpose:** Provides awareness and context, not enforcement. The DJ uses this information to make autonomous, informed decisions.
 
 **Usage:**
 ```python
@@ -87,15 +91,18 @@ summary = personality.get_compact_summary()
 
 ### 3. DJ Broadcast Helper (`hive/utils/dj_broadcast_helper.py`)
 
-Unified helper that combines Agent.md personality with DJ memory for context-aware broadcasting.
+Unified helper that combines Agent.md personality with DJ memory to provide context for autonomous broadcasting.
 
 **Features:**
 - Integrated session management
 - Automatic time-of-day detection
-- Song variety validation (Rule of 3)
+- Recent play awareness (not blocking)
+- Genre pattern awareness (not enforcement)
 - Listener context generation
-- Content validation against anti-repetition rules
+- Language suggestion (not validation)
 - Comprehensive broadcast summaries
+
+**Philosophy:** All checks are **advisory and informational**. The DJ receives context and suggestions but makes final decisions autonomously based on professional judgment.
 
 **Usage:**
 ```python
@@ -103,33 +110,39 @@ from hive.utils.dj_broadcast_helper import DJBroadcastHelper
 
 helper = DJBroadcastHelper()
 
-# Start a session
+# Start a session - loads personality context
 context = helper.start_session(time_of_day="morning", location="Seattle")
-# This context string can be injected into LLM for personality
+# Use this context to inform LLM about personality and situation
 
-# Track songs
+# Track songs for history
 helper.track_song_played("Song", "Artist", genre="Rock")
 
-# Check if we can play a song (anti-repeat check)
-can_play, reason = helper.can_play_song("Song", "Artist", hours=4)
+# Check if song was played recently (for awareness, not blocking)
+was_recent, note = helper.can_play_song("Song", "Artist", hours=4)
+# Returns (True, "Note: played recently") or (False, "Not recently played")
+# DJ decides whether to play anyway based on context
 
-# Check genre variety (Rule of 3)
-is_ok, reason = helper.check_genre_variety("Rock", limit=3)
+# Check genre patterns (for awareness, not enforcement)
+has_pattern, note = helper.check_genre_variety("Rock", limit=3)
+# Returns (True, "Note: Would be 3 consecutive Rock") or (False, "Variety present")
+# DJ decides whether pattern makes sense for the moment
+
+# Get language suggestions (advisory, not blocking)
+suggestions = helper.get_content_suggestions("Your broadcast text")
+# Returns list of suggestions like "Note: phrase used recently—consider varying"
+# Empty list if no suggestions. DJ chooses whether to adjust.
 
 # Remember listeners
 helper.remember_listener("id", name="John", location="Seattle")
 
-# Get listener context for shoutouts
+# Get listener context for personalized moments
 context = helper.get_listener_context("id")
 
-# Validate content against anti-repetition
-is_valid, violations = helper.validate_content("Your broadcast text")
-
-# Track phrases used
+# Track phrases for pattern awareness
 helper.track_phrase_used("Some phrase")
 
-# Check if phrase was used recently
-was_used, count = helper.check_phrase_repetition("Some phrase", hours=1)
+# Check phrase patterns (for awareness)
+was_recent, count = helper.check_phrase_repetition("Some phrase", hours=1)
 
 # Get session summary
 summary = helper.get_broadcast_summary()
@@ -139,7 +152,7 @@ summary = helper.get_broadcast_summary()
 
 ### For DJ Bees
 
-Update your DJ bees to use the new memory system:
+Integrate memory and personality to provide context for autonomous decisions:
 
 ```python
 from hive.bees.base_bee import EmployedBee
@@ -156,24 +169,24 @@ class EnhancedDJBee(EmployedBee):
             time_of_day=self._get_time_of_day()
         )
         
-        # Use context for LLM injection
+        # Use context for LLM injection (provides guidelines, not rules)
         response = self.llm_client.generate(
             system=context,
             prompt="Create a morning show intro"
         )
         
-        # Track what was played
+        # Track what was played (builds context)
         self.dj_helper.track_song_played(
             song_title="Song",
             artist="Artist",
             genre="Rock"
         )
         
-        # Validate content before broadcast
-        is_valid, violations = self.dj_helper.validate_content(response)
-        if not is_valid:
-            # Regenerate or handle violations
-            pass
+        # Get suggestions about content (advisory, not blocking)
+        suggestions = self.dj_helper.get_content_suggestions(response)
+        if suggestions:
+            # DJ can choose to adjust or proceed as-is
+            self.log(f"Content suggestions: {suggestions}")
         
         return {"status": "success"}
 ```
@@ -311,6 +324,21 @@ No additional configuration required. The system automatically:
 - Memory limited to last 100 songs (prevents unbounded growth)
 - Efficient time-window queries
 - Persistent storage for long-running operations
+
+## Key Philosophy: Advisory, Not Prescriptive
+
+**Important:** All validation methods are **advisory and informational**, not blocking:
+
+- `can_play_song()` - Informs about recent plays, doesn't block
+- `check_genre_variety()` - Notes patterns, doesn't enforce
+- `get_content_suggestions()` - Offers suggestions, doesn't validate/block
+- DJ makes final decisions based on professional judgment
+
+This approach:
+- Prevents rule conflicts and operational chaos
+- Trusts DJ expertise and autonomy
+- Provides context without constraints
+- Mimics how real radio DJs operate with awareness but autonomy
 
 ## Future Enhancements
 
