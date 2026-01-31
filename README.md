@@ -234,6 +234,21 @@ The Hive is deployed on **Google Cloud Run** using a containerized architecture 
 * **Production URL**: `https://backlink-hive-123509617840.us-central1.run.app`
 * **Docs**: See [DEPLOYMENT_HANDOFF.md](./docs/DEPLOYMENT_HANDOFF.md) for keys, environment variables, and redeployment steps.
 
+### External Service Integration
+
+The project integrates with multiple external services for hosting, DNS, and deployment:
+
+* **GoDaddy**: Documentation site deployment via SSH/SCP (automated via GitHub Actions)
+* **Cloudflare**: DNS management, CDN, and security layer
+* **Firebase/Google Cloud**: Application hosting, Firestore database, Cloud Run containers
+
+**Setup Guides:**
+* 📚 [External Service Integration Guide](./docs/EXTERNAL_SERVICE_INTEGRATION.md) - Comprehensive documentation
+* ⚡ [Quick Start Guide](./docs/QUICK_START_EXTERNAL_SERVICES.md) - Step-by-step setup checklist
+* 🔧 [API Integration Status](./config/target_apis.json) - Current status of all integrations
+
+**Note:** AI agents can configure deployment code and workflows but cannot directly access your external accounts. See the guides above for manual setup steps.
+
 ### Phase 2: Ecosystem Integration (Upcoming)
 
 The Hive is preparing to connect with the broader Andon FM ecosystem:
