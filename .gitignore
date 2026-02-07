@@ -154,6 +154,9 @@ temp/
 *.tmp
 *.temp
 
+# Example/demo repository data files
+hive/honeycomb/*_example.json
+
 # Bandit security reports
 bandit-report.json
 
