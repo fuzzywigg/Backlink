@@ -125,7 +125,7 @@ def example_filtering_and_pagination():
         filter_fn=lambda x: x["rating"] >= 4,
         limit=3
     )
-    print(f"\n✓ Top 3 high-rated tracks:")
+    print("\n✓ Top 3 high-rated tracks:")
     for track in high_rated:
         print(f"  - {track['title']} (rating: {track['rating']})")
 
@@ -222,7 +222,7 @@ def example_real_world_use_case():
 
     # Get active listeners (>5 interactions)
     print("\nIdentifying active listeners...")
-    active = listeners.list(filter_fn=lambda l: l["interactions"] > 5)
+    active = listeners.list(filter_fn=lambda listener: listener["interactions"] > 5)
     print(f"✓ Found {len(active)} active listeners:")
     for listener in active:
         print(f"  - {listener['username']}: {listener['interactions']} interactions")
@@ -230,7 +230,7 @@ def example_real_world_use_case():
     # Get listeners by genre preference
     print("\nListeners who prefer Electronic music:")
     electronic_fans = listeners.list(
-        filter_fn=lambda l: l["favorite_genre"] == "Electronic"
+        filter_fn=lambda listener: listener["favorite_genre"] == "Electronic"
     )
     for fan in electronic_fans:
         print(f"  - {fan['username']}")
