@@ -263,12 +263,15 @@ class CachingBee(ScoutBee):
 ### Event Logging Pattern
 
 ```python
+from hive.utils.repository import Repository
+from datetime import datetime, timezone
+
 events_repo = Repository("events")
 
 def log_event(event_type: str, data: dict):
     events_repo.create({
         "type": event_type,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "data": data
     })
 

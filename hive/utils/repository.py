@@ -6,7 +6,7 @@ for structured data, integrating with the existing StorageAdapter system.
 """
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Generic, Protocol, TypeVar
 from uuid import uuid4
@@ -68,14 +68,14 @@ class Repository(Generic[T]):
         if not data:
             data = {
                 "collection": self.collection_name,
-                "created_at": datetime.utcnow().isoformat(),
+                "created_at": datetime.now(timezone.utc).isoformat(),
                 "items": {},
             }
         return data
 
     def _save_data(self, data: dict[str, Any]) -> None:
         """Save the entire collection to storage."""
-        data["updated_at"] = datetime.utcnow().isoformat()
+        data["updated_at"] = datetime.now(timezone.utc).isoformat()
         self.storage_adapter.write(self.filename, data)
 
     def create(self, item: dict[str, Any], item_id: str | None = None) -> str:
@@ -104,7 +104,7 @@ class Repository(Generic[T]):
             raise ValueError(f"Item with ID {item_id} already exists")
 
         item["id"] = item_id
-        item["created_at"] = datetime.utcnow().isoformat()
+        item["created_at"] = datetime.now(timezone.utc).isoformat()
         data["items"][item_id] = item
 
         self._save_data(data)
@@ -191,7 +191,7 @@ class Repository(Generic[T]):
 
         item = data["items"][item_id]
         item.update(updates)
-        item["updated_at"] = datetime.utcnow().isoformat()
+        item["updated_at"] = datetime.now(timezone.utc).isoformat()
 
         self._save_data(data)
         self.logger.info(f"Updated item {item_id} in {self.collection_name}")
@@ -265,7 +265,7 @@ class Repository(Generic[T]):
         """
         data = {
             "collection": self.collection_name,
-            "created_at": datetime.utcnow().isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
             "items": {},
         }
         self._save_data(data)

@@ -6,8 +6,9 @@ This script shows how to use the repository system for managing
 structured data in the Backlink Broadcast Hive.
 """
 
-from datetime import datetime
-from hive.utils.repository import Repository, HoneycombRepository
+from datetime import datetime, timezone
+
+from hive.utils.repository import HoneycombRepository, Repository
 
 
 def example_basic_operations():
@@ -54,7 +55,7 @@ def example_basic_operations():
     print("\nUpdating item...")
     demo_repo.update(song_id, {
         "plays": 42,
-        "last_played": datetime.utcnow().isoformat()
+        "last_played": datetime.now(timezone.utc).isoformat()
     })
     updated = demo_repo.get(song_id)
     print(f"✓ Updated plays to: {updated['plays']}")
@@ -154,14 +155,14 @@ def example_factory_pattern():
     user_id = users.create({
         "username": "alice",
         "role": "dj",
-        "joined": datetime.utcnow().isoformat()
+        "joined": datetime.now(timezone.utc).isoformat()
     })
     print(f"✓ Created user: {user_id}")
 
     print("\nAdding data to events repository...")
     event_id = events.create({
         "type": "song_played",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "data": {"title": "Track 1", "artist": "Artist 1"}
     })
     print(f"✓ Created event: {event_id}")
@@ -169,7 +170,7 @@ def example_factory_pattern():
     print("\nAdding data to sessions repository...")
     session_id = sessions.create({
         "user_id": user_id,
-        "started": datetime.utcnow().isoformat(),
+        "started": datetime.now(timezone.utc).isoformat(),
         "active": True
     })
     print(f"✓ Created session: {session_id}")
@@ -203,7 +204,7 @@ def example_real_world_use_case():
     for i in range(5):
         listener_id = listeners.create({
             "username": f"node_{i+1}",
-            "first_seen": datetime.utcnow().isoformat(),
+            "first_seen": datetime.now(timezone.utc).isoformat(),
             "interactions": 0,
             "favorite_genre": ["Rock", "Electronic", "Jazz"][i % 3]
         })
@@ -216,7 +217,7 @@ def example_real_world_use_case():
         listener = listeners.get(listener_id)
         listeners.update(listener_id, {
             "interactions": listener["interactions"] + 10,
-            "last_seen": datetime.utcnow().isoformat()
+            "last_seen": datetime.now(timezone.utc).isoformat()
         })
 
     # Get active listeners (>5 interactions)
