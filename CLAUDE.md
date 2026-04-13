@@ -174,3 +174,16 @@ pytest hive/tests/test_base_bee.py
 - **Production**: Cloud Run at `https://backlink-hive-*.run.app`
 - **Local**: `docker-compose -f docker-compose.sovereign.yaml up`
 - **CI/CD**: GitHub Actions (lint, test on 3.10/3.11/3.12, security scan, build)
+
+## Agent Surface Routing
+
+| Surface | Use For | Avoid |
+|---------|---------|-------|
+| **copilot** | Single-file changes, config, docs, YAML workflows, dep updates | Multi-file refactors, architecture changes |
+| **geryon** | Deep coding, multi-file changes, test authoring, complex integrations | Simple config edits |
+| **browser-claude** | GitHub Settings UI, branch protection, Cloudflare DNS | Code changes |
+| **browser-gemini** | GoDaddy, Google Workspace, GSC, GA4 | Code changes |
+| **human** | Financial transactions, Stripe/Live365/Supabase credentials, repo visibility | Anything automatable |
+| **playwright** | E2E verification, demo QA for PikoClaw | Unit/integration test authoring |
+
+Full hydration report and prepared issues: [`docs/agent-hydration.md`](./docs/agent-hydration.md)
