@@ -53,7 +53,7 @@ The hive implements several defense layers:
 - `HIVE_SECRET_KEY` must be set in production. A development fallback exists for `ENVIRONMENT=dev` only.
 - Stripe webhook verification requires `STRIPE_WEBHOOK_SECRET` to be set; otherwise the system runs in simulation mode.
 - The `ClassifierDefenseBee` falls back to regex patterns if the `transformers` library is unavailable.
-- Iron Dome transaction proposals in `hive/security/iron_dome/proposals/` should not be committed to public repositories in production.
+- Iron Dome transaction proposals in `hive/security/iron_dome/proposals/` should not be committed to public repositories in production. Add this path to `.gitignore` before making the repo public, or ensure the proposals directory only contains sanitized/dummy data.
 
 ## Dependency Security
 

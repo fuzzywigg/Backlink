@@ -21,7 +21,8 @@ updates:
       - "dependencies"
       - "python"
     ignore:
-      # Cognee is under active development; pin until stable
+      # Cognee has a frequently-breaking API; skip major version bumps until the API stabilizes.
+      # Minor and patch updates are still applied automatically.
       - dependency-name: "cognee"
         update-types: ["version-update:semver-major"]
 
