@@ -52,11 +52,11 @@ dependencies = [
     "networkx>=3.0.0",
     "playwright>=1.40.0",
     # Security updates (2026-01-31)
-    "cryptography>=43.0.1",
+    "cryptography>=46.0.7",
     "urllib3>=2.6.3",
-    "python-multipart>=0.0.22",
-    "certifi>=2024.7.4",
-    "idna>=3.7",
+    "python-multipart>=0.0.26",
+    "certifi>=2026.2.25",
+    "idna>=3.11",
 ]
 
 [project.optional-dependencies]
