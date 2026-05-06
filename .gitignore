@@ -162,5 +162,15 @@ bandit-report.json
 
 grok_playlist.json
 
+# Audio capture data (large; was committed historically — see Hardening Pass 2026-05-06)
 data/stream_capture/
 *.mp3
+*.wav
+*.flac
+*.m4a
+*.aac
+*.ogg
+
+# Generated indices and large model caches (committed historically)
+beehive_index.json
+models_cache.json
