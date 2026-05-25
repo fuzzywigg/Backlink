@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Fuzzywigg - Hive Frequency</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>RADIO.FUZZYWIGG.COM</h1>
+            <div id="connection-status" class="status-indicator offline">OFFLINE</div>
+        </header>
+
+        <main>
+            <section id="player-section" class="panel">
+                <h2>// NOW PLAYING</h2>
+                <div id="track-info">
+                    <div class="label">ARTIST</div>
+                    <div id="current-artist" class="glitch-text" data-text="WAITING FOR SIGNAL...">WAITING FOR SIGNAL...
+                    </div>
+                    <div class="label">TRACK</div>
+                    <div id="current-track">--</div>
+                </div>
+                <!-- Placeholder for actual audio stream or visualizer -->
+                <div class="visualizer-placeholder">
+                    [ AUDIO WAVEFORM VISUALIZATION ]
+                </div>
+            </section>
+
+            <section id="intent-section" class="panel">
+                <h2>// BEE INTENTIONS</h2>
+                <ul id="intention-log">
+                    <li><span class="timestamp">[00:00:00]</span> <span class="bee-id">SYSTEM</span>: Identifying
+                        frequency...</li>
+                </ul>
+            </section>
+
+            <section id="needs-section" class="panel warning-panel">
+                <h2>// LLM NEEDS TERMINAL</h2>
+                <div id="needs-list">
+                    <div class="empty-state">No active needs. Systems nominal.</div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <a href="https://fuzzywigg.com" target="_blank">DOCS</a> |
+            <a href="#" id="refresh-link">REFRESH SIGNAL</a>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

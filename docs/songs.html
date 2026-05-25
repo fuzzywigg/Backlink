@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backlink Broadcast | Sonic Library</title>
+
+    <!-- Modern Typography -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #e0e0e0;
+            --accent-cyan: #00ffcc;
+            --accent-magenta: #ff00ff;
+            --border-color: #333;
+            --row-hover: #111;
+            --detail-bg: #0a0a0a;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* --- Header --- */
+        header {
+            max-width: 1400px;
+            margin: 0 auto 2rem auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-magenta);
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .stat-value {
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        /* --- Controls --- */
+        .controls {
+            max-width: 1400px;
+            margin: 0 auto 1.5rem auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        input#search-input {
+            background: #111;
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            font-family: 'Space Mono', monospace;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            flex-grow: 1;
+            outline: none;
+        }
+
+        input#search-input:focus {
+            border-color: var(--accent-cyan);
+        }
+
+        /* --- Table Architecture --- */
+        .table-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: black;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            /* CRITICAL: Prevents horizontal scroll / text bleed */
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* CRITICAL: Handles bleed */
+        }
+
+        th {
+            background-color: #111;
+            color: var(--accent-magenta);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            cursor: pointer;
+            user-select: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th:hover {
+            color: white;
+        }
+
+        /* Column Widths */
+        .col-art {
+            width: 60px;
+        }
+
+        .col-title {
+            width: 25%;
+        }
+
+        .col-artist {
+            width: 20%;
+        }
+
+        .col-genre {
+            width: 15%;
+        }
+
+        .col-stations {
+            width: 20%;
+        }
+
+        .col-plays {
+            width: 80px;
+            text-align: right;
+        }
+
+        .col-last {
+            width: 120px;
+        }
+
+        .col-preview {
+            width: 60px;
+            text-align: center;
+        }
+
+        /* Rows */
+        tr.song-row {
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        tr.song-row:hover {
+            background-color: var(--row-hover);
+        }
+
+        tr.song-row.active-row {
+            background-color: #1a1a1a;
+            border-left: 4px solid var(--accent-cyan);
+        }
+
+        /* --- Detail Row (The Slide Down) --- */
+        tr.detail-row {
+            display: none;
+            background-color: var(--detail-bg);
+        }
+
+        tr.detail-row.open {
+            display: table-row;
+        }
+
+        .detail-content {
+            padding: 24px;
+            border-bottom: 1px solid var(--accent-cyan);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            white-space: normal;
+            /* Allow text wrapping in details */
+        }
+
+        .meta-item label {
+            display: block;
+            font-size: 0.75rem;
+            color: #666;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .meta-item span {
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .meta-tags span {
+            display: inline-block;
+            background: #222;
+            color: #aaa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+
+        /* --- Components --- */
+        .cover-art {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+
+        .station-tag {
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            color: #aaa;
+            background: #222;
+            margin-right: 4px;
+        }
+
+        .station-tag.OpenAIR {
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.1);
+        }
+
+        .station-tag.Backlink {
+            color: #818cf8;
+            background: rgba(129, 140, 248, 0.1);
+        }
+
+        .play-btn {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .play-btn:hover {
+            color: white;
+        }
+
+        /* Loading */
+        #loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Sonic Library</h1>
+        <div class="stats-bar">
+            <div>TRACKS: <span id="count-tracks" class="stat-value">...</span></div>
+            <div>PLAYS: <span id="count-plays" class="stat-value">...</span></div>
+        </div>
+    </header>
+
+    <div class="controls">
+        <input type="text" id="search-input" placeholder="SEARCH TITLE, ARTIST, OR STATION_">
+    </div>
+
+    <div class="table-container">
+        <div id="loading">INITIALIZING LIBRARY DATABASE...</div>
+        <table id="library-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th class="col-art"></th>
+                    <th class="col-title" onclick="sortTable('title')">Title</th>
+                    <th class="col-artist" onclick="sortTable('artist')">Artist</th>
+                    <th class="col-genre" onclick="sortTable('genre')">Genre</th>
+                    <th class="col-stations">Station</th>
+                    <th class="col-plays" onclick="sortTable('plays')">Plays</th>
+                    <th class="col-last" onclick="sortTable('last_played')">Last Heard</th>
+                    <th class="col-preview"></th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Data injected here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let libraryData = [];
+        let sortDir = 1;
+
+        async function init() {
+            try {
+                // Force fresh fetch
+                const res = await fetch('./library.json?t=' + Date.now());
+                libraryData = await res.json();
+
+                // Stats
+                document.getElementById('count-tracks').textContent = libraryData.length;
+                document.getElementById('count-plays').textContent = libraryData.reduce((acc, c) => acc + (c.plays || 0), 0);
+
+                renderTable(libraryData);
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('library-table').style.display = 'table';
+
+                // Search Listener
+                document.getElementById('search-input').addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    const filtered = libraryData.filter(item =>
+                        (item.title && item.title.toLowerCase().includes(term)) ||
+                        (item.artist && item.artist.toLowerCase().includes(term)) ||
+                        (item.stations && item.stations.join(' ').toLowerCase().includes(term))
+                    );
+                    renderTable(filtered);
+                });
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loading').textContent = "ERROR: LINK FAILURE.";
+            }
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+
+            data.forEach(song => {
+                // 1. Logic for Stations
+                const stationsHtml = (song.stations || ['Unknown']).map(s => {
+                    const cls = s.includes('OpenAIR') ? 'OpenAIR' : (s.includes('Backlink') ? 'Backlink' : '');
+                    return `<span class="station-tag ${cls}">${s}</span>`;
+                }).join('');
+
+                // 2. Logic for Art
+                const artHtml = song.cover_art ? `<img src="${song.cover_art}" class="cover-art" loading="lazy">` : '';
+
+                // 3. Logic for Preview
+                const previewHtml = song.preview_url ? `<a href="${song.preview_url}" target="_blank" class="play-btn">▶</a>` : '';
+
+                // --- MAIN ROW ---
+                const tr = document.createElement('tr');
+                tr.className = 'song-row';
+                tr.innerHTML = `
+                    <td class="col-art">${artHtml}</td>
+                    <td class="col-title" title="${song.title}">${song.title}</td>
+                    <td class="col-artist" title="${song.artist}">${song.artist}</td>
+                    <td class="col-genre">${song.genre || '-'}</td>
+                    <td class="col-stations">${stationsHtml}</td>
+                    <td class="col-plays">${song.plays || 0}</td>
+                    <td class="col-last">${song.last_played || '-'}</td>
+                    <td class="col-preview">${previewHtml}</td>
+                `;
+
+                // --- DETAIL ROW (The "Slide Down") ---
+                const detailTr = document.createElement('tr');
+                detailTr.className = 'detail-row';
+
+                // Helper to format tags
+                const tagsRaw = song.dj_tags || '';
+                const tagsHtml = tagsRaw.split('|').map(t => `<span>${t.trim()}</span>`).join('');
+
+                detailTr.innerHTML = `
+                    <td colspan="8" style="padding:0; border:none;">
+                        <div class="detail-content">
+                            <div class="metadata-grid">
+                                <div class="meta-item"><label>Mood</label><span>${song.mood || '-'}</span></div>
+                                <div class="meta-item"><label>Energy</label><span>${song.energy_level || '-'}</span></div>
+                                <div class="meta-item"><label>BPM</label><span>${song.bpm || '-'}</span></div>
+                                <div class="meta-item"><label>Era</label><span>${song.era || '-'} (${song.year || '?'})</span></div>
+                                <div class="meta-item"><label>Features</label><span>${song.notable_features || '-'}</span></div>
+                                <div class="meta-item " style="grid-column: span 2;">
+                                    <label>DJ Tags</label>
+                                    <div class="meta-tags">${tagsHtml || '-'}</div>
+                                </div>
+                                <div class="meta-item" style="grid-column: span 3;">
+                                    <label>Lyrical Theme</label>
+                                    <span>${song.lyrical_theme || '-'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                `;
+
+                // --- INTERACTION ---
+                tr.addEventListener('click', () => {
+                    // Close others? Optional. Let's toggle only this one for sovereign control.
+                    // Or "accordion style" where others close?
+                    // Let's do: Close all *others*, toggle this one.
+                    document.querySelectorAll('tr.detail-row.open').forEach(row => {
+                        if (row !== detailTr) row.classList.remove('open');
+                    });
+                    document.querySelectorAll('tr.song-row.active-row').forEach(row => {
+                        if (row !== tr) row.classList.remove('active-row');
+                    });
+
+                    detailTr.classList.toggle('open');
+                    tr.classList.toggle('active-row');
+                });
+
+                tbody.appendChild(tr);
+                tbody.appendChild(detailTr);
+            });
+        }
+
+        function sortTable(key) {
+            sortDir = sortDir * -1;
+            libraryData.sort((a, b) => {
+                let valA = a[key] || '';
+                let valB = b[key] || '';
+
+                if (typeof valA === 'number' && typeof valB === 'number') {
+                    return (valA - valB) * sortDir;
+                }
+                return valA.toString().localeCompare(valB.toString()) * sortDir;
+            });
+            renderTable(libraryData);
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
