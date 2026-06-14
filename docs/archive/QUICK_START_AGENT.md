@@ -185,7 +185,7 @@ Edit these sections:
 
 | Resource | Purpose |
 |----------|---------|
-| [Agent.md](./Agent.md) | Main instruction file |
+| [Agent.md](../../Agent.md) | Main instruction file |
 | [AGENT_RECOMMENDATIONS.md](./AGENT_RECOMMENDATIONS.md) | Evaluation & recommendations |
 | [Deej-AI](https://github.com/teticio/Deej-AI) | Music curation learning |
 | [Rasa](https://github.com/RasaHQ/rasa) | Personality development |

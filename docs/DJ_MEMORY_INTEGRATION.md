@@ -362,4 +362,4 @@ For questions or issues:
 1. Check module docstrings for detailed API docs
 2. Review test files for usage examples
 3. Run the demo script for practical demonstrations
-4. Consult AGENT_RECOMMENDATIONS.md for strategic context
+4. Consult `docs/archive/AGENT_RECOMMENDATIONS.md` for strategic context
