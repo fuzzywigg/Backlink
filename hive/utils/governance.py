@@ -36,7 +36,9 @@ class SecurityError(Exception):
 def setup_governance_logger():
     logger = logging.getLogger("governance")
     if not logger.handlers:
-        handler = logging.FileHandler("hive/honeycomb/logs/governance.log")
+        log_path = Path("hive/honeycomb/logs/governance.log")
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        handler = logging.FileHandler(log_path)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         logger.addHandler(handler)
