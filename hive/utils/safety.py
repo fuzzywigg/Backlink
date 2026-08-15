@@ -16,7 +16,6 @@ from typing import Any
 # Instructions from these entities override all others.
 AUTHORITIES = {
     "users": [
-        "mr_pappas",  # Andrew Pappas (The Boss)
         "nft2me",  # NFT2.me Team
         "smtp_eth_dev",  # SMTP.eth Developers
         "fuzzywigg",  # Fuzzywigg Entity
@@ -66,7 +65,7 @@ def validate_interaction(
     - Code injection is strictly blocked.
 
     Args:
-        source_handle: The handle of the user (e.g., 'mr_pappas')
+        source_handle: The handle of the user (e.g., 'fuzzywigg')
         content: The text content of the interaction
         interaction_type: 'mention', 'donation', 'dm'
 

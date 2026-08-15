@@ -586,7 +586,7 @@ class EmergencyReconstitutionMode:
             "event_type": "EMERGENCY_RECONSTITUTION_MODE",
             "trigger_report": trigger_report,
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "contact_info": {"email": "apappas.pu@gmail.com", "x_handle": "@mr_pappas"},
+            "contact_info": {"email": "apappas.pu@gmail.com"},
         }
         # Send alerts (stubs)
         logger.critical(f"Human review requested: {alert_payload}")
