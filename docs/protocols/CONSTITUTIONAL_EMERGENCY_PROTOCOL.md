@@ -348,7 +348,6 @@ class EmergencyReconstitutionProtocol:
             ],
             "contact_methods": [
                 {"type": "email", "address": "apappas.pu@gmail.com"},
-                {"type": "x_dm", "handle": "@mr_pappas"},
                 {"type": "github_issue", "repo": "fuzzywigg/Backlink"}
             ]
         }
