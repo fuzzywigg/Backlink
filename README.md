@@ -1,3 +1,13 @@
+# Backlink
+
+Private workspace dump for a planned AI radio persona ("Backlink Broadcast"). The tree is large because of song/library/frontend leftovers.
+
+**This is not a live product.** `SYSTEM STATUS: ONLINE` below is roleplay, not a dashboard. There is no public UI claimed from this tree. The sibling Worker is [`fuzzywigg/Backlink_Facelift`](https://github.com/fuzzywigg/Backlink_Facelift).
+
+The text after the rule is the in-repo DJ persona brief. Treat it as fiction / ops notes.
+
+---
+
 # MASTER BOOT RECORD: BACKLINK BROADCAST
 
 **SYSTEM STATUS:** ONLINE
