@@ -37,6 +37,9 @@ jobs:
       - name: Run Ruff formatter check
         run: ruff format --check .
 
+      - name: Check lore Next Review dates
+        run: python scripts/check_lore_next_review.py
+
       - name: Run mypy type check
         run: mypy hive --ignore-missing-imports
         continue-on-error: true  # Don't fail on type errors initially
