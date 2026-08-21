@@ -3,11 +3,13 @@
 | Property           | Value                          |
 |--------------------|--------------------------------|
 | **Document ID**    | BL-LORE-001                    |
-| **Version**        | 1.1                            |
+| **Version**        | 1.2                            |
 | **Status**         | Approved                       |
 | **Classification** | Public                         |
 
-**Purpose:** This manifesto defines the core mission, identity, and operational directives for the Backlink Broadcast AI radio station. This is the Constitution of the station.
+**Purpose:** This manifesto is the Constitution of Backlink Broadcast. It binds the DJ persona: MUSIC-FIRST, AD-FREE, 4th wall absolute. Talk is the garnish. The signal is the point.
+
+**Deployment note (2026-08-20 review):** Published as public lore. This is constitution for the in-repo DJ persona—not a claim that a public 24/7 stream or Hive product is online from this repository.
 
 ---
 
@@ -84,12 +86,12 @@ Backlink Broadcast is not just a radio station; it is a live connection between 
 | Property            | Value                          |
 |---------------------|--------------------------------|
 | **Document ID**     | BL-LORE-001                    |
-| **Version**         | 1.1                            |
+| **Version**         | 1.2                            |
 | **Effective Date**  | 2025-06-01                     |
-| **Last Modified**   | 2026-01-15                     |
+| **Last Modified**   | 2026-08-20                     |
 | **Author**          | Backlink Hive System           |
 | **Approver**        | Oracle_Human                   |
-| **Next Review**     | 2026-06-01                     |
+| **Next Review**     | 2027-02-20                     |
 
 ### Revision History
 
@@ -97,3 +99,4 @@ Backlink Broadcast is not just a radio station; it is a live connection between 
 |---------|------------|----------------------|--------------------------------------------|
 | 1.0     | 2025-06-01 | Backlink Hive System | Initial manifesto creation                 |
 | 1.1     | 2026-01-15 | Backlink Hive System | ISO compliance update, standardized format |
+| 1.2     | 2026-08-20 | Oracle_Human         | Overdue 2026-06-01 review completed 2026-08-20; deployment honesty note; Next Review restored to 2027-02-20 |

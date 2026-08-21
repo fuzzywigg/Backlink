@@ -106,6 +106,7 @@ exclude = ["tests*", "test_*"]
 [tool.pytest.ini_options]
 minversion = "7.0"
 testpaths = ["tests", "hive/tests", "constitutional-llm/tests"]
+pythonpath = ["."]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
