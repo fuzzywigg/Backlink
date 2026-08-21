@@ -13,6 +13,23 @@ env:
 
 jobs:
   # ───────────────────────────────────────────────────────────────────────────────
+  # Lore document-control (stdlib only; must not be gated behind ruff/tests)
+  # ───────────────────────────────────────────────────────────────────────────────
+  lore-review:
+    name: Lore Next Review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Check lore Next Review dates
+        run: python scripts/check_lore_next_review.py
+
+  # ───────────────────────────────────────────────────────────────────────────────
   # Lint and Format Check
   # ───────────────────────────────────────────────────────────────────────────────
   lint:
@@ -31,14 +48,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install ruff mypy
 
+      - name: Check lore Next Review dates
+        run: python scripts/check_lore_next_review.py
+
       - name: Run Ruff linter
         run: ruff check .
 
       - name: Run Ruff formatter check
         run: ruff format --check .
-
-      - name: Check lore Next Review dates
-        run: python scripts/check_lore_next_review.py
 
       - name: Run mypy type check
         run: mypy hive --ignore-missing-imports
