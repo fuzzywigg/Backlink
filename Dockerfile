@@ -1,11 +1,18 @@
 # Use official Python runtime as a parent image
 FROM python:3.11-slim
 
+# Non-secret build provenance (inject at build time; never put secrets here)
+ARG GIT_SHA=unknown
+ARG BUILD_ID=
+ARG BUILD_TIMESTAMP=
+
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PORT=8080 \
-    BUILD_TIMESTAMP=20251228_05
+    GIT_SHA=${GIT_SHA} \
+    BUILD_ID=${BUILD_ID} \
+    BUILD_TIMESTAMP=${BUILD_TIMESTAMP}
 
 # Set working directory
 WORKDIR /app
