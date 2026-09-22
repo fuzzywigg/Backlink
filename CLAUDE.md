@@ -83,8 +83,8 @@ constitutional_llm/           # Governance layer
 ### Stigmergy Pattern
 Bees never communicate directly. All communication via honeycomb:
 ```python
-state = self.read_state()    # Read from honeycomb
-result = process(state)      # Do work
+state = self.read_state()  # Read from honeycomb
+result = process(state)  # Do work
 self.write_state({"key": result})  # Write back
 ```
 
@@ -96,6 +96,7 @@ self.write_state({"key": result})  # Write back
 ### Creating a New Bee
 ```python
 from hive.bees.base_bee import ScoutBee
+
 
 class MyBee(ScoutBee):
     BEE_TYPE = "my_bee"

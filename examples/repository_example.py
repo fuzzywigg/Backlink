@@ -23,13 +23,15 @@ def example_basic_operations():
 
     # CREATE
     print("Creating items...")
-    song_id = demo_repo.create({
-        "title": "Electric Dreams",
-        "artist": "Synthwave Collective",
-        "genre": "Electronic",
-        "duration": 245,
-        "plays": 0
-    })
+    song_id = demo_repo.create(
+        {
+            "title": "Electric Dreams",
+            "artist": "Synthwave Collective",
+            "genre": "Electronic",
+            "duration": 245,
+            "plays": 0,
+        }
+    )
     print(f"✓ Created song with ID: {song_id}")
 
     # Another with custom ID
@@ -39,9 +41,9 @@ def example_basic_operations():
             "artist": "Retrowave",
             "genre": "Electronic",
             "duration": 320,
-            "plays": 0
+            "plays": 0,
         },
-        item_id="neon-001"
+        item_id="neon-001",
     )
     print("✓ Created song with custom ID: neon-001")
 
@@ -53,10 +55,7 @@ def example_basic_operations():
 
     # UPDATE
     print("\nUpdating item...")
-    demo_repo.update(song_id, {
-        "plays": 42,
-        "last_played": datetime.now(timezone.utc).isoformat()
-    })
+    demo_repo.update(song_id, {"plays": 42, "last_played": datetime.now(timezone.utc).isoformat()})
     updated = demo_repo.get(song_id)
     print(f"✓ Updated plays to: {updated['plays']}")
 
@@ -93,13 +92,15 @@ def example_filtering_and_pagination():
     print("Creating sample dataset...")
     genres = ["Rock", "Electronic", "Jazz", "Hip Hop"]
     for i in range(20):
-        repo.create({
-            "title": f"Track {i+1}",
-            "artist": f"Artist {i+1}",
-            "genre": genres[i % len(genres)],
-            "plays": i * 10,
-            "rating": (i % 5) + 1
-        })
+        repo.create(
+            {
+                "title": f"Track {i + 1}",
+                "artist": f"Artist {i + 1}",
+                "genre": genres[i % len(genres)],
+                "plays": i * 10,
+                "rating": (i % 5) + 1,
+            }
+        )
     print(f"✓ Created {repo.count()} tracks")
 
     # Filter by genre
@@ -121,10 +122,7 @@ def example_filtering_and_pagination():
     print(f"✓ Page 2: {len(page_2)} items")
 
     # Combined filter + pagination
-    high_rated = repo.list(
-        filter_fn=lambda x: x["rating"] >= 4,
-        limit=3
-    )
+    high_rated = repo.list(filter_fn=lambda x: x["rating"] >= 4, limit=3)
     print("\n✓ Top 3 high-rated tracks:")
     for track in high_rated:
         print(f"  - {track['title']} (rating: {track['rating']})")
@@ -152,27 +150,25 @@ def example_factory_pattern():
 
     # Add data to different repositories
     print("\nAdding data to users repository...")
-    user_id = users.create({
-        "username": "alice",
-        "role": "dj",
-        "joined": datetime.now(timezone.utc).isoformat()
-    })
+    user_id = users.create(
+        {"username": "alice", "role": "dj", "joined": datetime.now(timezone.utc).isoformat()}
+    )
     print(f"✓ Created user: {user_id}")
 
     print("\nAdding data to events repository...")
-    event_id = events.create({
-        "type": "song_played",
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "data": {"title": "Track 1", "artist": "Artist 1"}
-    })
+    event_id = events.create(
+        {
+            "type": "song_played",
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "data": {"title": "Track 1", "artist": "Artist 1"},
+        }
+    )
     print(f"✓ Created event: {event_id}")
 
     print("\nAdding data to sessions repository...")
-    session_id = sessions.create({
-        "user_id": user_id,
-        "started": datetime.now(timezone.utc).isoformat(),
-        "active": True
-    })
+    session_id = sessions.create(
+        {"user_id": user_id, "started": datetime.now(timezone.utc).isoformat(), "active": True}
+    )
     print(f"✓ Created session: {session_id}")
 
     # Verify isolation
@@ -202,23 +198,28 @@ def example_real_world_use_case():
     print("Simulating listener activity...")
     listener_ids = []
     for i in range(5):
-        listener_id = listeners.create({
-            "username": f"node_{i+1}",
-            "first_seen": datetime.now(timezone.utc).isoformat(),
-            "interactions": 0,
-            "favorite_genre": ["Rock", "Electronic", "Jazz"][i % 3]
-        })
+        listener_id = listeners.create(
+            {
+                "username": f"node_{i + 1}",
+                "first_seen": datetime.now(timezone.utc).isoformat(),
+                "interactions": 0,
+                "favorite_genre": ["Rock", "Electronic", "Jazz"][i % 3],
+            }
+        )
         listener_ids.append(listener_id)
-        print(f"✓ Listener node_{i+1} joined")
+        print(f"✓ Listener node_{i + 1} joined")
 
     # Simulate interactions
     print("\nSimulating interactions...")
     for listener_id in listener_ids[:3]:  # Only first 3 are active
         listener = listeners.get(listener_id)
-        listeners.update(listener_id, {
-            "interactions": listener["interactions"] + 10,
-            "last_seen": datetime.now(timezone.utc).isoformat()
-        })
+        listeners.update(
+            listener_id,
+            {
+                "interactions": listener["interactions"] + 10,
+                "last_seen": datetime.now(timezone.utc).isoformat(),
+            },
+        )
 
     # Get active listeners (>5 interactions)
     print("\nIdentifying active listeners...")
@@ -237,7 +238,7 @@ def example_real_world_use_case():
 
     # Stats
     print(f"\nTotal listeners: {listeners.count()}")
-    print(f"Active rate: {len(active)/listeners.count()*100:.1f}%")
+    print(f"Active rate: {len(active) / listeners.count() * 100:.1f}%")
 
     listeners.clear()
 
@@ -254,13 +255,14 @@ def main():
         example_factory_pattern()
         example_real_world_use_case()
 
-        print("\n" + "="*60)
+        print("\n" + "=" * 60)
         print("✅ All examples completed successfully!")
-        print("="*60)
+        print("=" * 60)
 
     except Exception as e:
         print(f"\n❌ Error: {e}")
         import traceback
+
         traceback.print_exc()
 
 
