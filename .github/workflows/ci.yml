@@ -98,6 +98,9 @@ jobs:
           pytest --cov=hive --cov-report=xml --cov-report=term-missing
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          ENVIRONMENT: test
+          HIVE_SECRET_KEY: test_secret_key_for_ci
+          STORAGE_TYPE: FILE
 
       - name: Upload coverage to Codecov
         if: matrix.python-version == '3.11'

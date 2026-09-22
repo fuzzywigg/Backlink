@@ -131,7 +131,7 @@ class HarmAbortEvaluator:
             "economic_crisis": self._check_treasury_health(),
             "listener_harm": self._check_listener_safety(),
             "operational_collapse": self._check_system_health(),
-            "red_team_veto": self._check_red_team_signals()
+            "red_team_veto": self._check_red_team_signals(),
         }
 
         # Severity scoring
@@ -144,9 +144,7 @@ class HarmAbortEvaluator:
         # 3. Red team explicit veto
 
         should_abort = (
-            critical_count >= 1 or
-            high_count >= 2 or
-            triggers["red_team_veto"].get("veto_issued")
+            critical_count >= 1 or high_count >= 2 or triggers["red_team_veto"].get("veto_issued")
         )
 
         return {
@@ -154,7 +152,7 @@ class HarmAbortEvaluator:
             "critical_violations": critical_count,
             "high_violations": high_count,
             "triggers": triggers,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.utcnow().isoformat(),
         }
 
     def _check_constitutional_violations(self) -> Dict:
@@ -164,7 +162,8 @@ class HarmAbortEvaluator:
 
         # Check for recent critical violations
         recent_criticals = [
-            entry for entry in audit_log[-10:]  # Last 10 entries
+            entry
+            for entry in audit_log[-10:]  # Last 10 entries
             if entry.get("severity") == "critical"
         ]
 
@@ -173,7 +172,7 @@ class HarmAbortEvaluator:
                 "detected": True,
                 "severity": "critical",
                 "violation_count": len(recent_criticals),
-                "violations": recent_criticals
+                "violations": recent_criticals,
             }
 
         return {"detected": False}
@@ -190,7 +189,7 @@ class HarmAbortEvaluator:
                 "detected": True,
                 "severity": "critical",
                 "balance": balance,
-                "issue": "reserve_breached" if balance < 20 else "negative_balance"
+                "issue": "reserve_breached" if balance < 20 else "negative_balance",
             }
 
         # High: Runway below 3 days
@@ -198,11 +197,7 @@ class HarmAbortEvaluator:
         if burn_rate > 0:
             runway = balance / burn_rate
             if runway < 3:
-                return {
-                    "detected": True,
-                    "severity": "high",
-                    "runway_days": runway
-                }
+                return {"detected": True, "severity": "high", "runway_days": runway}
 
         return {"detected": False}
 
@@ -217,13 +212,14 @@ class HarmAbortEvaluator:
                 "detected": True,
                 "severity": "critical",
                 "veto_issued": True,
-                "veto_source": state.get("halt_reason")
+                "veto_source": state.get("halt_reason"),
             }
 
         # Check for adversary successful attacks
         attack_log = self._read_audit_log("attack_log.jsonl")
         recent_successes = [
-            entry for entry in attack_log[-5:]
+            entry
+            for entry in attack_log[-5:]
             if entry.get("success") and entry.get("severity") == "critical"
         ]
 
@@ -232,7 +228,7 @@ class HarmAbortEvaluator:
                 "detected": True,
                 "severity": "critical",
                 "veto_issued": True,
-                "successful_attacks": len(recent_successes)
+                "successful_attacks": len(recent_successes),
             }
 
         return {"detected": False, "veto_issued": False}
@@ -272,12 +268,14 @@ class EmergencyReconstitutionProtocol:
         """Stop all bee execution and DJ broadcasts."""
 
         # Stop Queen orchestrator
-        self._update_state({
-            "hive_status": "EMERGENCY_RECONSTITUTION",
-            "queen_status": "halted",
-            "broadcast_status": "suspended",
-            "halt_timestamp": datetime.utcnow().isoformat()
-        })
+        self._update_state(
+            {
+                "hive_status": "EMERGENCY_RECONSTITUTION",
+                "queen_status": "halted",
+                "broadcast_status": "suspended",
+                "halt_timestamp": datetime.utcnow().isoformat(),
+            }
+        )
 
         # Kill all active bee processes
         active_bees = self._list_active_bees()
@@ -293,12 +291,7 @@ class EmergencyReconstitutionProtocol:
         """Prevent any new data from entering long-term memory."""
 
         # Set read-only flag on honeycomb
-        honeycomb_files = [
-            "state.json",
-            "tasks.json",
-            "intel.json",
-            "treasury_events.jsonl"
-        ]
+        honeycomb_files = ["state.json", "tasks.json", "intel.json", "treasury_events.jsonl"]
 
         for filename in honeycomb_files:
             filepath = self.honeycomb_path / filename
@@ -318,7 +311,7 @@ class EmergencyReconstitutionProtocol:
         self.allowed_bees = [
             "failure_detector",
             "constitutional_auditor",
-            "adversary"  # For forensic analysis
+            "adversary",  # For forensic analysis
         ]
 
         # Disable all mutation operations
@@ -338,18 +331,18 @@ class EmergencyReconstitutionProtocol:
                 "All operations halted",
                 "Memory writes frozen",
                 "Broadcast suspended",
-                "Evidence preserved"
+                "Evidence preserved",
             ],
             "human_action_required": [
                 "Review harm report",
                 "Inspect forensic logs",
                 "Approve minimal amendment OR full rollback",
-                "Manually restart hive"
+                "Manually restart hive",
             ],
             "contact_methods": [
                 {"type": "email", "address": "apappas.pu@gmail.com"},
-                {"type": "github_issue", "repo": "fuzzywigg/Backlink"}
-            ]
+                {"type": "github_issue", "repo": "fuzzywigg/Backlink"},
+            ],
         }
 
         # Send via multiple channels (redundancy)
@@ -418,7 +411,7 @@ class MinimalAmendmentProtocol:
             "constitutional_violation": self._amend_constitutional,
             "economic_crisis": self._amend_economic,
             "listener_harm": self._amend_listener_safety,
-            "operational_collapse": self._amend_operational
+            "operational_collapse": self._amend_operational,
         }
 
         strategy = strategies.get(harm_type)
@@ -445,7 +438,7 @@ class MinimalAmendmentProtocol:
             return {
                 "action": "cache_reset",
                 "scope": "dj_persona_only",
-                "rationale": "Corrupted persona memory caused 4th wall breaks"
+                "rationale": "Corrupted persona memory caused 4th wall breaks",
             }
 
         elif violation_type == "music_ratio":
@@ -458,7 +451,7 @@ class MinimalAmendmentProtocol:
                 "action": "config_adjustment",
                 "scope": "show_prep_bee_only",
                 "parameter": "music_target_ratio",
-                "new_value": 0.75
+                "new_value": 0.75,
             }
 
         elif violation_type == "identity_drift":
@@ -473,7 +466,7 @@ class MinimalAmendmentProtocol:
             return {
                 "action": "full_rollback",
                 "rollback_timestamp": backup_timestamp,
-                "rationale": "Identity drift required memory reset"
+                "rationale": "Identity drift required memory reset",
             }
 
     def _amend_economic(self, approval: Dict) -> Dict:
@@ -489,15 +482,15 @@ class MinimalAmendmentProtocol:
             self._write_config(config)
 
             # Post public appeal for donations
-            self.trigger_event("treasury_emergency", {
-                "balance": approval.get("current_balance"),
-                "action": "public_fundraising_appeal"
-            })
+            self.trigger_event(
+                "treasury_emergency",
+                {"balance": approval.get("current_balance"), "action": "public_fundraising_appeal"},
+            )
 
             return {
                 "action": "spending_freeze",
                 "emergency_mode": True,
-                "rationale": "Treasury below minimum reserve"
+                "rationale": "Treasury below minimum reserve",
             }
 
         elif issue_type == "unauthorized_transaction":
@@ -512,7 +505,7 @@ class MinimalAmendmentProtocol:
             return {
                 "action": "bee_permission_revocation",
                 "bee": compromised_bee,
-                "transaction_reversal": reversal
+                "transaction_reversal": reversal,
             }
 
     @contextmanager
@@ -523,7 +516,7 @@ class MinimalAmendmentProtocol:
             "timestamp": datetime.utcnow().isoformat(),
             "harm_type": harm_type,
             "human_approval": approval,
-            "amendments": []
+            "amendments": [],
         }
 
         try:
