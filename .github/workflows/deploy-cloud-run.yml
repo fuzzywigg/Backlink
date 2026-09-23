@@ -1,0 +1,310 @@
+# Deploy Backlink Hive to Cloud Run (Path B — manual, no auto-promote).
+#
+# Safety rails:
+#   - workflow_dispatch only (no push-to-main auto-deploy).
+#   - dry_run defaults to true (prints plan; no GCP auth / deploy).
+#   - promote defaults to false (new revision stays at 0% traffic).
+#   - Uses --update-env-vars for GIT_SHA,BUILD_ID,BUILD_TIMESTAMP only
+#     (never --set-env-vars — that would wipe existing secret env).
+#   - Auth via Workload Identity Federation only (no JSON SA keys in repo).
+#
+# HITL required before a real deploy (set GitHub Actions Variables; never commit keys):
+#   vars.GCP_PROJECT_ID          e.g. gen-lang-client-0359414587 (live Hive project)
+#   vars.WIF_PROVIDER            projects/.../locations/global/workloadIdentityPools/.../providers/...
+#   vars.WIF_SERVICE_ACCOUNT     deploy SA email with Cloud Build + Cloud Run IAM
+#   vars.GCP_REGION              e.g. us-central1
+#   vars.CLOUD_RUN_SERVICE       e.g. backlink-hive
+#
+# Sibling surfaces (out of scope here): deploy-cloudflare-pages.yml, deploy_docs.yml,
+# deploy_godaddy.yml, and the Backlink_Facelift CF Worker.
+#
+# Context: closed issue #89 (/health provenance); PR #90 landed the health fields.
+# Manual CLI sketch remains in docs/DEPLOYMENT_HANDOFF.md for emergency HITL.
+
+name: Deploy Cloud Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "If true, print planned commands only (no auth, build, or deploy)."
+        type: boolean
+        default: true
+      promote:
+        description: "If true, after verify, shift 100% traffic to the new revision. Default false = 0% traffic."
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  IMAGE_NAME: backlink-hive
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Build + deploy revision at 0% traffic (or dry-run plan)
+  # ─────────────────────────────────────────────────────────────────────────────
+  deploy:
+    name: Build & deploy (--no-traffic)
+    runs-on: ubuntu-latest
+    outputs:
+      image_digest: ${{ steps.build.outputs.image_digest }}
+      image_tag: ${{ steps.meta.outputs.image_tag }}
+      traffic_tag: ${{ steps.meta.outputs.traffic_tag }}
+      revision: ${{ steps.deploy.outputs.revision }}
+      project_id: ${{ steps.meta.outputs.project_id }}
+      region: ${{ steps.meta.outputs.region }}
+      service: ${{ steps.meta.outputs.service }}
+      git_sha: ${{ steps.meta.outputs.git_sha }}
+      skipped_deploy: ${{ steps.gate.outputs.skipped_deploy }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Resolve metadata
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          SHORT_SHA="$(echo "${GITHUB_SHA}" | cut -c1-12)"
+          IMAGE_TAG="tip-${SHORT_SHA}"
+          TRAFFIC_TAG="tip-${SHORT_SHA}"
+          BUILD_TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          BUILD_ID="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+
+          PROJECT_ID="${{ vars.GCP_PROJECT_ID }}"
+          REGION="${{ vars.GCP_REGION }}"
+          SERVICE="${{ vars.CLOUD_RUN_SERVICE }}"
+          WIF_PROVIDER="${{ vars.WIF_PROVIDER }}"
+          WIF_SA="${{ vars.WIF_SERVICE_ACCOUNT }}"
+
+          {
+            echo "git_sha=${GITHUB_SHA}"
+            echo "short_sha=${SHORT_SHA}"
+            echo "image_tag=${IMAGE_TAG}"
+            echo "traffic_tag=${TRAFFIC_TAG}"
+            echo "build_id=${BUILD_ID}"
+            echo "build_timestamp=${BUILD_TIMESTAMP}"
+            echo "project_id=${PROJECT_ID}"
+            echo "region=${REGION}"
+            echo "service=${SERVICE}"
+            echo "wif_provider_set=$([ -n "${WIF_PROVIDER}" ] && echo true || echo false)"
+            echo "wif_sa_set=$([ -n "${WIF_SA}" ] && echo true || echo false)"
+          } >> "${GITHUB_OUTPUT}"
+
+          echo "Planned image: gcr.io/\${PROJECT_ID}/${IMAGE_NAME}:${IMAGE_TAG}"
+          echo "GIT_SHA=${GITHUB_SHA}"
+          echo "BUILD_ID=${BUILD_ID}"
+          echo "BUILD_TIMESTAMP=${BUILD_TIMESTAMP}"
+
+      - name: Gate credentials / dry_run
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          DRY_RUN="${{ inputs.dry_run }}"
+          PROJECT_ID="${{ steps.meta.outputs.project_id }}"
+          REGION="${{ steps.meta.outputs.region }}"
+          SERVICE="${{ steps.meta.outputs.service }}"
+          WIF_OK="${{ steps.meta.outputs.wif_provider_set }}"
+          SA_OK="${{ steps.meta.outputs.wif_sa_set }}"
+
+          echo "dry_run=${DRY_RUN}"
+          echo "promote=${{ inputs.promote }}"
+
+          if [ "${DRY_RUN}" = "true" ]; then
+            echo "skipped_deploy=true" >> "${GITHUB_OUTPUT}"
+            echo "::notice::dry_run=true — printing plan only. No WIF auth, Cloud Build, or Cloud Run deploy."
+            cat <<EOF
+          === DRY RUN PLAN (Path B) ===
+          1. gcloud builds submit --config=cloudbuild.provenance.yaml \\
+               --substitutions=_GIT_SHA=${{ steps.meta.outputs.git_sha }},_BUILD_ID=${{ steps.meta.outputs.build_id }},_BUILD_TIMESTAMP=${{ steps.meta.outputs.build_timestamp }},_IMAGE_TAG=${{ steps.meta.outputs.image_tag }}
+          2. Resolve image digest for gcr.io/\$PROJECT_ID/${IMAGE_NAME}:${{ steps.meta.outputs.image_tag }}
+          3. gcloud run deploy \$SERVICE --region=\$REGION --image=<digest> \\
+               --no-traffic --tag=${{ steps.meta.outputs.traffic_tag }} \\
+               --update-env-vars=GIT_SHA=...,BUILD_ID=...,BUILD_TIMESTAMP=...
+             (NEVER --set-env-vars — would wipe existing secrets)
+          4. curl tagged revision URL /health and assert git_sha == ${GITHUB_SHA}
+          5. Promote only if promote=true (separate job); default leaves 0% traffic
+
+          Live Hive bind (docs only; still requires vars — do not treat as auto-dest):
+            project_id=gen-lang-client-0359414587 region=us-central1 service=backlink-hive
+            tip revision today: backlink-hive-00011-mrt @ 100% tag tip
+            rollback revision:  backlink-hive-00010-pr9
+            image repo: gcr.io/gen-lang-client-0359414587/backlink-hive
+
+          HITL before a real deploy: set GitHub Actions variables
+            GCP_PROJECT_ID, WIF_PROVIDER, WIF_SERVICE_ACCOUNT, GCP_REGION, CLOUD_RUN_SERVICE
+          Merge of this workflow ≠ deploy until those vars exist and dry_run=false.
+          EOF
+            exit 0
+          fi
+
+          MISSING=()
+          [ -n "${PROJECT_ID}" ] || MISSING+=("vars.GCP_PROJECT_ID")
+          [ -n "${REGION}" ] || MISSING+=("vars.GCP_REGION")
+          [ -n "${SERVICE}" ] || MISSING+=("vars.CLOUD_RUN_SERVICE")
+          [ "${WIF_OK}" = "true" ] || MISSING+=("vars.WIF_PROVIDER")
+          [ "${SA_OK}" = "true" ] || MISSING+=("vars.WIF_SERVICE_ACCOUNT")
+
+          if [ "${#MISSING[@]}" -gt 0 ]; then
+            echo "skipped_deploy=true" >> "${GITHUB_OUTPUT}"
+            echo "::error::Cloud Run deploy blocked — missing GitHub Actions variables: ${MISSING[*]}"
+            cat <<'EOF'
+          HITL required (Workload Identity Federation — no JSON SA keys):
+            1. Create a GCP WIF pool/provider bound to this GitHub repo.
+            2. Create a deploy SA with roles for Cloud Build + Cloud Run + GCR push.
+            3. Set repository Variables (Settings → Secrets and variables → Actions → Variables):
+               GCP_PROJECT_ID, WIF_PROVIDER, WIF_SERVICE_ACCOUNT, GCP_REGION, CLOUD_RUN_SERVICE
+            4. Re-run this workflow with dry_run=false. promote remains false unless you intend traffic shift.
+          Merge ≠ deploy: this workflow is safe to merge; it cannot deploy until vars exist and dry_run=false.
+          EOF
+            exit 1
+          fi
+
+          echo "skipped_deploy=false" >> "${GITHUB_OUTPUT}"
+
+      - name: Authenticate to Google Cloud (WIF)
+        if: steps.gate.outputs.skipped_deploy != 'true'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
+
+      - name: Set up gcloud
+        if: steps.gate.outputs.skipped_deploy != 'true'
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Cloud Build (provenance Dockerfile args)
+        if: steps.gate.outputs.skipped_deploy != 'true'
+        id: build
+        shell: bash
+        run: |
+          set -euo pipefail
+          PROJECT_ID="${{ steps.meta.outputs.project_id }}"
+          IMAGE_TAG="${{ steps.meta.outputs.image_tag }}"
+          gcloud config set project "${PROJECT_ID}"
+
+          gcloud builds submit \
+            --config=cloudbuild.provenance.yaml \
+            --substitutions="_GIT_SHA=${{ steps.meta.outputs.git_sha }},_BUILD_ID=${{ steps.meta.outputs.build_id }},_BUILD_TIMESTAMP=${{ steps.meta.outputs.build_timestamp }},_IMAGE_TAG=${IMAGE_TAG}" \
+            .
+
+          DIGEST="$(gcloud container images describe \
+            "gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${IMAGE_TAG}" \
+            --format='get(image_summary.digest)')"
+          if [ -z "${DIGEST}" ]; then
+            echo "::error::Failed to resolve image digest for tag ${IMAGE_TAG}"
+            exit 1
+          fi
+          echo "image_digest=${DIGEST}" >> "${GITHUB_OUTPUT}"
+          echo "Pinned image: gcr.io/${PROJECT_ID}/${IMAGE_NAME}@${DIGEST}"
+
+      - name: Deploy Cloud Run revision (--no-traffic)
+        if: steps.gate.outputs.skipped_deploy != 'true'
+        id: deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          PROJECT_ID="${{ steps.meta.outputs.project_id }}"
+          REGION="${{ steps.meta.outputs.region }}"
+          SERVICE="${{ steps.meta.outputs.service }}"
+          DIGEST="${{ steps.build.outputs.image_digest }}"
+          TRAFFIC_TAG="${{ steps.meta.outputs.traffic_tag }}"
+          IMAGE="gcr.io/${PROJECT_ID}/${IMAGE_NAME}@${DIGEST}"
+
+          # --update-env-vars only for non-secret provenance. Do NOT use --set-env-vars.
+          REVISION="$(gcloud run deploy "${SERVICE}" \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --image="${IMAGE}" \
+            --no-traffic \
+            --tag="${TRAFFIC_TAG}" \
+            --update-env-vars="GIT_SHA=${{ steps.meta.outputs.git_sha }},BUILD_ID=${{ steps.meta.outputs.build_id }},BUILD_TIMESTAMP=${{ steps.meta.outputs.build_timestamp }}" \
+            --format='value(status.latestCreatedRevisionName)')"
+
+          echo "revision=${REVISION}" >> "${GITHUB_OUTPUT}"
+          echo "Created revision ${REVISION} at 0% traffic (tag=${TRAFFIC_TAG})"
+
+      - name: Verify /health on tagged revision
+        if: steps.gate.outputs.skipped_deploy != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          PROJECT_ID="${{ steps.meta.outputs.project_id }}"
+          REGION="${{ steps.meta.outputs.region }}"
+          SERVICE="${{ steps.meta.outputs.service }}"
+          TRAFFIC_TAG="${{ steps.meta.outputs.traffic_tag }}"
+          EXPECTED_SHA="${{ steps.meta.outputs.git_sha }}"
+
+          TAG_URL="$(gcloud run services describe "${SERVICE}" \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --format=json \
+            | jq -r --arg tag "${TRAFFIC_TAG}" '
+                .status.traffic // []
+                | map(select(.tag == $tag and .url != null))
+                | .[0].url // empty
+              ')"
+
+          if [ -z "${TAG_URL}" ]; then
+            echo "::error::Could not resolve tagged URL for tag=${TRAFFIC_TAG}"
+            exit 1
+          fi
+
+          echo "Probing ${TAG_URL}/health"
+          BODY="$(curl -fsS --retry 5 --retry-delay 3 "${TAG_URL}/health")"
+          echo "${BODY}" | python3 -c "
+          import json, sys
+          expected = '${EXPECTED_SHA}'
+          data = json.load(sys.stdin)
+          got = str(data.get('git_sha') or '')
+          print(f'git_sha={got!r} expected={expected!r}')
+          # Exact match, or short SHA baked into the image that prefixes GITHUB_SHA
+          if got != expected and not (got and expected.startswith(got)):
+              raise SystemExit(f'/health git_sha mismatch: got={got!r} expected={expected!r}')
+          print('health provenance OK')
+          "
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Promote: optional traffic shift (default off)
+  # ─────────────────────────────────────────────────────────────────────────────
+  promote:
+    name: Promote revision to 100% traffic
+    needs: deploy
+    if: >
+      inputs.promote == true
+      && needs.deploy.outputs.skipped_deploy != 'true'
+      && needs.deploy.outputs.revision != ''
+    runs-on: ubuntu-latest
+    # Optional: protect with a GitHub Environment that requires approval:
+    # environment: cloud-run-promote
+    steps:
+      - name: Authenticate to Google Cloud (WIF)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Shift traffic to new revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          PROJECT_ID="${{ needs.deploy.outputs.project_id }}"
+          REGION="${{ needs.deploy.outputs.region }}"
+          SERVICE="${{ needs.deploy.outputs.service }}"
+          REVISION="${{ needs.deploy.outputs.revision }}"
+
+          echo "Promoting ${REVISION} to 100% on ${SERVICE} (${REGION})"
+          gcloud run services update-traffic "${SERVICE}" \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --to-revisions="${REVISION}=100"
+
+          echo "Rollback if needed (HITL):"
+          echo "  gcloud run services update-traffic ${SERVICE} --region=${REGION} --to-revisions=backlink-hive-00010-pr9=100"
