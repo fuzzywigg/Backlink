@@ -120,8 +120,6 @@ hive/
 
 ### 🚨 Recent Intelligence
 
-* **[Night Ops Report (Jan 21)](reports/night_ops_2026_01_21.md)** - *Successful autonomous test of Sentinel and Curator.*
-* **[Jan 17 Security Incident Report](reports/incident_jan_17.md)** - *Analysis of the key compromise.*
 * **[Gap Analysis Report](GAP_ANALYSIS_REPORT.md)** - *Strategic roadmap vs reality check.*
 * **[Prompt Audit Report](PROMPT_AUDIT_REPORT.md)** - *Review of system prompts for safety.*
 
