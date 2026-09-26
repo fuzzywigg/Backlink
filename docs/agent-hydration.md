@@ -62,7 +62,7 @@
 | Test | 3-way matrix (3.10/3.11/3.12), Codecov upload | — |
 | Security | Bandit (`continue-on-error: true` ⚠️) | Should be blocking; no CodeQL |
 | Build | `python -m build` + twine check | — |
-| Deployment | `deploy_godaddy.yml` (docs), `deploy_docs.yml` (GH Pages), `deploy-cloudflare-pages.yml` (CF Pages), `deploy-cloud-run.yml` (Cloud Run, WIF HITL, `workflow_dispatch`, no auto-promote) | WIF / GCP SA variables still HITL — workflow safe to merge without deploying |
+| Deployment | `deploy_godaddy.yml` (docs), `deploy_docs.yml` (GH Pages), `deploy-cloudflare-pages.yml` (CF Pages), `deploy-cloud-run.yml` (Cloud Run, `workflow_dispatch`, no auto-promote; WIF vars live as of run `35880833596`) | Merge ≠ deploy; promote remains intentional HITL |
 | Dependency updates | None | `dependabot.yml` (**now created**) |
 
 ### Documentation
@@ -124,7 +124,7 @@
 | Is stripe in deps? | No — optional import only | `pyproject.toml`, `payment_processor.py:7` |
 | Does .secrets.baseline exist? | No — pre-commit hook references it | File system |
 | Does dependabot.yml exist? | No | `.github/` contents |
-| Is there a Cloud Run deploy workflow? | Yes — `deploy-cloud-run.yml` (manual dispatch; WIF vars HITL; dry_run default; no auto-promote). CF Pages / GoDaddy / docs deploys remain separate. | `.github/workflows/deploy-cloud-run.yml`, `cloudbuild.provenance.yaml`, `docs/DEPLOYMENT_HANDOFF.md` |
+| Is there a Cloud Run deploy workflow? | Yes — `deploy-cloud-run.yml` (manual dispatch; dry_run default; no auto-promote). WIF vars live (first real deploy run `35880833596` → revision `backlink-hive-00014-xej` / tag `tip-e5271783e763`). CF Pages / GoDaddy / docs deploys remain separate. | `.github/workflows/deploy-cloud-run.yml`, `cloudbuild.provenance.yaml`, `docs/DEPLOYMENT_HANDOFF.md` |
 | Is there a PR template? | No | `.github/` contents |
 | Is Live365 streaming implemented? | No — DjBee simulates it | `docs/GAP_ANALYSIS_REPORT.md`, `hive/bees/content/dj_bee.py` |
 | Is Supabase implemented? | No — FILE + FIRESTORE only | `hive/utils/storage_adapter.py` |
@@ -139,7 +139,7 @@ These cannot be resolved from the codebase alone:
 2. **Payment processor priority**: Is Stripe the confirmed P1 payment path, or is Lightning Network (ETH/SOL) via Iron Dome the priority?
 3. **Live365 encoder credentials**: Is there an active Live365 account and station ID? Without this, DjBee cannot move from simulation to production audio.
 4. **Supabase instance**: Is there a Supabase project provisioned? What is the URL and key structure?
-5. **Cloud Run redeployment**: ~~auto on `main`?~~ **Resolved for v1:** manual `workflow_dispatch` only (`deploy-cloud-run.yml`), `dry_run` default true, `promote` default false. WIF pool/provider + deploy SA + GitHub vars remain HITL before a real deploy.
+5. **Cloud Run redeployment**: ~~auto on `main`?~~ **Resolved for v1:** manual `workflow_dispatch` only (`deploy-cloud-run.yml`), `dry_run` default true, `promote` default false. WIF/vars live; promote / traffic shift remains intentional HITL.
 6. **Branch protection rules on `main`**: Should mypy and Bandit be enforced as hard blockers before merge?
 
 ---
@@ -431,14 +431,14 @@ Add `.github/workflows/codeql.yml`:
 #### Issue 8: [geryon] Add Cloud Run deployment workflow
 
 ```
-Status: PARTIAL — workflow landed; WIF HITL still open
+Status: PARTIAL — Path B workflow + first live deploy landed; promote discipline / tip-vs-main lag still operator HITL
 Tier: 1
 Created: 2026-04-13
 Owner: geryon
 Source links: README.md, Dockerfile, docs/DEPLOYMENT_HANDOFF.md,
   .github/workflows/deploy-cloud-run.yml, cloudbuild.provenance.yaml, issue #89 / PR #90
-Edit policy: Agent-editable workflow/docs; WIF pool + deploy SA + GitHub vars require Andrew (HITL).
-  Do NOT commit JSON service-account keys.
+Edit policy: Agent-editable workflow/docs; do not change WIF/IAM/secrets or force traffic
+  from agents without explicit HITL. Do NOT commit JSON service-account keys.
 
 **Problem**
 `Dockerfile` and Cloud Run are the production target, but historically only a manual Andon CLI
@@ -454,10 +454,12 @@ scope for v1 (traffic safety).
 - Docs updated so the CLI sketch is no longer the only truth.
 
 **Remaining HITL**
-- [ ] Create WIF provider + deploy SA; set vars `GCP_PROJECT_ID`, `WIF_PROVIDER`,
-      `WIF_SERVICE_ACCOUNT`, `GCP_REGION`, `CLOUD_RUN_SERVICE`
-- [ ] First real run: `dry_run=false`, `promote=false`; confirm tagged `/health`
-- [ ] Promote only with `promote=true` (optional GitHub Environment approval)
+- [x] WIF + GitHub vars live (Path B real deploy succeeded: Actions run `35880833596`)
+- [x] First real run: `dry_run=false`, `promote=false`; tagged `/health` OK on
+      `tip-e5271783e763` / revision `backlink-hive-00014-xej`
+- [ ] Keep promote intentional (`promote=true` or explicit HITL traffic shift); do not
+      assume merge redeploys. Serving tip as of 2026-09-26 matches `00014-xej` provenance
+      on the default URL (handoff-era `00011-mrt` @ tag `tip` superseded).
 - [ ] Rollback reference: `backlink-hive-00010-pr9`
 
 **Agent Surface Routing**

@@ -61,9 +61,17 @@ Sibling workflows (`deploy-cloudflare-pages.yml`, `deploy_docs.yml`, `deploy_god
 `Backlink_Facelift` CF Worker are separate surfaces — out of scope here.
 
 Live Hive bind (non-secret, for operators — not an auto-deploy destination without vars):
-project `gen-lang-client-0359414587`, region `us-central1`, service `backlink-hive`,
-image `gcr.io/gen-lang-client-0359414587/backlink-hive`. Tip revision at handoff time:
-`backlink-hive-00011-mrt` @ 100% tag `tip`. Known rollback: `backlink-hive-00010-pr9`.
+project `gen-lang-client-0359414587` (URL project number `123509617840`), region `us-central1`,
+service `backlink-hive`, image `gcr.io/gen-lang-client-0359414587/backlink-hive`.
+
+**Serving tip (verified 2026-09-26 via default `/health`):** revision `backlink-hive-00014-xej`,
+workflow image/traffic tag `tip-e5271783e763` (Actions run `35880833596`, Path B first live
+`--no-traffic` deploy of `#91` / `e527178…`). Default URL and that tag URL both report
+`git_sha` `e5271783e763…`, `build_id` `35880833596-1`, `build_time` `2026-09-23T15:24:10Z`.
+Handoff-era `backlink-hive-00011-mrt` @ tag `tip` is **not** the serving tip anymore.
+Known older rollback: `backlink-hive-00010-pr9`. Repo `main` may be ahead of Cloud Run when
+only docs/chore land (e.g. `#92` / `#93`); compare `/health` `git_sha`, do not assume merge
+redeployed.
 
 ### 3b. Manual CLI (emergency / Andon HITL sketch)
 
