@@ -131,9 +131,12 @@ jobs:
 
           Live Hive bind (docs only; still requires vars — do not treat as auto-dest):
             project_id=gen-lang-client-0359414587 region=us-central1 service=backlink-hive
-            tip revision today: backlink-hive-00011-mrt @ 100% tag tip
+            serving tip (verified 2026-09-26 via default /health): backlink-hive-00014-xej
+              / tag tip-e5271783e763 (git_sha e5271783e763…; Actions run 35880833596)
+            handoff-era backlink-hive-00011-mrt @ tag tip is superseded (not serving)
             rollback revision:  backlink-hive-00010-pr9
             image repo: gcr.io/gen-lang-client-0359414587/backlink-hive
+            confirm live tip via GET /health — merge ≠ deploy
 
           HITL before a real deploy: set GitHub Actions variables
             GCP_PROJECT_ID, WIF_PROVIDER, WIF_SERVICE_ACCOUNT, GCP_REGION, CLOUD_RUN_SERVICE
