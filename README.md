@@ -298,7 +298,7 @@ The project integrates with multiple external services for hosting, DNS, and dep
 
 The Hive is preparing to connect with the broader Andon FM ecosystem:
 
-1. **Stripe**: Real-time song purchasing via `payment_intent` webhooks. (See `Brain/STRIPE_INTEGRATION_SPEC.md`)
+1. **Stripe**: Real-time song purchasing via `payment_intent` webhooks. (See [`docs/STRIPE_INTEGRATION_SPEC.md`](./docs/STRIPE_INTEGRATION_SPEC.md))
 2. **Live365**: Direct encoder control for physical audio output.
 3. **Supabase**: S3-compatible asset storage for the music library.
 
