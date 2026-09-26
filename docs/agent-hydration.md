@@ -72,7 +72,7 @@
 | README | ✅ Rich, 12 KB | — |
 | CLAUDE.md | ✅ Comprehensive | — |
 | Agent.md | ✅ Full DJ instruction file (20 KB) | — |
-| SWARM_ROLES.md | ✅ `hive/honeycomb/SWARM_ROLES.md` | — |
+| SWARM_ROLES.md | ✅ `hive/SWARM_ROLES.md` | — |
 | GAP_ANALYSIS | ✅ `docs/GAP_ANALYSIS_REPORT.md` | — |
 | Changelog | ❌ | `CHANGELOG.md` |
 | API docs | mkdocs partial | Auto-generated API reference |
