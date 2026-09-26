@@ -33,9 +33,6 @@ nav:
       - Q2 2026 Latent Space: q2_2026_latent_space_roadmap.md
       - Monetization Strategy: monetization_strategy.md
       - Sovereign Capital Plan: sovereign_capital_plan.md
-      - Roadmap: planning/ROADMAP.md
-      - Pathway: planning/PATHWAY.md
-      - Gap Assessment: planning/GAP_ASSESSMENT.md
   - Technical Specs:
       - Architecture: DEPLOYMENT_HANDOFF.md
       - Gap Analysis: GAP_ANALYSIS_REPORT.md
@@ -47,7 +44,6 @@ nav:
       - Persona: lore/PERSONA_DYNAMIC.md
       - Music Logic: lore/MUSIC_LOGIC.md
   - Resources:
-      - Song Library: songs.html
       - Wisdom API: api/wisdom.json
 
 plugins:
