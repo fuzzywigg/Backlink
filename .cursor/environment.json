@@ -1,0 +1,5 @@
+{
+  "name": "Backlink",
+  "install": "python -m pip install --upgrade pip && pip install -e '.[dev]'",
+  "start": "ENVIRONMENT=test HIVE_SECRET_KEY=test_secret_key_for_ci STORAGE_TYPE=FILE pytest --cov=hive --cov-report=xml --cov-report=term-missing"
+}
