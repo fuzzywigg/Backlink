@@ -1,0 +1,2423 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the Backlink Hive AI Swarm.">
+      
+      
+      
+        <link rel="canonical" href="https://hive.fuzzywigg.com/agent-hydration/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Agent Hydration Report — fuzzywigg/Backlink - Backlink Hive</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="yellow" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#agent-hydration-report-fuzzywiggbacklink" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Backlink Hive" class="md-header__button md-logo" aria-label="Backlink Hive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Backlink Hive
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Agent Hydration Report — fuzzywigg/Backlink
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="yellow" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="yellow" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../DOCUMENTATION_STANDARD/" class="md-tabs__link">
+          
+  
+  
+  Governance
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../roadmap_2026_q1_integrations/" class="md-tabs__link">
+          
+  
+  
+  Planning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../DEPLOYMENT_HANDOFF/" class="md-tabs__link">
+          
+  
+  
+  Technical Specs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../lore/STATION_MANIFESTO/" class="md-tabs__link">
+          
+  
+  
+  Lore
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../api/wisdom.json" class="md-tabs__link">
+          
+  
+  
+  Resources
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Backlink Hive" class="md-nav__button md-logo" aria-label="Backlink Hive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Backlink Hive
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Governance
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Governance
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DOCUMENTATION_STANDARD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentation Standard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SWARM_ROLES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Swarm Roles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../INVESTORS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Investors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Planning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap_2026_q1_integrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q1 2026 Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q2_2026_latent_space_roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q2 2026 Latent Space
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monetization_strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monetization Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sovereign_capital_plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sovereign Capital Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technical Specs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Technical Specs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEPLOYMENT_HANDOFF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GAP_ANALYSIS_REPORT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gap Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PROMPT_AUDIT_REPORT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../STRIPE_INTEGRATION_SPEC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stripe Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lore
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lore
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lore/STATION_MANIFESTO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manifesto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lore/AGENTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lore/PERSONA_DYNAMIC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Persona
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lore/MUSIC_LOGIC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Music Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Resources
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/wisdom.json" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wisdom API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="agent-hydration-report-fuzzywiggbacklink">Agent Hydration Report — fuzzywigg/Backlink</h1>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Protocol</strong></td>
+<td>FUZZYWIGG Repo Hydration v1.0</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>2026-04-13</td>
+</tr>
+<tr>
+<td><strong>Branch</strong></td>
+<td><code>copilot/hydrate</code></td>
+</tr>
+<tr>
+<td><strong>Agent</strong></td>
+<td>copilot (GitHub Copilot)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>Phases 0-3 Complete; Phases 4-6 Delivered</td>
+</tr>
+<tr>
+<td><strong>Edit Policy</strong></td>
+<td>Agent-editable; structural changes require Andrew approval</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="phase-1-findings-report">Phase 1: Findings Report</h2>
+<h3 id="identity">Identity</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>EXISTS</th>
+<th>MISSING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>README</td>
+<td><code>README.md</code> (12 KB, comprehensive)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>License</td>
+<td>Declared MIT in <code>pyproject.toml</code></td>
+<td><code>LICENSE</code> file (<strong>now created</strong>)</td>
+</tr>
+<tr>
+<td>Package manifest</td>
+<td><code>pyproject.toml</code> (v1.1.0, setuptools)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Language/Framework</td>
+<td>Python 3.10-3.12, FastAPI + Uvicorn</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Purpose</td>
+<td>AI autonomous radio station (swarm intelligence)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="source-architecture">Source Architecture</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>EXISTS</th>
+<th>MISSING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entry points</td>
+<td><code>hive/main_service.py</code> (FastAPI), <code>hive/queen/orchestrator.py</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Bee modules</td>
+<td>25 bees across 8 categories (~13,800 LOC)</td>
+<td><code>ScriptWriterBee</code>, <code>JingleBee</code>, <code>MusicDiscoveryBee</code>, <code>CompetitorWatchBee</code>, <code>SEOBee</code>, <code>ViralAnalystBee</code>, <code>NewsletterBee</code>, <code>MerchBee</code>, <code>VIPManagerBee</code> (all marked TODO)</td>
+</tr>
+<tr>
+<td>State management</td>
+<td><code>hive/utils/state_manager.py</code> (HMAC-SHA256)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Intelligence</td>
+<td><code>hive/intelligence/dj_brain.py</code> (Ollama), <code>hive/utils/gemini_client.py</code> (Google)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Governance</td>
+<td><code>constitutional_llm/src/constitutional_gateway.py</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Defense</td>
+<td><code>hive/bees/defense/classifier_defense_bee.py</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dependencies">Dependencies</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>EXISTS</th>
+<th>MISSING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Production</td>
+<td>22 deps in <code>pyproject.toml</code></td>
+<td><code>stripe</code> library (commerce bee falls back to simulation), <code>supabase</code> client (storage gap), <code>transformers</code> (classifier bee optional)</td>
+</tr>
+<tr>
+<td>Dev deps</td>
+<td>pytest, mypy, ruff, black, isort, pre-commit</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Lockfile</td>
+<td>None</td>
+<td><code>pip-tools</code> lockfile (<code>requirements.lock</code>)</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td><code>Dockerfile</code> (python:3.11-slim), <code>docker-compose.sovereign.yaml</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tests">Tests</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>EXISTS</th>
+<th>MISSING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Framework</td>
+<td>pytest + pytest-asyncio + pytest-mock + pytest-cov</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Test files</td>
+<td>13 in <code>tests/</code>, 8 in <code>hive/tests/</code> (~3,094 LOC)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Coverage threshold</td>
+<td>60% minimum (<code>pyproject.toml</code>)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Untested modules</td>
+<td>—</td>
+<td><code>hive/main_service.py</code> (FastAPI endpoints), <code>hive/queen/orchestrator.py</code>, <code>constitutional_llm/src/constitutional_gateway.py</code>, <code>hive/utils/payment_processor.py</code></td>
+</tr>
+<tr>
+<td>Test markers</td>
+<td><code>unit</code>, <code>integration</code>, <code>slow</code></td>
+<td>No <code>conftest.py</code> in <code>hive/tests/</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="cicd">CI/CD</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>EXISTS</th>
+<th>MISSING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lint</td>
+<td>Ruff (blocking)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Type check</td>
+<td>mypy (<code>continue-on-error: true</code> ⚠️)</td>
+<td>Should be blocking</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>3-way matrix (3.10/3.11/3.12), Codecov upload</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Bandit (<code>continue-on-error: true</code> ⚠️)</td>
+<td>Should be blocking; no CodeQL</td>
+</tr>
+<tr>
+<td>Build</td>
+<td><code>python -m build</code> + twine check</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td><code>deploy_godaddy.yml</code> (docs), <code>deploy_docs.yml</code> (GH Pages), <code>deploy-cloudflare-pages.yml</code> (CF Pages), <code>deploy-cloud-run.yml</code> (Cloud Run, <code>workflow_dispatch</code>, no auto-promote; WIF vars live as of run <code>35880833596</code>)</td>
+<td>Merge ≠ deploy; promote remains intentional HITL</td>
+</tr>
+<tr>
+<td>Dependency updates</td>
+<td>None</td>
+<td><code>dependabot.yml</code> (<strong>now created</strong>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="documentation">Documentation</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>EXISTS</th>
+<th>MISSING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>README</td>
+<td>✅ Rich, 12 KB</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CLAUDE.md</td>
+<td>✅ Comprehensive</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Agent.md</td>
+<td>✅ Full DJ instruction file (20 KB)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SWARM_ROLES.md</td>
+<td>✅ <code>hive/SWARM_ROLES.md</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>GAP_ANALYSIS</td>
+<td>✅ <code>docs/GAP_ANALYSIS_REPORT.md</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Changelog</td>
+<td>❌</td>
+<td><code>CHANGELOG.md</code></td>
+</tr>
+<tr>
+<td>API docs</td>
+<td>mkdocs partial</td>
+<td>Auto-generated API reference</td>
+</tr>
+<tr>
+<td>Agent hydration</td>
+<td>❌</td>
+<td><code>docs/agent-hydration.md</code> (<strong>this file</strong>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="governance">Governance</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>EXISTS</th>
+<th>MISSING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLAUDE.md</td>
+<td>✅ <code>CLAUDE.md</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>CONTRIBUTING.md</td>
+<td>✅ <code>CONTRIBUTING.md</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>SECURITY.md</td>
+<td>✅ <code>SECURITY.md</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>LICENSE</td>
+<td>✅ <code>LICENSE</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>CODEOWNERS</td>
+<td>❌</td>
+<td><code>.github/CODEOWNERS</code></td>
+</tr>
+<tr>
+<td>PR Template</td>
+<td>✅ <code>.github/pull_request_template.md</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>AGENTS.md</td>
+<td>✅ <code>docs/lore/AGENTS.md</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="security">Security</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>EXISTS</th>
+<th>MISSING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Secret handling</td>
+<td><code>.gitignore</code>, <code>.env.example</code>, HMAC signing</td>
+<td><code>.secrets.baseline</code> (still absent; pre-commit references it), SECURITY.md (<strong>now created</strong>)</td>
+</tr>
+<tr>
+<td>Input validation</td>
+<td><code>safety.py</code>, <code>constitutional_gateway.py</code>, <code>classifier_defense_bee.py</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Stripe webhook HMAC</td>
+<td><code>payment_processor.py</code> (simulation mode without key)</td>
+<td><code>stripe</code> library in <code>pyproject.toml</code></td>
+</tr>
+<tr>
+<td>CodeQL</td>
+<td>❌</td>
+<td><code>.github/workflows/codeql.yml</code></td>
+</tr>
+<tr>
+<td>Path traversal</td>
+<td>✅ <code>storage_adapter.py</code> checks prefix</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="observability">Observability</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>EXISTS</th>
+<th>MISSING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Structured logging</td>
+<td><code>hive/utils/logging.py</code>, per-bee loggers</td>
+<td>JSON-format logs for Cloud Run</td>
+</tr>
+<tr>
+<td>Health endpoint</td>
+<td><code>/health</code> in <code>main_service.py</code></td>
+<td>Health endpoint tests</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td><code>hive/utils/plausible_andon.py</code></td>
+<td>Prometheus/OpenTelemetry metrics</td>
+</tr>
+<tr>
+<td>Alerting</td>
+<td>Bee failure tracker in orchestrator</td>
+<td>No external alerting (PagerDuty, Slack)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="phase-2-questions">Phase 2: Questions</h2>
+<h3 id="list-a-resolved-by-research">LIST A — Resolved by Research</h3>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Does a LICENSE file exist?</td>
+<td>Yes — <code>LICENSE</code> at repo root (MIT)</td>
+<td>File system</td>
+</tr>
+<tr>
+<td>Is there a SECURITY.md?</td>
+<td>Yes — <code>SECURITY.md</code> at repo root</td>
+<td>File system</td>
+</tr>
+<tr>
+<td>Is Bandit CI blocking?</td>
+<td>No — <code>continue-on-error: true</code></td>
+<td><code>.github/workflows/ci.yml:96</code></td>
+</tr>
+<tr>
+<td>Is mypy CI blocking?</td>
+<td>No — <code>continue-on-error: true</code></td>
+<td><code>.github/workflows/ci.yml:36</code></td>
+</tr>
+<tr>
+<td>Is stripe in deps?</td>
+<td>No — optional import only</td>
+<td><code>pyproject.toml</code>, <code>payment_processor.py:7</code></td>
+</tr>
+<tr>
+<td>Does .secrets.baseline exist?</td>
+<td>No — pre-commit hook references it</td>
+<td>File system</td>
+</tr>
+<tr>
+<td>Does dependabot.yml exist?</td>
+<td>Yes — <code>.github/dependabot.yml</code></td>
+<td>File system</td>
+</tr>
+<tr>
+<td>Is there a Cloud Run deploy workflow?</td>
+<td>Yes — <code>deploy-cloud-run.yml</code> (manual dispatch; dry_run default; no auto-promote). WIF vars live (first real deploy run <code>35880833596</code> → revision <code>backlink-hive-00014-xej</code> / tag <code>tip-e5271783e763</code>). CF Pages / GoDaddy / docs deploys remain separate.</td>
+<td><code>.github/workflows/deploy-cloud-run.yml</code>, <code>cloudbuild.provenance.yaml</code>, <code>docs/DEPLOYMENT_HANDOFF.md</code></td>
+</tr>
+<tr>
+<td>Is there a PR template?</td>
+<td>Yes — <code>.github/pull_request_template.md</code></td>
+<td>File system</td>
+</tr>
+<tr>
+<td>Is Live365 streaming implemented?</td>
+<td>No — DjBee simulates it</td>
+<td><code>docs/GAP_ANALYSIS_REPORT.md</code>, <code>hive/bees/content/dj_bee.py</code></td>
+</tr>
+<tr>
+<td>Is Supabase implemented?</td>
+<td>No — FILE + FIRESTORE only</td>
+<td><code>hive/utils/storage_adapter.py</code></td>
+</tr>
+<tr>
+<td>Does orchestrator.py have tests?</td>
+<td>No</td>
+<td><code>tests/</code> and <code>hive/tests/</code> scans</td>
+</tr>
+<tr>
+<td>Does main_service.py have tests?</td>
+<td>No</td>
+<td><code>tests/</code> scan</td>
+</tr>
+</tbody>
+</table>
+<h3 id="list-b-requires-andrew-hitl">LIST B — Requires Andrew (HITL)</h3>
+<p>These cannot be resolved from the codebase alone:</p>
+<ol>
+<li><strong>PikoClaw demo at Panathenea (May 27-29, 2026)</strong>: Which specific features must be live and demo-ready? This gates P1 priority assignments.</li>
+<li><strong>Payment processor priority</strong>: Is Stripe the confirmed P1 payment path, or is Lightning Network (ETH/SOL) via Iron Dome the priority?</li>
+<li><strong>Live365 encoder credentials</strong>: Is there an active Live365 account and station ID? Without this, DjBee cannot move from simulation to production audio.</li>
+<li><strong>Supabase instance</strong>: Is there a Supabase project provisioned? What is the URL and key structure?</li>
+<li><strong>Cloud Run redeployment</strong>: ~~auto on <code>main</code>?~~ <strong>Resolved for v1:</strong> manual <code>workflow_dispatch</code> only (<code>deploy-cloud-run.yml</code>), <code>dry_run</code> default true, <code>promote</code> default false. WIF/vars live; promote / traffic shift remains intentional HITL.</li>
+<li><strong>Branch protection rules on <code>main</code></strong>: Should mypy and Bandit be enforced as hard blockers before merge?</li>
+</ol>
+<hr />
+<h2 id="phase-4-prepared-issues">Phase 4: Prepared Issues</h2>
+<blockquote>
+<p><strong>Note</strong>: GitHub issue creation requires authentication (HITL). Copy each block below into the GitHub Issues UI or use <code>gh issue create</code>.
+Issue title format: <code>[surface] Title</code></p>
+</blockquote>
+<hr />
+<h3 id="phase-1-issues-foundation-p1">PHASE 1 ISSUES (Foundation — P1)</h3>
+<hr />
+<h4 id="issue-1-copilot-add-license-file-mit">Issue 1: [copilot] Add LICENSE file (MIT)</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Status: ACTIVE
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Tier: 1
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Created: 2026-04-13
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Owner: copilot
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Source links: pyproject.toml (license = {text = "MIT"})
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>**Problem**
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>`pyproject.toml` declares `license = {text = "MIT"}` but no `LICENSE` file exists in the repository root.
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>GitHub cannot detect the license without this file, affecting discoverability and legal compliance.
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>**Proposed Solution**
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>Add standard MIT `LICENSE` file with copyright holder set to "Andon Labs / fuzzywigg.ai".
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>File path: `LICENSE`
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>**Acceptance Criteria**
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>- [ ] `LICENSE` file exists at repo root
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>- [ ] GitHub correctly detects "MIT License" in repository metadata
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>- [ ] Copyright year and holder are accurate
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>**Agent Surface Routing**
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>| Field | Value |
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>|-------|-------|
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>| Surface | copilot |
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>| Rationale | Single-file creation, no logic required |
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>| Priority | P1 — Legal compliance, unblocks partnership/investor relations |
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>| Branch | `copilot/add-license` |
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h4 id="issue-2-copilot-add-securitymd-vulnerability-disclosure-policy">Issue 2: [copilot] Add SECURITY.md vulnerability disclosure policy</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Status: ACTIVE
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Tier: 1
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Created: 2026-04-13
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Owner: copilot
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Source links: GitHub security best practices, docs/lore/AGENTS.md (authority hierarchy)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Edit policy: Agent-editable; contact info requires Andrew approval
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>**Problem**
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>No `SECURITY.md` exists. GitHub displays a warning and external researchers have no documented
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>path to report vulnerabilities privately. The hive processes payments and crypto transactions,
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>making this a critical gap.
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>**Proposed Solution**
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>Create `SECURITY.md` at repo root following GitHub's standard format:
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>- Supported versions table
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>- Private disclosure email (andrew.pappas@nft2.me)
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>- Response SLA by severity
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>- Overview of security architecture (safety.py, constitutional_gateway.py, etc.)
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>**Acceptance Criteria**
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>- [ ] `SECURITY.md` exists at repo root
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>- [ ] GitHub "Security" tab shows the policy
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>- [ ] Private advisory reporting URL is included
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>- [ ] Security architecture components are listed
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>**Agent Surface Routing**
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>| Field | Value |
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>|-------|-------|
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>| Surface | copilot |
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>| Rationale | Documentation creation, no code changes |
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>| Priority | P1 — Security posture, required for any production deployment |
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>| Branch | `copilot/add-security-policy` |
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h4 id="issue-3-copilot-fix-ci-make-bandit-and-mypy-blocking">Issue 3: [copilot] Fix CI: make Bandit and mypy blocking</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Status: ACTIVE
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Tier: 1
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Created: 2026-04-13
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Owner: copilot
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Source links: .github/workflows/ci.yml:36 (mypy), .github/workflows/ci.yml:96 (bandit)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>**Problem**
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Both `mypy` type checking and `bandit` security scanning use `continue-on-error: true` in CI.
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>This means PRs can merge with type errors and security vulnerabilities without any gate.
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>The hive manages crypto transactions and LLM inputs — security failures must block merges.
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>**Proposed Solution**
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>1. Remove `continue-on-error: true` from the `mypy` step in `ci.yml`
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>2. Remove `continue-on-error: true` from the `bandit` step in `ci.yml`
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>3. Fix any existing mypy/bandit failures that would now block CI
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>**Acceptance Criteria**
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>- [ ] `ci.yml` has no `continue-on-error: true` on mypy or bandit steps
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>- [ ] CI pipeline fails (red) when mypy errors are present
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>- [ ] CI pipeline fails (red) when bandit finds HIGH/MEDIUM severity issues
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>- [ ] All current mypy and bandit errors are resolved or explicitly suppressed with justification
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>**Agent Surface Routing**
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>| Field | Value |
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>|-------|-------|
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>| Surface | geryon |
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>| Rationale | Requires fixing type errors across the codebase, multi-file changes |
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>| Priority | P1 — Security enforcement gate |
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>| Branch | `geryon/enforce-ci-security-gates` |
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h4 id="issue-4-copilot-add-githubdependabotyml-for-automated-dependency-updates">Issue 4: [copilot] Add .github/dependabot.yml for automated dependency updates</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Status: ACTIVE
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Tier: 1
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Created: 2026-04-13
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Owner: copilot
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Source links: pyproject.toml (22 production deps), .github/ contents
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>**Problem**
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>No `dependabot.yml` exists. Security dependencies (`cryptography`, `urllib3`, `certifi`) were
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>manually updated on 2026-01-31 (per comment in pyproject.toml), indicating no automated process.
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>Without Dependabot, CVEs in transitive dependencies will go undetected.
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>**Proposed Solution**
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>Create `.github/dependabot.yml` with:
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>- Weekly pip updates, grouped security updates
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>- Weekly GitHub Actions updates
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>- Ignore major version bumps for `cognee` (unstable API)
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>**Acceptance Criteria**
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>- [ ] `.github/dependabot.yml` exists and is valid YAML
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>- [ ] Dependabot PRs appear in the repository within 1 week
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>- [ ] Security group (`cryptography`, `urllib3`, etc.) is configured
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>- [ ] GitHub Actions ecosystem is included
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>**Agent Surface Routing**
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>| Field | Value |
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>|-------|-------|
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>| Surface | copilot |
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>| Rationale | Config-only change, no code logic |
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>| Priority | P1 — Continuous security patch automation |
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>| Branch | `copilot/add-dependabot` |
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h4 id="issue-5-copilot-generate-secretsbaseline-for-detect-secrets-pre-commit-hook">Issue 5: [copilot] Generate .secrets.baseline for detect-secrets pre-commit hook</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Status: ACTIVE
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Tier: 1
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Created: 2026-04-13
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Owner: copilot
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Source links: .pre-commit-config.yaml (detect-secrets hook)
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>**Problem**
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>`.pre-commit-config.yaml` includes the `detect-secrets` hook with `--baseline .secrets.baseline`,
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>but no `.secrets.baseline` file exists. Running `pre-commit run --all-files` fails immediately
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>with a missing baseline error, blocking all contributors from using pre-commit hooks.
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>**Proposed Solution**
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>Run `detect-secrets scan --exclude-files &lt;large-json-files&gt; &gt; .secrets.baseline` and commit the result.
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>Exclude: `beehive_index.json`, `models_cache.json`, iron dome proposal JSONs, docs API JSON.
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>**Acceptance Criteria**
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>- [ ] `.secrets.baseline` exists at repo root
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>- [ ] `pre-commit run detect-secrets --all-files` passes
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>- [ ] No actual secrets are in the baseline (only false-positive tokens)
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>**Agent Surface Routing**
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>| Field | Value |
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>|-------|-------|
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>| Surface | copilot |
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>| Rationale | Single command + commit |
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>| Priority | P1 — Unblocks all contributor pre-commit workflows |
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>| Branch | `copilot/add-secrets-baseline` |
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h3 id="phase-2-issues-hardening-p2">PHASE 2 ISSUES (Hardening — P2)</h3>
+<hr />
+<h4 id="issue-6-copilot-add-githubcodeowners-file">Issue 6: [copilot] Add .github/CODEOWNERS file</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Status: ACTIVE
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Tier: 1
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Created: 2026-04-13
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Owner: copilot
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Source links: docs/lore/AGENTS.md (authority hierarchy: mr_pappas, fuzzywigg, nft2me)
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>Edit policy: Agent-editable; ownership assignments require Andrew approval
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>**Problem**
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>No CODEOWNERS file. Merges to sensitive paths (treasury, constitutional_llm, security) have no
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>auto-review requirements. This is especially critical for the Iron Dome and payment flows.
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>**Proposed Solution**
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>Create `.github/CODEOWNERS`:
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>- `*` → @fuzzywigg (all files)
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>- `hive/security/` → @fuzzywigg
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>- `constitutional_llm/` → @fuzzywigg
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>- `hive/bees/system/treasury_bee.py` → @fuzzywigg
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>- `hive/utils/payment_processor.py` → @fuzzywigg
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>- `.github/` → @fuzzywigg
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>**Acceptance Criteria**
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>- [ ] `.github/CODEOWNERS` is valid
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>- [ ] PRs touching treasury/security files auto-request @fuzzywigg review
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>- [ ] GitHub shows "Changes approved" requirement for protected paths
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>**Agent Surface Routing**
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>| Field | Value |
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>|-------|-------|
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>| Surface | copilot |
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>| Rationale | Config-only, but ownership requires human confirmation |
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>| Priority | P2 — Security governance enforcement |
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>| Branch | `copilot/add-codeowners` |
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>| Dependencies | Issue #1 (LICENSE) |
+</code></pre></div>
+<hr />
+<h4 id="issue-7-copilot-add-githubworkflowscodeqlyml-security-scanning">Issue 7: [copilot] Add .github/workflows/codeql.yml security scanning</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Status: ACTIVE
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Tier: 1
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Created: 2026-04-13
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Owner: copilot
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Source links: .github/workflows/ (no CodeQL), pyproject.toml (Python project)
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>**Problem**
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>No CodeQL workflow exists. Bandit covers Python security linting but misses semantic
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>vulnerabilities (path traversal, injection patterns, insecure deserialization) that CodeQL
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>detects via data-flow analysis. The hive handles LLM inputs, payment webhooks, and crypto
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>transactions — high-value targets requiring deep SAST.
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>**Proposed Solution**
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>Add `.github/workflows/codeql.yml`:
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>- Triggers: push to main, PRs, weekly schedule
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>- Language: python
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>- Queries: security-extended
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>- Upload results to GitHub Security tab
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>**Acceptance Criteria**
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>- [ ] `.github/workflows/codeql.yml` is valid and runs successfully
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>- [ ] CodeQL results appear in GitHub Security &gt; Code scanning alerts
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>- [ ] No HIGH/CRITICAL findings are unaddressed
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>- [ ] Weekly scheduled scan runs
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>**Agent Surface Routing**
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>| Field | Value |
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>|-------|-------|
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>| Surface | copilot |
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>| Rationale | YAML workflow creation, no Python changes |
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>| Priority | P2 — Deep SAST coverage |
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>| Branch | `copilot/add-codeql` |
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h4 id="issue-8-geryon-add-cloud-run-deployment-workflow">Issue 8: [geryon] Add Cloud Run deployment workflow</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Status: PARTIAL — Path B workflow + first live deploy landed; promote discipline / tip-vs-main lag still operator HITL
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Tier: 1
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Created: 2026-04-13
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Owner: geryon
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Source links: README.md, Dockerfile, docs/DEPLOYMENT_HANDOFF.md,
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  .github/workflows/deploy-cloud-run.yml, cloudbuild.provenance.yaml, issue #89 / PR #90
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Edit policy: Agent-editable workflow/docs; do not change WIF/IAM/secrets or force traffic
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>  from agents without explicit HITL. Do NOT commit JSON service-account keys.
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>**Problem**
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>`Dockerfile` and Cloud Run are the production target, but historically only a manual Andon CLI
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>sketch existed in `docs/DEPLOYMENT_HANDOFF.md`. Auto push-to-main deploy is intentionally out of
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>scope for v1 (traffic safety).
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>**Implemented (Path B)**
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>- `.github/workflows/deploy-cloud-run.yml` — `workflow_dispatch` with `dry_run` (default true) and
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>  `promote` (default false); WIF via `google-github-actions/auth`; Cloud Build via
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>  `cloudbuild.provenance.yaml`; deploy by digest with `--no-traffic`;
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>  `--update-env-vars` only for `GIT_SHA,BUILD_ID,BUILD_TIMESTAMP`; `/health` git_sha verify;
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>  promote job gated separately.
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>- Docs updated so the CLI sketch is no longer the only truth.
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>**Remaining HITL**
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>- [x] WIF + GitHub vars live (Path B real deploy succeeded: Actions run `35880833596`)
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>- [x] First real run: `dry_run=false`, `promote=false`; tagged `/health` OK on
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>      `tip-e5271783e763` / revision `backlink-hive-00014-xej`
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>- [ ] Keep promote intentional (`promote=true` or explicit HITL traffic shift); do not
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>      assume merge redeploys. Serving tip as of 2026-09-26 matches `00014-xej` provenance
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>      on the default URL (handoff-era `00011-mrt` @ tag `tip` superseded).
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>- [ ] Rollback reference: `backlink-hive-00010-pr9`
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>**Agent Surface Routing**
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>| Field | Value |
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>|-------|-------|
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>| Surface | geryon |
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>| Rationale | Multi-step GCP workflow with WIF (no SA JSON keys) |
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>| Priority | P2 — CI path exists; IAM still HITL |
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>| Branch | `cursor/cloud-run-ci-deploy-af4d` |
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>| Dependencies | Issue #89 / PR #90 (`/health` provenance) |
+</code></pre></div>
+<hr />
+<h4 id="issue-9-copilot-add-stripe-to-pyprojecttoml-optional-dependencies">Issue 9: [copilot] Add stripe to pyproject.toml optional dependencies</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Status: ACTIVE
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Tier: 1
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Created: 2026-04-13
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Owner: copilot
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Source links: hive/utils/payment_processor.py:7, docs/GAP_ANALYSIS_REPORT.md §2.1, hive/schemas/payment.py
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>**Problem**
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>`payment_processor.py` does `try: import stripe except ImportError: stripe = None` and silently
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>falls back to simulation mode. The `stripe` library is not in any `pyproject.toml` dep group.
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>The `/webhook` endpoint in `main_service.py` will silently fail to verify Stripe signatures in
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>production without this library, creating a security gap.
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>**Proposed Solution**
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>1. Add `stripe&gt;=6.0.0` to `[project.optional-dependencies].payment` group in `pyproject.toml`
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>2. Add `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` to `.env.example`
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>3. Add startup warning to `main_service.py` if stripe is not installed and `STRIPE_SECRET_KEY` is set
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>4. Update `INSTALL.md` or README with `pip install -e ".[payment]"` instructions
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>**Acceptance Criteria**
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>- [ ] `stripe` appears in `pyproject.toml` optional deps
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>- [ ] `pip install -e ".[payment]"` installs stripe
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>- [ ] `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` in `.env.example`
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>- [ ] Startup log warns if stripe is not available but key is configured
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>**Agent Surface Routing**
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>| Field | Value |
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>|-------|-------|
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>| Surface | copilot |
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>| Rationale | Dependency + env template update, no logic changes |
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>| Priority | P2 — Payment security gap |
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>| Branch | `copilot/add-stripe-dependency` |
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>| Dependencies | None (HITL: Stripe credentials from Andrew) |
+</code></pre></div>
+<hr />
+<h4 id="issue-10-geryon-add-supabase-backend-to-storageadapter">Issue 10: [geryon] Add Supabase backend to StorageAdapter</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Status: ACTIVE
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Tier: 1
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Created: 2026-04-13
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Owner: geryon
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Source links: docs/GAP_ANALYSIS_REPORT.md §2.3, hive/utils/storage_adapter.py
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>**Problem**
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>`StorageAdapter` supports `FILE` and `FIRESTORE` backends only. Large media assets (audio files,
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>clips) cannot be reliably stored or retrieved. The gap analysis documents this as critical for
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>end-to-end functionality. `ClipCutterBee` and `DjBee` are blocked from producing real audio output.
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>**Proposed Solution**
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>Add `SUPABASE` storage backend to `StorageAdapter`:
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>1. Add `supabase&gt;=2.0.0` to optional deps in `pyproject.toml` (`[project.optional-dependencies].storage`)
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>2. Implement `_read_supabase()` and `_write_supabase()` using S3-compatible Supabase Storage API
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>3. Support `STORAGE_TYPE=SUPABASE` env var
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>4. Add `SUPABASE_URL` and `SUPABASE_KEY` to `.env.example`
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>5. Add unit tests with mocked Supabase client
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>**Acceptance Criteria**
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>- [ ] `STORAGE_TYPE=SUPABASE` works end-to-end for read/write
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>- [ ] Fallback to `FILE` if supabase package not installed
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>- [ ] Unit tests cover Supabase backend (mocked)
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>- [ ] `.env.example` includes `SUPABASE_URL` and `SUPABASE_KEY`
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>**Agent Surface Routing**
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>| Field | Value |
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>|-------|-------|
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>| Surface | geryon |
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>| Rationale | Multi-file implementation with new backend + tests |
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>| Priority | P2 — Asset storage for real audio pipeline |
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>| Branch | `geryon/add-supabase-storage` |
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>| Dependencies | HITL: Supabase instance credentials from Andrew |
+</code></pre></div>
+<hr />
+<h4 id="issue-11-geryon-add-fastapi-endpoint-tests-for-main_servicepy">Issue 11: [geryon] Add FastAPI endpoint tests for main_service.py</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Status: ACTIVE
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Tier: 1
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Created: 2026-04-13
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>Owner: geryon
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>Source links: hive/main_service.py, tests/ (no main_service tests), pyproject.toml (pytest-asyncio)
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>**Problem**
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>`main_service.py` contains 8+ API endpoints (`/health`, `/status`, `/trigger`, `/spawn`, `/webhook`,
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>`/ws/stream`, static mounts) with zero test coverage. The `/webhook` Stripe endpoint handles payment
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>verification — untested security-critical code.
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>**Proposed Solution**
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>Add `tests/test_main_service.py` using `fastapi.testclient.TestClient`:
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>- Test `/health` endpoint returns 200 with correct schema
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>- Test `/status` returns hive state
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>- Test `/trigger` validates required fields
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>- Test `/webhook` rejects requests without valid Stripe signature
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>- Test WebSocket `/ws/stream` connects and receives data
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>- Mock `QueenOrchestrator` to isolate FastAPI layer
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>**Acceptance Criteria**
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>- [ ] `tests/test_main_service.py` exists with ≥ 8 test cases
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>- [ ] All HTTP status codes are tested (200, 422, 503)
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>- [ ] Stripe webhook signature rejection is tested
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>- [ ] Tests run without real Gemini/Stripe credentials (all mocked)
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>- [ ] Coverage for `main_service.py` reaches ≥ 70%
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>**Agent Surface Routing**
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>| Field | Value |
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>|-------|-------|
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>| Surface | geryon |
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>| Rationale | Multi-endpoint testing with async mocking complexity |
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>| Priority | P2 — Payment and API security coverage |
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>| Branch | `geryon/add-main-service-tests` |
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h4 id="issue-12-geryon-add-queenorchestrator-unit-tests">Issue 12: [geryon] Add QueenOrchestrator unit tests</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Status: ACTIVE
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Tier: 1
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Created: 2026-04-13
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Owner: geryon
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>Source links: hive/queen/orchestrator.py (635 LOC), tests/ (no orchestrator tests)
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>**Problem**
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>`orchestrator.py` (635 lines) is the core coordinator — zero test coverage. It manages bee
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>lifecycle, event dispatch, heartbeat, constitutional gateway integration, and failure tracking.
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>Bugs here silently stop the entire hive.
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>**Proposed Solution**
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>Add `tests/test_orchestrator.py`:
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>- Test bee registration and lookup
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>- Test `spawn_bee()` success and failure paths
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>- Test `trigger_event()` dispatching
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>- Test bee failure tracking and `MAX_BEE_FAILURES` circuit breaker
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>- Test `_load_config()` with missing/invalid config
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>- Mock all external dependencies (filesystem, Gemini, ConstitutionalGateway)
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>**Acceptance Criteria**
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>- [ ] `tests/test_orchestrator.py` exists with ≥ 10 test cases
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>- [ ] Bee failure circuit breaker behavior is tested
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>- [ ] Event dispatch routing is tested
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>- [ ] No real API calls made during tests
+<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>- [ ] Coverage for `orchestrator.py` reaches ≥ 60%
+<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>
+<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>**Agent Surface Routing**
+<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>| Field | Value |
+<a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>|-------|-------|
+<a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>| Surface | geryon |
+<a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a>| Rationale | Complex class with many dependencies, requires careful mocking |
+<a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>| Priority | P2 — Core hive reliability |
+<a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a>| Branch | `geryon/add-orchestrator-tests` |
+<a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h4 id="issue-13-copilot-add-changelogmd">Issue 13: [copilot] Add CHANGELOG.md</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Status: ACTIVE
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Tier: 1
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Created: 2026-04-13
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Owner: copilot
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Source links: pyproject.toml (v1.1.0), docs/roadmap_q1_2026.md, docs/session_manifest_jan_2026.md
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>Edit policy: Agent-editable; version entries require Andrew approval
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>**Problem**
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>No `CHANGELOG.md` exists. v1.1.0 is the current version with no documented history.
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>With multiple external integrations in flight (Stripe, Live365, Supabase), a changelog
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>is critical for operators and investors to track what changed between deployments.
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>**Proposed Solution**
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>Create `CHANGELOG.md` following [Keep a Changelog](https://keepachangelog.com) format:
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>- `[1.1.0]` — Backfill from session manifests and roadmap docs
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>- `[1.0.0]` — Initial hive deployment
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>- `[Unreleased]` — Changes on current branch
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>**Acceptance Criteria**
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>- [ ] `CHANGELOG.md` exists at repo root
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>- [ ] Follows Keep a Changelog format
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>- [ ] v1.1.0 entry documents DJ memory system, constitutional gateway, Gemini 2.0 upgrade
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>- [ ] Linked from README.md
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>**Agent Surface Routing**
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>| Field | Value |
+<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>|-------|-------|
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>| Surface | copilot |
+<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>| Rationale | Documentation aggregation from existing session manifests |
+<a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>| Priority | P2 — Release transparency |
+<a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>| Branch | `copilot/add-changelog` |
+<a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h3 id="phase-3-issues-optimization-p3">PHASE 3 ISSUES (Optimization — P3)</h3>
+<hr />
+<h4 id="issue-14-geryon-add-retrybackoff-logic-to-basebee">Issue 14: [geryon] Add retry/backoff logic to BaseBee</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Status: ACTIVE
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Tier: 1
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Created: 2026-04-13
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Owner: geryon
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Source links: hive/bees/base_bee.py, hive/queen/orchestrator.py (MAX_BEE_FAILURES = 3)
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>**Problem**
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>`BaseBee.run()` has no retry logic. Transient API failures (Gemini rate limits, network blips)
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>immediately count as bee failures against the orchestrator's `MAX_BEE_FAILURES` circuit breaker.
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>After 3 consecutive failures, the bee is blacklisted. This causes unnecessary hive degradation
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>during normal cloud service fluctuations.
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>**Proposed Solution**
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>Add `tenacity` (or simple exponential backoff) to `BaseBee.run()`:
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>- 3 retries with exponential backoff (1s, 2s, 4s)
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>- Retry on `requests.RequestException`, `ConnectionError`, `TimeoutError`
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>- Do NOT retry on `ValidationError` or `ValueError` (logic errors, not transient)
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>- Log each retry attempt at WARNING level
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>**Acceptance Criteria**
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>- [ ] `BaseBee.run()` retries transient failures up to 3 times
+<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>- [ ] Backoff intervals are exponential (not fixed)
+<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>- [ ] Logic errors (ValueError, ValidationError) are NOT retried
+<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>- [ ] Retry behavior is unit tested
+<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>- [ ] `tenacity` or backoff utility added to deps if used
+<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>
+<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>**Agent Surface Routing**
+<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>| Field | Value |
+<a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a>|-------|-------|
+<a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a>| Surface | geryon |
+<a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a>| Rationale | Core base class modification with test updates |
+<a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>| Priority | P3 — Resilience improvement |
+<a id="__codelineno-13-34" name="__codelineno-13-34" href="#__codelineno-13-34"></a>| Branch | `geryon/add-bee-retry-logic` |
+<a id="__codelineno-13-35" name="__codelineno-13-35" href="#__codelineno-13-35"></a>| Dependencies | None |
+</code></pre></div>
+<hr />
+<h4 id="issue-15-geryon-add-json-structured-logging-for-cloud-run">Issue 15: [geryon] Add JSON structured logging for Cloud Run</h4>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Status: ACTIVE
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Tier: 1
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Created: 2026-04-13
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>Owner: geryon
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>Source links: hive/utils/logging.py, Dockerfile (Cloud Run target), README.md
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>Edit policy: Agent-editable
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>**Problem**
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>Current logging uses plain-text `[timestamp][BEE_TYPE] message` format. Cloud Run's log explorer
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>requires JSON-structured logs for filtering, correlation, and Cloud Monitoring integration.
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>Production debugging is impaired when logs cannot be queried by bee type, severity, or trace ID.
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>**Proposed Solution**
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>Update `hive/utils/logging.py` to emit JSON logs when `LOG_FORMAT=JSON` env var is set:
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>```json
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>{"timestamp": "...", "severity": "INFO", "bee": "trend_scout", "message": "..."}
+</code></pre></div>
+- Keep plain-text format as default for local development
+- JSON format for <code>LOG_FORMAT=JSON</code> (set in Dockerfile ENV)
+- Include <code>bee_id</code>, <code>bee_type</code>, <code>trace_id</code> fields</p>
+<p><strong>Acceptance Criteria</strong>
+- [ ] <code>LOG_FORMAT=JSON</code> produces valid JSON log lines
+- [ ] Cloud Run Dockerfile sets <code>LOG_FORMAT=JSON</code>
+- [ ] Plain text format unchanged for local dev (no <code>LOG_FORMAT</code> set)
+- [ ] Log lines include <code>bee_type</code>, <code>severity</code>, <code>message</code>, <code>timestamp</code>
+- [ ] Existing logging tests still pass</p>
+<p><strong>Agent Surface Routing</strong>
+| Field | Value |
+|-------|-------|
+| Surface | geryon |
+| Rationale | Logging infrastructure change with test impact |
+| Priority | P3 — Production observability |
+| Branch | <code>geryon/structured-json-logging</code> |
+| Dependencies | Issue #8 (Cloud Run deployment) |
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>---
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>#### Issue 16: [geryon] Implement Live365 audio stream control in DjBee
+</code></pre></div>
+Status: ACTIVE
+Tier: 1
+Created: 2026-04-13
+Owner: geryon
+Source links: docs/GAP_ANALYSIS_REPORT.md §2.2, hive/bees/content/dj_bee.py, hive/utils/radio_bridge.py
+Edit policy: Agent-editable; Live365 credentials require Andrew approval</p>
+<p><strong>Problem</strong>
+<code>DjBee</code> simulates audio broadcast. <code>hive/utils/radio_bridge.py</code> contains placeholder Live365
+integration. The station cannot actually play music without real Icecast/Live365 encoder control.
+This is the core "actuator" gap — the hive can think but cannot broadcast.</p>
+<p><strong>Proposed Solution</strong>
+Implement <code>hive/utils/radio_bridge.py</code>:
+1. Connect to Live365 Icecast endpoint using <code>LIVE365_STATION_ID</code>, <code>LIVE365_USERNAME</code>, <code>LIVE365_PASSWORD</code>
+2. Implement <code>push_audio(file_path)</code> — stream audio file to encoder
+3. Implement <code>get_stream_status()</code> — check if stream is live
+4. Implement <code>skip_track()</code> — send next-track signal
+5. Update <code>DjBee.work()</code> to call radio_bridge instead of simulating
+6. Add <code>LIVE365_*</code> vars to <code>.env.example</code></p>
+<p><strong>Acceptance Criteria</strong>
+- [ ] <code>radio_bridge.py</code> connects to a real Icecast endpoint (or Live365 API)
+- [ ] <code>DjBee</code> calls <code>radio_bridge.push_audio()</code> when streaming is enabled
+- [ ] Simulation mode remains available via <code>STREAM_MODE=SIMULATE</code> env var
+- [ ] Integration test (marked <code>@pytest.mark.integration</code>) tests with real credentials
+- [ ] Graceful fallback to simulation if Live365 unreachable</p>
+<p><strong>Agent Surface Routing</strong>
+| Field | Value |
+|-------|-------|
+| Surface | geryon |
+| Rationale | Complex audio streaming integration, requires Live365 API research |
+| Priority | P3 (P1 after PikoClaw demo requirements confirmed by Andrew) |
+| Branch | <code>geryon/live365-stream-control</code> |
+| Dependencies | HITL: Live365 credentials and station ID from Andrew |
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>---
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>## Phase 5: Roadmap Tracker
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>### Backlink Broadcast — Development Roadmap 2026
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>| Phase | Issues | Surfaces | Exit Criteria |
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>|-------|--------|----------|---------------|
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>| **Phase 1: Foundation** | #1 LICENSE, #2 SECURITY.md, #3 CI Gates, #4 Dependabot, #5 Secrets Baseline | copilot, geryon | All P1 issues closed; CI gates enforced; repo legally compliant |
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>| **Phase 2: Hardening** | #6 CODEOWNERS, #7 CodeQL, #8 Cloud Run Deploy, #9 Stripe Dep, #10 Supabase, #11 API Tests, #12 Orchestrator Tests, #13 CHANGELOG | copilot, geryon | 70%+ coverage on critical paths; automated deployments working; payment infrastructure live |
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>| **Phase 3: Optimization** | #14 Retry Logic, #15 JSON Logging, #16 Live365 Stream | geryon | Real audio broadcasting; Cloud Run logs queryable; hive self-heals transient failures |
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>### Surface Distribution
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>| Surface | Issues | Count |
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>|---------|--------|-------|
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>| copilot | #1, #2, #4, #5, #6, #7, #9, #13 | 8 |
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>| geryon | #3, #8, #10, #11, #12, #14, #15, #16 | 8 |
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>| human (Andrew) | HITL items (Live365, Supabase, Stripe credentials, branch protection) | — |
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>### Dependency Graph
+</code></pre></div></p>
+<h1 id="1-license-6-codeowners">1 LICENSE ──────────────────────────────► #6 CODEOWNERS</h1>
+<h1 id="2-securitymd-standalone">2 SECURITY.md ──────────────────────────► (standalone)</h1>
+<h1 id="3-ci-gates-8-cloud-run-deploy">3 CI Gates ─────────────────────────────► #8 Cloud Run Deploy</h1>
+<h1 id="4-dependabot-standalone">4 Dependabot ───────────────────────────► (standalone)</h1>
+<h1 id="5-secrets-baseline-standalone">5 Secrets Baseline ─────────────────────► (standalone)</h1>
+<h1 id="9-stripe-dep-11-api-tests-webhook">9 Stripe Dep ──────────────────────────► #11 API Tests (webhook)</h1>
+<h1 id="10-supabase-hitl-gate">10 Supabase ────────────────────────────► (HITL gate)</h1>
+<h1 id="8-cloud-run-deploy-15-json-logging">8 Cloud Run Deploy ─────────────────────► #15 JSON Logging</h1>
+<h1 id="16-live365-hitl-gate-andrew">16 Live365 ─────────────────────────────► (HITL gate: Andrew)</h1>
+<p>```</p>
+<h3 id="governing-principles">Governing Principles</h3>
+<ol>
+<li><strong>Stigmergy First</strong>: All bee changes must communicate via honeycomb, never direct.</li>
+<li><strong>Constitutional Compliance</strong>: Every new bee must integrate <code>ConstitutionalGateway</code>.</li>
+<li><strong>4th Wall Integrity</strong>: No implementation details leak into public DJ outputs.</li>
+<li><strong>Security Gates Before Features</strong>: Phase 1 must complete before Phase 2 merges.</li>
+<li><strong>PikoClaw Demo Priority</strong>: Features needed for Panathenea (May 27-29, 2026) are P1 regardless of phase.</li>
+</ol>
+<hr />
+<h2 id="phase-6-cross-system-documentation">Phase 6: Cross-System Documentation</h2>
+<h3 id="repo-artifacts-created-this-session">Repo Artifacts Created This Session</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Action</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LICENSE</code></td>
+<td>Created</td>
+<td>MIT license file (was missing, declared in pyproject.toml)</td>
+</tr>
+<tr>
+<td><code>SECURITY.md</code></td>
+<td>Created</td>
+<td>Vulnerability disclosure policy</td>
+</tr>
+<tr>
+<td><code>.github/pull_request_template.md</code></td>
+<td>Created</td>
+<td>Consistent PR hygiene</td>
+</tr>
+<tr>
+<td><code>.github/dependabot.yml</code></td>
+<td>Created</td>
+<td>Automated dependency updates</td>
+</tr>
+<tr>
+<td><code>.secrets.baseline</code></td>
+<td>❌ Not created (absent on tip)</td>
+<td>detect-secrets baseline still missing; Issue #5 remains open</td>
+</tr>
+<tr>
+<td><code>docs/agent-hydration.md</code></td>
+<td>Created</td>
+<td>This hydration report</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hitl-required-andrew">HITL Required (Andrew)</h3>
+<p>These items cannot proceed without human action:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Item</th>
+<th>Why HITL</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Stripe credentials</strong></td>
+<td>Financial/API key setup</td>
+<td>CommerceBee production mode</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Live365 station ID + credentials</strong></td>
+<td>External account access</td>
+<td>Real audio broadcasting</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Supabase instance URL + key</strong></td>
+<td>External account setup</td>
+<td>Media asset storage</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Branch protection rules</strong></td>
+<td>GitHub settings UI</td>
+<td>Enforce CI gates on merges</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>PikoClaw demo feature list</strong></td>
+<td>Product direction</td>
+<td>P1 priority assignment</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>WIF + GCP deploy SA for Cloud Run</strong> (<code>WIF_PROVIDER</code>, <code>WIF_SERVICE_ACCOUNT</code>, project/region/service vars)</td>
+<td>IAM/security — no JSON keys in repo</td>
+<td><code>deploy-cloud-run.yml</code> can leave dry-run / fail-closed until set; merge ≠ deploy</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recommended-next-action">Recommended Next Action</h3>
+<p><strong>Start with Issue #3</strong> (<code>[geryon] Fix CI: make Bandit and mypy blocking</code>) on the <code>geryon</code> surface.
+This is the single most impactful foundation change — it converts the CI from decorative to
+enforcing, which makes all subsequent quality improvements meaningful.</p>
+<p><strong>Parallel track</strong>: Andrew completes the HITL items (Stripe, Live365, Supabase credentials) to
+unblock the Phase 2 payment + audio integration work.</p>
+<hr />
+<p><em>Generated by GitHub Copilot agent | fuzzywigg/Backlink | 2026-04-13</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

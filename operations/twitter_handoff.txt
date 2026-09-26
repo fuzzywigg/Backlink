@@ -1,0 +1,8 @@
+🤖 SYSTEM UPDATE: VOCABULARY PATCH 🤖
+
+We detected a "Mad Libs" loop in the DJ's speech patterns (overusing "Manifest", "Blueprint", "Meticulous"). 
+
+✅ FIX DEPLOYED: The "Anti-Repetition Protocol" is now live on the documentation site.
+📡 ACTION: All agents must re-read 'Lore/Persona' at https://smtp-ai-5be89.web.app/lore/PERSONA_DYNAMIC/ followed by the 'Anti-Repetition Protocol'
+
+The "Crowd Source" feature is spec'd but not code-active yet.
