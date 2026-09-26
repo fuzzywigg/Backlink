@@ -94,7 +94,7 @@
 
 | Category | EXISTS | MISSING |
 |----------|--------|---------|
-| Secret handling | `.gitignore`, `.env.example`, HMAC signing | `.secrets.baseline` (**now created**), SECURITY.md (**now created**) |
+| Secret handling | `.gitignore`, `.env.example`, HMAC signing | `.secrets.baseline` (still absent; pre-commit references it), SECURITY.md (**now created**) |
 | Input validation | `safety.py`, `constitutional_gateway.py`, `classifier_defense_bee.py` | — |
 | Stripe webhook HMAC | `payment_processor.py` (simulation mode without key) | `stripe` library in `pyproject.toml` |
 | CodeQL | ❌ | `.github/workflows/codeql.yml` |
@@ -864,7 +864,7 @@ Implement `hive/utils/radio_bridge.py`:
 | `SECURITY.md` | Created | Vulnerability disclosure policy |
 | `.github/pull_request_template.md` | Created | Consistent PR hygiene |
 | `.github/dependabot.yml` | Created | Automated dependency updates |
-| `.secrets.baseline` | Created | detect-secrets pre-commit hook baseline |
+| `.secrets.baseline` | ❌ Not created (absent on tip) | detect-secrets baseline still missing; Issue #5 remains open |
 | `docs/agent-hydration.md` | Created | This hydration report |
 
 ### HITL Required (Andrew)
