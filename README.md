@@ -277,6 +277,7 @@ python -m hive.queen.orchestrator run
 The Hive is deployed on **Google Cloud Run** using a containerized architecture with Firestore Native Mode for state.
 
 * **Production URL**: `https://backlink-hive-123509617840.us-central1.run.app`
+* **How tip is deployed**: Manual `workflow_dispatch` only (`.github/workflows/deploy-cloud-run.yml`). Merge ≠ deploy; new revisions default to 0% traffic. Image/traffic tags use `tip-<12-char-sha>`. Confirm what is live with `GET /health` (`git_sha`, optional `build_id` / `build_time`) — see [DEPLOYMENT_HANDOFF.md](./docs/DEPLOYMENT_HANDOFF.md).
 * **Docs**: See [DEPLOYMENT_HANDOFF.md](./docs/DEPLOYMENT_HANDOFF.md) for keys, environment variables, and redeployment steps.
 
 ### External Service Integration

@@ -220,6 +220,7 @@ The Hive is deployed on **Google Cloud Run** using a containerized architecture 
 | Parameter | Value |
 |-----------|-------|
 | **Production URL** | `https://backlink-hive-123509617840.us-central1.run.app` |
+| **How tip is deployed** | Manual `workflow_dispatch` only (`deploy-cloud-run.yml`); merge ≠ deploy; tags `tip-<12-char-sha>`; confirm via `/health` (`git_sha`, `build_id`, `build_time`) |
 | **Documentation** | [BL-TECH-001](DEPLOYMENT_HANDOFF.md) |
 
 ### 9.2 Phase 2: Ecosystem Integration
