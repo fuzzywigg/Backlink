@@ -84,10 +84,10 @@
 |----------|--------|---------|
 | CLAUDE.md | ✅ `CLAUDE.md` | — |
 | CONTRIBUTING.md | ✅ `CONTRIBUTING.md` | — |
-| SECURITY.md | ❌ | ✅ **Now created** |
-| LICENSE | ❌ | ✅ **Now created** |
+| SECURITY.md | ✅ `SECURITY.md` | — |
+| LICENSE | ✅ `LICENSE` | — |
 | CODEOWNERS | ❌ | `.github/CODEOWNERS` |
-| PR Template | ❌ | ✅ **Now created** |
+| PR Template | ✅ `.github/pull_request_template.md` | — |
 | AGENTS.md | ✅ `docs/lore/AGENTS.md` | — |
 
 ### Security
@@ -117,15 +117,15 @@
 
 | Question | Answer | Source |
 |----------|--------|--------|
-| Does a LICENSE file exist? | No — only declared in pyproject.toml | File system |
-| Is there a SECURITY.md? | No | File system |
+| Does a LICENSE file exist? | Yes — `LICENSE` at repo root (MIT) | File system |
+| Is there a SECURITY.md? | Yes — `SECURITY.md` at repo root | File system |
 | Is Bandit CI blocking? | No — `continue-on-error: true` | `.github/workflows/ci.yml:96` |
 | Is mypy CI blocking? | No — `continue-on-error: true` | `.github/workflows/ci.yml:36` |
 | Is stripe in deps? | No — optional import only | `pyproject.toml`, `payment_processor.py:7` |
 | Does .secrets.baseline exist? | No — pre-commit hook references it | File system |
-| Does dependabot.yml exist? | No | `.github/` contents |
+| Does dependabot.yml exist? | Yes — `.github/dependabot.yml` | File system |
 | Is there a Cloud Run deploy workflow? | Yes — `deploy-cloud-run.yml` (manual dispatch; dry_run default; no auto-promote). WIF vars live (first real deploy run `35880833596` → revision `backlink-hive-00014-xej` / tag `tip-e5271783e763`). CF Pages / GoDaddy / docs deploys remain separate. | `.github/workflows/deploy-cloud-run.yml`, `cloudbuild.provenance.yaml`, `docs/DEPLOYMENT_HANDOFF.md` |
-| Is there a PR template? | No | `.github/` contents |
+| Is there a PR template? | Yes — `.github/pull_request_template.md` | File system |
 | Is Live365 streaming implemented? | No — DjBee simulates it | `docs/GAP_ANALYSIS_REPORT.md`, `hive/bees/content/dj_bee.py` |
 | Is Supabase implemented? | No — FILE + FIRESTORE only | `hive/utils/storage_adapter.py` |
 | Does orchestrator.py have tests? | No | `tests/` and `hive/tests/` scans |
