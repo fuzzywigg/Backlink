@@ -64,7 +64,9 @@ class TestParseFullFile:
         assert entries[1][0] == "10:05:00"
         assert entries[1][1]["song_info"] == "A - B"
 
-    def test_skips_empty_and_malformed_blocks(self, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    def test_skips_empty_and_malformed_blocks(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+    ) -> None:
         log = tmp_path / "messy.txt"
         log.write_text(
             "[11:00:00]\n"
