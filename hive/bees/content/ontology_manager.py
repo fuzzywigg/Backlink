@@ -14,19 +14,26 @@ try:
     DSPY_AVAILABLE = True
 except ImportError:
     DSPY_AVAILABLE = False
+    dspy = None  # type: ignore[assignment]
     print("WARNING: DSPy not found. OntologyManager running in fallback mode.")
 
 
-class PersonaAdapter(dspy.Signature):
-    """Adapts a core message to a specific persona and pacing."""
+if DSPY_AVAILABLE:
 
-    core_message = dspy.InputField(desc="The neutral facts to convey")
-    persona_desc = dspy.InputField(desc="Description of the target persona")
-    constraints = dspy.InputField(desc="Forbidden words and stylistic constraints")
+    class PersonaAdapter(dspy.Signature):
+        """Adapts a core message to a specific persona and pacing."""
 
-    adapted_script = dspy.OutputField(
-        desc="The rewritten script matching variable linguistic patterns"
-    )
+        core_message = dspy.InputField(desc="The neutral facts to convey")
+        persona_desc = dspy.InputField(desc="Description of the target persona")
+        constraints = dspy.InputField(desc="Forbidden words and stylistic constraints")
+
+        adapted_script = dspy.OutputField(
+            desc="The rewritten script matching variable linguistic patterns"
+        )
+
+else:
+    # Placeholder so the module stays importable in fallback / unit-test mode.
+    PersonaAdapter = None  # type: ignore[misc, assignment]
 
 
 class OntologyManager:
