@@ -178,7 +178,7 @@ jobs:
 
       - name: Set up gcloud
         if: steps.gate.outputs.skipped_deploy != 'true'
-        uses: google-github-actions/setup-gcloud@v2
+        uses: google-github-actions/setup-gcloud@v3
 
       - name: Cloud Build (provenance Dockerfile args)
         if: steps.gate.outputs.skipped_deploy != 'true'
@@ -292,7 +292,7 @@ jobs:
           service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
 
       - name: Set up gcloud
-        uses: google-github-actions/setup-gcloud@v2
+        uses: google-github-actions/setup-gcloud@v3
 
       - name: Shift traffic to new revision
         shell: bash
