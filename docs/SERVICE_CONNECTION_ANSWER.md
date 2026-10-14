@@ -83,24 +83,24 @@ firebase deploy --only hosting --project smtp-ai-5be89
 
 I've created these files to help you connect everything:
 
-1. **[docs/EXTERNAL_SERVICE_INTEGRATION.md](./docs/EXTERNAL_SERVICE_INTEGRATION.md)**
+1. **[docs/EXTERNAL_SERVICE_INTEGRATION.md](./EXTERNAL_SERVICE_INTEGRATION.md)**
    - Complete guide to all integrations
    - Architecture options
    - Environment variable reference
    - Troubleshooting tips
 
-2. **[docs/QUICK_START_EXTERNAL_SERVICES.md](./docs/QUICK_START_EXTERNAL_SERVICES.md)**  
+2. **[docs/QUICK_START_EXTERNAL_SERVICES.md](./QUICK_START_EXTERNAL_SERVICES.md)**
    - Step-by-step checklist format
    - Exact commands to run
    - Links to service dashboards
    - Verification steps
 
-3. **[core_utils/cloudflare_dns.py](./core_utils/cloudflare_dns.py)**
+3. **[core_utils/cloudflare_dns.py](../core_utils/cloudflare_dns.py)**
    - Python utility for Cloudflare DNS management
    - Ready to use once you provide credentials
    - CLI interface for common tasks
 
-4. **[config/target_apis.json](./config/target_apis.json)**
+4. **[config/target_apis.json](../config/target_apis.json)**
    - Updated with current status of all integrations
    - Shows what's configured vs. what needs setup
 

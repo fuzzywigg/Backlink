@@ -8,8 +8,9 @@
 ```python
 ARTIST_MINIMUM_SHARE = 0.50  # 50% minimum
 
+
 def validate_artist_share(deal: Dict) -> bool:
-    artist_share = deal['artist_revenue'] / deal['total_revenue']
+    artist_share = deal["artist_revenue"] / deal["total_revenue"]
     if artist_share < ARTIST_MINIMUM_SHARE:
         return False  # BLOCK
     return True  # APPROVE

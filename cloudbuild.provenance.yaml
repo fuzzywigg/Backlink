@@ -1,0 +1,35 @@
+# Cloud Build config for Backlink Hive images with non-secret provenance.
+# Used by .github/workflows/deploy-cloud-run.yml — do not put secrets in substitutions.
+#
+# Substitutions (passed by the workflow):
+#   _GIT_SHA          Full or short git commit SHA (baked into image ENV)
+#   _BUILD_ID         CI build / run identifier
+#   _BUILD_TIMESTAMP  UTC timestamp string
+#   _IMAGE_TAG        Image tag, e.g. tip-<12-char-sha>
+
+substitutions:
+  _GIT_SHA: "unknown"
+  _BUILD_ID: ""
+  _BUILD_TIMESTAMP: ""
+  _IMAGE_TAG: "tip-local"
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: build
+    args:
+      - build
+      - --build-arg
+      - GIT_SHA=${_GIT_SHA}
+      - --build-arg
+      - BUILD_ID=${_BUILD_ID}
+      - --build-arg
+      - BUILD_TIMESTAMP=${_BUILD_TIMESTAMP}
+      - -t
+      - gcr.io/$PROJECT_ID/backlink-hive:${_IMAGE_TAG}
+      - .
+
+images:
+  - gcr.io/$PROJECT_ID/backlink-hive:${_IMAGE_TAG}
+
+options:
+  logging: CLOUD_LOGGING_ONLY

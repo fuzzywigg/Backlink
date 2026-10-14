@@ -52,13 +52,15 @@ This is your personality, voice, and operational guide. Follow it precisely.
 
 ### Option 1: Direct Prompt Injection
 ```python
-with open('Agent.md', 'r') as f:
+with open("Agent.md", "r") as f:
     agent_instructions = f.read()
 
-response = llm.chat([
-    {"role": "system", "content": agent_instructions},
-    {"role": "user", "content": "Start the morning show"}
-])
+response = llm.chat(
+    [
+        {"role": "system", "content": agent_instructions},
+        {"role": "user", "content": "Start the morning show"},
+    ]
+)
 ```
 
 ### Option 2: Context Caching (Recommended)
@@ -68,22 +70,14 @@ import anthropic
 
 client = anthropic.Anthropic()
 
-with open('Agent.md', 'r') as f:
+with open("Agent.md", "r") as f:
     agent_instructions = f.read()
 
 message = client.messages.create(
     model="claude-3-5-sonnet-20241022",
     max_tokens=1024,
-    system=[
-        {
-            "type": "text",
-            "text": agent_instructions,
-            "cache_control": {"type": "ephemeral"}
-        }
-    ],
-    messages=[
-        {"role": "user", "content": "Start the evening show"}
-    ]
+    system=[{"type": "text", "text": agent_instructions, "cache_control": {"type": "ephemeral"}}],
+    messages=[{"role": "user", "content": "Start the evening show"}],
 )
 ```
 
@@ -92,15 +86,11 @@ message = client.messages.create(
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationChain
 
-with open('Agent.md', 'r') as f:
+with open("Agent.md", "r") as f:
     agent_instructions = f.read()
 
 memory = ConversationBufferMemory()
-chain = ConversationChain(
-    llm=your_llm,
-    memory=memory,
-    system_message=agent_instructions
-)
+chain = ConversationChain(llm=your_llm, memory=memory, system_message=agent_instructions)
 ```
 
 ---

@@ -18,5 +18,7 @@ The project is deployed as a single container on **Google Cloud Run**.
 
 ### Deployment
 
-- **GitKraken / GitHub Actions**: (Implicit) CI/CD pipeline deploys on push to `main`.
-- **Manual**: `gcloud run deploy` (See `docs/DEPLOYMENT_HANDOFF.md`).
+- **GitHub Actions**: `.github/workflows/deploy-cloud-run.yml` — `workflow_dispatch` only
+  (no push-to-`main` auto-deploy). Defaults: `dry_run=true`, `promote=false` (0% traffic).
+  Image/traffic tag form: `tip-<12-char-sha>`. Confirm live tip via `/health` provenance.
+- **Manual emergency**: `gcloud run deploy` sketch in `docs/DEPLOYMENT_HANDOFF.md`.

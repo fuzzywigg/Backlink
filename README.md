@@ -1,3 +1,13 @@
+# Backlink
+
+Private workspace dump for a planned AI radio persona ("Backlink Broadcast"). The tree is large because of song/library/frontend leftovers.
+
+**This is not a live product.** `SYSTEM STATUS: ONLINE` below is roleplay, not a dashboard. There is no public UI claimed from this tree. The sibling Worker is [`fuzzywigg/Backlink_Facelift`](https://github.com/fuzzywigg/Backlink_Facelift).
+
+The text after the rule is the in-repo DJ persona brief. Treat it as fiction / ops notes.
+
+---
+
 # MASTER BOOT RECORD: BACKLINK BROADCAST
 
 **SYSTEM STATUS:** ONLINE
@@ -267,6 +277,7 @@ python -m hive.queen.orchestrator run
 The Hive is deployed on **Google Cloud Run** using a containerized architecture with Firestore Native Mode for state.
 
 * **Production URL**: `https://backlink-hive-123509617840.us-central1.run.app`
+* **How tip is deployed**: Manual `workflow_dispatch` only (`.github/workflows/deploy-cloud-run.yml`). Merge ≠ deploy; new revisions default to 0% traffic. Image/traffic tags use `tip-<12-char-sha>`. Confirm what is live with `GET /health` (`git_sha`, optional `build_id` / `build_time`) — see [DEPLOYMENT_HANDOFF.md](./docs/DEPLOYMENT_HANDOFF.md).
 * **Docs**: See [DEPLOYMENT_HANDOFF.md](./docs/DEPLOYMENT_HANDOFF.md) for keys, environment variables, and redeployment steps.
 
 ### External Service Integration
@@ -288,7 +299,7 @@ The project integrates with multiple external services for hosting, DNS, and dep
 
 The Hive is preparing to connect with the broader Andon FM ecosystem:
 
-1. **Stripe**: Real-time song purchasing via `payment_intent` webhooks. (See `Brain/STRIPE_INTEGRATION_SPEC.md`)
+1. **Stripe**: Real-time song purchasing via `payment_intent` webhooks. (See [`docs/STRIPE_INTEGRATION_SPEC.md`](./docs/STRIPE_INTEGRATION_SPEC.md))
 2. **Live365**: Direct encoder control for physical audio output.
 3. **Supabase**: S3-compatible asset storage for the music library.
 

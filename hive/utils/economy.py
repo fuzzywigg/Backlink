@@ -15,7 +15,7 @@ from typing import Any
 # CONFIGURATION
 # ─────────────────────────────────────────────────────────────
 
-PRINCIPAL_ARCHITECTS = ["mr_pappas", "fuzzywigg", "nft2me", "smtp_eth_dev"]
+PRINCIPAL_ARCHITECTS = ["fuzzywigg", "nft2me", "smtp_eth_dev"]
 
 TRUSTED_EMAILS = ["fuzzywigg@hotmail.com", "andrew.pappas@nft2.me", "apappas.pu@gmail.com"]
 

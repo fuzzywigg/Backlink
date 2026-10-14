@@ -313,7 +313,5 @@ class HoneycombRepository:
             >>> events = repos.get_repository("events")
         """
         if collection_name not in self._repositories:
-            self._repositories[collection_name] = Repository(
-                collection_name, self.honeycomb_path
-            )
+            self._repositories[collection_name] = Repository(collection_name, self.honeycomb_path)
         return self._repositories[collection_name]

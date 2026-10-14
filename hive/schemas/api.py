@@ -33,6 +33,18 @@ class HealthCheckResponse(BaseSchema):
     version: str = Field(..., description="API version")
     uptime_seconds: float = Field(..., ge=0, description="Service uptime in seconds")
     hive_status: dict[str, Any] = Field(default_factory=dict, description="Hive operational status")
+    git_sha: str = Field(
+        default="unknown",
+        description="Non-secret git/source SHA from build env (GIT_SHA/SOURCE_COMMIT/COMMIT_SHA)",
+    )
+    build_id: str | None = Field(
+        default=None,
+        description="Optional CI/CD build identifier from BUILD_ID",
+    )
+    build_time: str | None = Field(
+        default=None,
+        description="Optional build timestamp from BUILD_TIME or BUILD_TIMESTAMP",
+    )
 
 
 class BeeSpawnRequest(BaseSchema):

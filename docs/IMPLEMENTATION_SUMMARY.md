@@ -217,19 +217,10 @@ strict_manager = ValidatedStateManager(strict=True)
 from hive.schemas import TaskSchema, IntelSchema
 
 # Validate task
-task = TaskSchema(
-    task_id="task_123",
-    bee_type="trend_scout",
-    priority="high"
-)
+task = TaskSchema(task_id="task_123", bee_type="trend_scout", priority="high")
 
 # Validate intel
-intel = IntelSchema(
-    intel_id="intel_456",
-    source="scout",
-    category="trends",
-    data={"info": "value"}
-)
+intel = IntelSchema(intel_id="intel_456", source="scout", category="trends", data={"info": "value"})
 ```
 
 ## Environment Variables

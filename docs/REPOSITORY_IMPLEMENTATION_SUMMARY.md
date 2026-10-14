@@ -152,21 +152,21 @@ Works with existing storage configuration:
 ### 1. Listener Tracking
 ```python
 listeners = Repository("listeners")
-listener_id = listeners.create({
-    "username": "node_42",
-    "first_seen": datetime.now(timezone.utc).isoformat(),
-    "interactions": 0
-})
+listener_id = listeners.create(
+    {"username": "node_42", "first_seen": datetime.now(timezone.utc).isoformat(), "interactions": 0}
+)
 ```
 
 ### 2. Event Logging
 ```python
 events = Repository("events")
-events.create({
-    "type": "song_played",
-    "timestamp": datetime.now(timezone.utc).isoformat(),
-    "data": {"title": "Track", "artist": "Artist"}
-})
+events.create(
+    {
+        "type": "song_played",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "data": {"title": "Track", "artist": "Artist"},
+    }
+)
 ```
 
 ### 3. Caching
