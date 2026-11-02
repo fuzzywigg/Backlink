@@ -197,11 +197,18 @@ class Gemini3Client:
 
         target_model = model or self.model_name
         host = "generativelanguage.googleapis.com"
-        path = f"/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key={self.client.api_key}"
+        # Send the API key in a header, never in the URL query string: URLs end up
+        # in proxy/server logs and in exception messages.
+        path = "/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent"
         url = f"wss://{host}{path}"
+        headers = {"x-goog-api-key": self.client.api_key}
 
         try:
-            async with websockets.connect(url) as ws:
+            try:
+                conn = websockets.connect(url, additional_headers=headers)
+            except TypeError:  # websockets < 14 legacy client
+                conn = websockets.connect(url, extra_headers=headers)
+            async with conn as ws:
                 setup_msg = {
                     "setup": {
                         "model": f"models/{target_model}",
@@ -211,5 +218,5 @@ class Gemini3Client:
                 await ws.send(json.dumps(setup_msg))
                 yield ws
         except Exception as e:
-            print(f"Gemini Live Connect Error: {e}")
+            print(f"Gemini Live Connect Error: {type(e).__name__}")
             raise
