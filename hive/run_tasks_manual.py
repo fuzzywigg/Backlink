@@ -35,9 +35,7 @@ def main():
             duration_str = f" in {duration:.2f}s"
 
         print(
-            f"{color}{status_text} {Colors.ENDC} {Colors.CYAN}{bee_type}{Colors.ENDC} -> Task: {
-                task_id
-            }{duration_str}"
+            f"{color}{status_text} {Colors.ENDC} {Colors.CYAN}{bee_type}{Colors.ENDC} -> Task: {task_id}{duration_str}"
         )
 
         error = result.get("error")
@@ -63,9 +61,7 @@ def main():
     }
 
     print(
-        f"\n🔎 Found {Colors.BOLD}{len(pending_tasks)}{Colors.ENDC} pending tasks and {Colors.BOLD}{
-            len(recurring_tasks)
-        }{Colors.ENDC} recurring tasks."
+        f"\n🔎 Found {Colors.BOLD}{len(pending_tasks)}{Colors.ENDC} pending tasks and {Colors.BOLD}{len(recurring_tasks)}{Colors.ENDC} recurring tasks."
     )
 
     stats = {"success": 0, "failed": 0, "skipped": 0}
@@ -104,9 +100,7 @@ def main():
 
         if not mapped_bee:
             print(
-                f"{Colors.WARNING}⚠️  Warning: Could not map bee type '{bee_short_type}' for task '{
-                    task_id
-                }'. Skipping.{Colors.ENDC}"
+                f"{Colors.WARNING}⚠️  Warning: Could not map bee type '{bee_short_type}' for task '{task_id}'. Skipping.{Colors.ENDC}"
             )
             stats["skipped"] += 1
             continue

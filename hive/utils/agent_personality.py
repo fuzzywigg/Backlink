@@ -288,10 +288,10 @@ class AgentPersonality:
         """
         anti_rep = self.get_anti_repetition_rules()
 
-        # Extract phrases marked with ❌
+        # Extract phrases marked with ❌ (MULTILINE so `$` matches each line end)
         forbidden = []
         pattern = r'❌\s*["\']?([^"\'\n]+?)["\']?(?:\s*[/|]|$)'
-        matches = re.findall(pattern, anti_rep)
+        matches = re.findall(pattern, anti_rep, flags=re.MULTILINE)
 
         for match in matches:
             phrase = match.strip()

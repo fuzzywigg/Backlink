@@ -154,9 +154,7 @@ class WebSearch:
 
         results = []
         for _ in range(limit):
-            company = f"{random.choice(prefixes)}{
-                random.choice(['Lab', 'Hub', 'Works', 'Box', 'ify', 'ly'])
-            }"
+            company = f"{random.choice(prefixes)}{random.choice(['Lab', 'Hub', 'Works', 'Box', 'ify', 'ly'])}"
             domain = f"www.{company.lower()}.com"
 
             results.append(

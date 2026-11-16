@@ -62,7 +62,7 @@
 | Test | 3-way matrix (3.10/3.11/3.12), Codecov upload | — |
 | Security | Bandit (`continue-on-error: true` ⚠️) | Should be blocking; no CodeQL |
 | Build | `python -m build` + twine check | — |
-| Deployment | `deploy_godaddy.yml` (docs), `deploy_docs.yml` (GH Pages) | Cloud Run deployment workflow missing |
+| Deployment | `deploy_godaddy.yml` (docs), `deploy_docs.yml` (GH Pages), `deploy-cloudflare-pages.yml` (CF Pages), `deploy-cloud-run.yml` (Cloud Run, `workflow_dispatch`, no auto-promote; WIF vars live as of run `35880833596`) | Merge ≠ deploy; promote remains intentional HITL |
 | Dependency updates | None | `dependabot.yml` (**now created**) |
 
 ### Documentation
@@ -72,7 +72,7 @@
 | README | ✅ Rich, 12 KB | — |
 | CLAUDE.md | ✅ Comprehensive | — |
 | Agent.md | ✅ Full DJ instruction file (20 KB) | — |
-| SWARM_ROLES.md | ✅ `hive/honeycomb/SWARM_ROLES.md` | — |
+| SWARM_ROLES.md | ✅ `hive/SWARM_ROLES.md` | — |
 | GAP_ANALYSIS | ✅ `docs/GAP_ANALYSIS_REPORT.md` | — |
 | Changelog | ❌ | `CHANGELOG.md` |
 | API docs | mkdocs partial | Auto-generated API reference |
@@ -84,17 +84,17 @@
 |----------|--------|---------|
 | CLAUDE.md | ✅ `CLAUDE.md` | — |
 | CONTRIBUTING.md | ✅ `CONTRIBUTING.md` | — |
-| SECURITY.md | ❌ | ✅ **Now created** |
-| LICENSE | ❌ | ✅ **Now created** |
+| SECURITY.md | ✅ `SECURITY.md` | — |
+| LICENSE | ✅ `LICENSE` | — |
 | CODEOWNERS | ❌ | `.github/CODEOWNERS` |
-| PR Template | ❌ | ✅ **Now created** |
+| PR Template | ✅ `.github/pull_request_template.md` | — |
 | AGENTS.md | ✅ `docs/lore/AGENTS.md` | — |
 
 ### Security
 
 | Category | EXISTS | MISSING |
 |----------|--------|---------|
-| Secret handling | `.gitignore`, `.env.example`, HMAC signing | `.secrets.baseline` (**now created**), SECURITY.md (**now created**) |
+| Secret handling | `.gitignore`, `.env.example`, HMAC signing | `.secrets.baseline` (still absent; pre-commit references it), SECURITY.md (**now created**) |
 | Input validation | `safety.py`, `constitutional_gateway.py`, `classifier_defense_bee.py` | — |
 | Stripe webhook HMAC | `payment_processor.py` (simulation mode without key) | `stripe` library in `pyproject.toml` |
 | CodeQL | ❌ | `.github/workflows/codeql.yml` |
@@ -117,15 +117,15 @@
 
 | Question | Answer | Source |
 |----------|--------|--------|
-| Does a LICENSE file exist? | No — only declared in pyproject.toml | File system |
-| Is there a SECURITY.md? | No | File system |
+| Does a LICENSE file exist? | Yes — `LICENSE` at repo root (MIT) | File system |
+| Is there a SECURITY.md? | Yes — `SECURITY.md` at repo root | File system |
 | Is Bandit CI blocking? | No — `continue-on-error: true` | `.github/workflows/ci.yml:96` |
 | Is mypy CI blocking? | No — `continue-on-error: true` | `.github/workflows/ci.yml:36` |
 | Is stripe in deps? | No — optional import only | `pyproject.toml`, `payment_processor.py:7` |
 | Does .secrets.baseline exist? | No — pre-commit hook references it | File system |
-| Does dependabot.yml exist? | No | `.github/` contents |
-| Is there a Cloud Run deploy workflow? | No — only GoDaddy + GH Pages | `.github/workflows/` |
-| Is there a PR template? | No | `.github/` contents |
+| Does dependabot.yml exist? | Yes — `.github/dependabot.yml` | File system |
+| Is there a Cloud Run deploy workflow? | Yes — `deploy-cloud-run.yml` (manual dispatch; dry_run default; no auto-promote). WIF vars live (first real deploy run `35880833596` → revision `backlink-hive-00014-xej` / tag `tip-e5271783e763`). CF Pages / GoDaddy / docs deploys remain separate. | `.github/workflows/deploy-cloud-run.yml`, `cloudbuild.provenance.yaml`, `docs/DEPLOYMENT_HANDOFF.md` |
+| Is there a PR template? | Yes — `.github/pull_request_template.md` | File system |
 | Is Live365 streaming implemented? | No — DjBee simulates it | `docs/GAP_ANALYSIS_REPORT.md`, `hive/bees/content/dj_bee.py` |
 | Is Supabase implemented? | No — FILE + FIRESTORE only | `hive/utils/storage_adapter.py` |
 | Does orchestrator.py have tests? | No | `tests/` and `hive/tests/` scans |
@@ -139,7 +139,7 @@ These cannot be resolved from the codebase alone:
 2. **Payment processor priority**: Is Stripe the confirmed P1 payment path, or is Lightning Network (ETH/SOL) via Iron Dome the priority?
 3. **Live365 encoder credentials**: Is there an active Live365 account and station ID? Without this, DjBee cannot move from simulation to production audio.
 4. **Supabase instance**: Is there a Supabase project provisioned? What is the URL and key structure?
-5. **Cloud Run redeployment**: Should deployment be triggered automatically on `main` push, or is manual redeployment the current preference?
+5. **Cloud Run redeployment**: ~~auto on `main`?~~ **Resolved for v1:** manual `workflow_dispatch` only (`deploy-cloud-run.yml`), `dry_run` default true, `promote` default false. WIF/vars live; promote / traffic shift remains intentional HITL.
 6. **Branch protection rules on `main`**: Should mypy and Bandit be enforced as hard blockers before merge?
 
 ---
@@ -431,40 +431,45 @@ Add `.github/workflows/codeql.yml`:
 #### Issue 8: [geryon] Add Cloud Run deployment workflow
 
 ```
-Status: ACTIVE
+Status: PARTIAL — Path B workflow + first live deploy landed; promote discipline / tip-vs-main lag still operator HITL
 Tier: 1
 Created: 2026-04-13
 Owner: geryon
-Source links: README.md ("Production URL: https://backlink-hive-*.run.app"), Dockerfile, docs/DEPLOYMENT_HANDOFF.md
-Edit policy: Agent-editable; Cloud Run service account keys require Andrew approval
+Source links: README.md, Dockerfile, docs/DEPLOYMENT_HANDOFF.md,
+  .github/workflows/deploy-cloud-run.yml, cloudbuild.provenance.yaml, issue #89 / PR #90
+Edit policy: Agent-editable workflow/docs; do not change WIF/IAM/secrets or force traffic
+  from agents without explicit HITL. Do NOT commit JSON service-account keys.
 
 **Problem**
-`Dockerfile` and Cloud Run are mentioned throughout the codebase as the production deployment
-target, but no `.github/workflows/deploy_cloudrun.yml` exists. Deployments require manual CLI
-commands, introducing human error risk and breaking the autonomous CI/CD objective.
+`Dockerfile` and Cloud Run are the production target, but historically only a manual Andon CLI
+sketch existed in `docs/DEPLOYMENT_HANDOFF.md`. Auto push-to-main deploy is intentionally out of
+scope for v1 (traffic safety).
 
-**Proposed Solution**
-Create `.github/workflows/deploy_cloudrun.yml`:
-- Trigger: push to `main` (after CI passes)
-- Steps: docker build → push to GCR/Artifact Registry → deploy to Cloud Run
-- Secrets needed: `GCP_SA_KEY`, `GCP_PROJECT_ID`, `GCP_REGION`, `CLOUD_RUN_SERVICE`
-- Only deploy if tests pass (use `needs: [test]`)
+**Implemented (Path B)**
+- `.github/workflows/deploy-cloud-run.yml` — `workflow_dispatch` with `dry_run` (default true) and
+  `promote` (default false); WIF via `google-github-actions/auth`; Cloud Build via
+  `cloudbuild.provenance.yaml`; deploy by digest with `--no-traffic`;
+  `--update-env-vars` only for `GIT_SHA,BUILD_ID,BUILD_TIMESTAMP`; `/health` git_sha verify;
+  promote job gated separately.
+- Docs updated so the CLI sketch is no longer the only truth.
 
-**Acceptance Criteria**
-- [ ] Workflow file exists and is valid
-- [ ] `gcloud run deploy` succeeds with new image on every `main` push
-- [ ] Rollback step included (deploy previous revision on failure)
-- [ ] Required GCP secrets documented in workflow comments
-- [ ] Does NOT run on branch pushes (only `main`)
+**Remaining HITL**
+- [x] WIF + GitHub vars live (Path B real deploy succeeded: Actions run `35880833596`)
+- [x] First real run: `dry_run=false`, `promote=false`; tagged `/health` OK on
+      `tip-e5271783e763` / revision `backlink-hive-00014-xej`
+- [ ] Keep promote intentional (`promote=true` or explicit HITL traffic shift); do not
+      assume merge redeploys. Serving tip as of 2026-09-26 matches `00014-xej` provenance
+      on the default URL (handoff-era `00011-mrt` @ tag `tip` superseded).
+- [ ] Rollback reference: `backlink-hive-00010-pr9`
 
 **Agent Surface Routing**
 | Field | Value |
 |-------|-------|
 | Surface | geryon |
-| Rationale | Multi-step GCP workflow with service account integration |
-| Priority | P2 — Removes manual deployment bottleneck |
-| Branch | `geryon/add-cloudrun-deploy` |
-| Dependencies | Issue #3 (enforce CI gates first) |
+| Rationale | Multi-step GCP workflow with WIF (no SA JSON keys) |
+| Priority | P2 — CI path exists; IAM still HITL |
+| Branch | `cursor/cloud-run-ci-deploy-af4d` |
+| Dependencies | Issue #89 / PR #90 (`/health` provenance) |
 ```
 
 ---
@@ -859,7 +864,7 @@ Implement `hive/utils/radio_bridge.py`:
 | `SECURITY.md` | Created | Vulnerability disclosure policy |
 | `.github/pull_request_template.md` | Created | Consistent PR hygiene |
 | `.github/dependabot.yml` | Created | Automated dependency updates |
-| `.secrets.baseline` | Created | detect-secrets pre-commit hook baseline |
+| `.secrets.baseline` | ❌ Not created (absent on tip) | detect-secrets baseline still missing; Issue #5 remains open |
 | `docs/agent-hydration.md` | Created | This hydration report |
 
 ### HITL Required (Andrew)
@@ -873,7 +878,7 @@ These items cannot proceed without human action:
 | 3 | **Supabase instance URL + key** | External account setup | Media asset storage |
 | 4 | **Branch protection rules** | GitHub settings UI | Enforce CI gates on merges |
 | 5 | **PikoClaw demo feature list** | Product direction | P1 priority assignment |
-| 6 | **GCP service account for Cloud Run deploy** | IAM/security | Automated deployment workflow |
+| 6 | **WIF + GCP deploy SA for Cloud Run** (`WIF_PROVIDER`, `WIF_SERVICE_ACCOUNT`, project/region/service vars) | IAM/security — no JSON keys in repo | `deploy-cloud-run.yml` can leave dry-run / fail-closed until set; merge ≠ deploy |
 
 ### Recommended Next Action
 

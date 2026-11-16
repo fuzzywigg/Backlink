@@ -80,9 +80,7 @@ forbidden = personality.get_forbidden_phrases()
 
 # Generate broadcast context
 context = personality.get_context_for_broadcast(
-    time_of_day="morning",
-    include_music_logic=True,
-    include_interactions=True
+    time_of_day="morning", include_music_logic=True, include_interactions=True
 )
 
 # Get compact summary (for token limits)
@@ -158,36 +156,28 @@ Integrate memory and personality to provide context for autonomous decisions:
 from hive.bees.base_bee import EmployedBee
 from hive.utils.dj_broadcast_helper import DJBroadcastHelper
 
+
 class EnhancedDJBee(EmployedBee):
     def __init__(self, hive_path=None):
         super().__init__(hive_path)
         self.dj_helper = DJBroadcastHelper(hive_path=self.hive_path)
-    
+
     def work(self, task=None):
         # Start session with personality context
-        context = self.dj_helper.start_session(
-            time_of_day=self._get_time_of_day()
-        )
-        
+        context = self.dj_helper.start_session(time_of_day=self._get_time_of_day())
+
         # Use context for LLM injection (provides guidelines, not rules)
-        response = self.llm_client.generate(
-            system=context,
-            prompt="Create a morning show intro"
-        )
-        
+        response = self.llm_client.generate(system=context, prompt="Create a morning show intro")
+
         # Track what was played (builds context)
-        self.dj_helper.track_song_played(
-            song_title="Song",
-            artist="Artist",
-            genre="Rock"
-        )
-        
+        self.dj_helper.track_song_played(song_title="Song", artist="Artist", genre="Rock")
+
         # Get suggestions about content (advisory, not blocking)
         suggestions = self.dj_helper.get_content_suggestions(response)
         if suggestions:
             # DJ can choose to adjust or proceed as-is
             self.log(f"Content suggestions: {suggestions}")
-        
+
         return {"status": "success"}
 ```
 
@@ -198,28 +188,26 @@ Integrate memory context into show preparation:
 ```python
 from hive.utils.dj_broadcast_helper import DJBroadcastHelper
 
+
 class EnhancedShowPrepBee(EmployedBee):
     def work(self, task=None):
         helper = DJBroadcastHelper()
-        
+
         # Get recent song history for variety planning
         recent_songs = helper.memory.get_recent_songs(limit=20)
         genre_dist = helper.memory.get_genre_distribution(hours=2)
-        
+
         # Get listener profiles for personalized content
         listeners = helper.memory.get_all_listeners(limit=10)
-        
+
         # Generate talking points with personality context
         personality_context = helper.personality.get_section("VOICE & PERSONA")
-        
+
         # Ensure no forbidden phrases
         forbidden = helper.get_forbidden_phrases()
-        
+
         return {
-            "talking_points": self._generate_points(
-                context=personality_context,
-                avoid=forbidden
-            )
+            "talking_points": self._generate_points(context=personality_context, avoid=forbidden)
         }
 ```
 

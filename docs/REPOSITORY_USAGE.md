@@ -35,11 +35,7 @@ custom_repo = Repository("my_collection", base_path=Path("/custom/path"))
 
 ```python
 # Create with auto-generated ID
-user_data = {
-    "username": "alice",
-    "role": "admin",
-    "email": "alice@backlink.fm"
-}
+user_data = {"username": "alice", "role": "admin", "email": "alice@backlink.fm"}
 user_id = users_repo.create(user_data)
 print(f"Created user: {user_id}")
 
@@ -68,10 +64,9 @@ print(f"Total users: {total_users}")
 
 ```python
 # Update fields
-success = users_repo.update(user_id, {
-    "email": "alice@newdomain.com",
-    "last_login": "2026-02-07T10:00:00Z"
-})
+success = users_repo.update(
+    user_id, {"email": "alice@newdomain.com", "last_login": "2026-02-07T10:00:00Z"}
+)
 
 if success:
     print("User updated!")
@@ -136,6 +131,7 @@ from hive.bees.base_bee import ScoutBee
 from hive.utils.repository import Repository
 from typing import Any
 
+
 class ListenerTrackerBee(ScoutBee):
     """Bee that tracks listener activity using repository pattern."""
 
@@ -150,29 +146,25 @@ class ListenerTrackerBee(ScoutBee):
     def work(self, task: dict[str, Any] | None = None) -> dict[str, Any]:
         """Track and manage listener data."""
         # Record a new listener
-        listener_id = self.listeners_repo.create({
-            "username": "node_42",
-            "first_seen": "2026-02-07T10:00:00Z",
-            "interactions": 0
-        })
+        listener_id = self.listeners_repo.create(
+            {"username": "node_42", "first_seen": "2026-02-07T10:00:00Z", "interactions": 0}
+        )
 
         # Update interaction count
         listener = self.listeners_repo.get(listener_id)
         if listener:
-            self.listeners_repo.update(listener_id, {
-                "interactions": listener["interactions"] + 1,
-                "last_seen": "2026-02-07T11:00:00Z"
-            })
+            self.listeners_repo.update(
+                listener_id,
+                {"interactions": listener["interactions"] + 1, "last_seen": "2026-02-07T11:00:00Z"},
+            )
 
         # Get active listeners
-        active = self.listeners_repo.list(
-            filter_fn=lambda l: l.get("interactions", 0) > 5
-        )
+        active = self.listeners_repo.list(filter_fn=lambda l: l.get("interactions", 0) > 5)
 
         return {
             "status": "success",
             "tracked_listeners": self.listeners_repo.count(),
-            "active_listeners": len(active)
+            "active_listeners": len(active),
         }
 ```
 
@@ -231,9 +223,7 @@ No code changes needed - the repository adapts automatically!
 
 4. **Use Filters for Complex Queries**: Leverage the filter function
    ```python
-   recent = repo.list(
-       filter_fn=lambda x: x["timestamp"] > cutoff_time
-   )
+   recent = repo.list(filter_fn=lambda x: x["timestamp"] > cutoff_time)
    ```
 
 5. **Avoid Excessive Clear Operations**: Clearing removes all data permanently
@@ -268,12 +258,12 @@ from datetime import datetime, timezone
 
 events_repo = Repository("events")
 
+
 def log_event(event_type: str, data: dict):
-    events_repo.create({
-        "type": event_type,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "data": data
-    })
+    events_repo.create(
+        {"type": event_type, "timestamp": datetime.now(timezone.utc).isoformat(), "data": data}
+    )
+
 
 # Usage
 log_event("song_played", {"title": "Track", "artist": "Artist"})
@@ -294,9 +284,7 @@ class BeeRegistry:
         return self.registry.get(bee_type)
 
     def list_active_bees(self):
-        return self.registry.list(
-            filter_fn=lambda b: b.get("active", False)
-        )
+        return self.registry.list(filter_fn=lambda b: b.get("active", False))
 ```
 
 ## Migration from Direct File Access

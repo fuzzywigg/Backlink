@@ -34,7 +34,7 @@
 
 ## Checklist
 
-- [ ] Code follows the [stigmergy pattern](./hive/bees/base_bee.py) (no direct bee-to-bee communication)
+- [ ] Code follows the [stigmergy pattern](../hive/bees/base_bee.py) (no direct bee-to-bee communication)
 - [ ] Tool outputs are JSON (not Python code blocks)
 - [ ] Type hints added for all new public functions
 - [ ] Docstrings in Google style for all public functions

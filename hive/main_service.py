@@ -3,6 +3,7 @@ import base64
 import contextlib
 import os
 import threading
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -17,6 +18,7 @@ from hive.schemas import (
     EventTriggerRequest,
     HealthCheckResponse,
 )
+from hive.utils.build_info import resolve_build_id, resolve_build_time, resolve_git_sha
 
 # Global Queen instance
 queen: QueenOrchestrator = None
@@ -33,8 +35,6 @@ async def lifespan(app: FastAPI):
     global queen, queen_thread
 
     # Track startup time for uptime calculation
-    import time
-
     app.state.start_time = time.time()
 
     # Initialize Queen
@@ -86,8 +86,6 @@ async def health_check():
     if not queen:
         raise HTTPException(status_code=503, detail="Queen not initialized")
 
-    import time
-
     # Calculate uptime (simplified)
     uptime = time.time() - getattr(app.state, "start_time", time.time())
 
@@ -96,6 +94,9 @@ async def health_check():
         version="1.1.0",
         uptime_seconds=uptime,
         hive_status={"queen_active": queen is not None},
+        git_sha=resolve_git_sha(),
+        build_id=resolve_build_id(),
+        build_time=resolve_build_time(),
     )
 
 

@@ -42,9 +42,7 @@ class WeatherBee(EmployedBee):
             weather_reports.append(report)
 
         # 2. Update Honeycomb (for DJ to read)
-        latest_snippet = f"{weather_reports[0]['city']}: {weather_reports[0]['temp']}F, {
-            weather_reports[0]['conditions']
-        }"
+        latest_snippet = f"{weather_reports[0]['city']}: {weather_reports[0]['temp']}F, {weather_reports[0]['conditions']}"
         self._update_weather_intel(weather_reports, latest_snippet)
 
         # 3. Tweet if time match

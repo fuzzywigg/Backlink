@@ -15,6 +15,7 @@ from hive.schemas import (
     BeeRole,
     BeeStatus,
     BeeWorkResult,
+    HealthCheckResponse,
     HoneycombStateSchema,
     IntelSchema,
     PaymentIntentSchema,
@@ -295,4 +296,60 @@ class TestSchemaExtraFields:
                 task_id="task_123",
                 bee_type="test",
                 unknown_field="value",  # Extra field - should fail
+            )
+
+
+class TestHealthCheckResponse:
+    """Tests for /health response schema (including build provenance)."""
+
+    def test_health_check_required_fields(self):
+        """Legacy clients still receive status/version/uptime/hive_status."""
+        response = HealthCheckResponse(
+            status="healthy",
+            version="1.1.0",
+            uptime_seconds=12.5,
+            hive_status={"queen_active": True},
+        )
+
+        assert response.status == "healthy"
+        assert response.version == "1.1.0"
+        assert response.uptime_seconds == 12.5
+        assert response.hive_status["queen_active"] is True
+
+    def test_health_check_provenance_defaults(self):
+        """Unset provenance must not invent a fake SHA."""
+        response = HealthCheckResponse(
+            status="healthy",
+            version="1.1.0",
+            uptime_seconds=0.0,
+        )
+
+        assert response.git_sha == "unknown"
+        assert response.build_id is None
+        assert response.build_time is None
+
+    def test_health_check_provenance_fields(self):
+        """Provenance fields are accepted when provided."""
+        response = HealthCheckResponse(
+            status="healthy",
+            version="1.1.0",
+            uptime_seconds=1.0,
+            git_sha="abc1234",
+            build_id="build-99",
+            build_time="20260322_1200",
+        )
+
+        data = response.model_dump()
+        assert data["git_sha"] == "abc1234"
+        assert data["build_id"] == "build-99"
+        assert data["build_time"] == "20260322_1200"
+        assert data["status"] == "healthy"
+
+    def test_health_check_rejects_negative_uptime(self):
+        """Uptime must be non-negative."""
+        with pytest.raises(ValidationError):
+            HealthCheckResponse(
+                status="healthy",
+                version="1.1.0",
+                uptime_seconds=-1.0,
             )
